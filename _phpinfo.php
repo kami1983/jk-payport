@@ -1,14 +1,2 @@
-AAA
-BBB
-CCC
-DDD
-EEE
-FFF
-GGG
-HHH
-III
-JJJ
-KKK
-LLL
-XXX
-1111 222 333
+<?php
+echo phpinfo();
