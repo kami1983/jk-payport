@@ -1,4 +1,5 @@
 <?php
+define('PUB_PAYPAL_SERVICE_URI', 'https://www.sandbox.paypal.com');
 
 return CMap::mergeArray(
 	require(dirname(__FILE__).'/main.php'),

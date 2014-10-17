@@ -1,4 +1,5 @@
 <?php
+define('PUB_PAYPAL_SERVICE_URI', 'https://www.paypal.com');
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
