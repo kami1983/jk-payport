@@ -5,14 +5,16 @@
  */
 class PaypalController extends Controller
 {
-    
-    /**
-     * paypal 付款类的构造方法，一些参数初始化应该隔离在这里
-     * @param string $id id of this controller
-     * @param CWebModule $module the module that this controller belongs to.
-     */
-    public function __construct($id,$module=null)
-    {
+    /* @var ApiContext $_apiContent */
+    private $_apiContent=null;
+
+
+    private function apiContext(){
+        if($this->_apiContent instanceof ApiContext){
+           return $this->_apiContent; 
+        }
+        
+        //初始化：
         $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
         echo $composerAutoload ;
         echo 'RUN 3 ';
@@ -34,9 +36,19 @@ class PaypalController extends Controller
         $clientSecret = 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL';
 
         /** @var \Paypal\Rest\ApiContext $apiContext */
-        $apiContext = $this->getApiContext($clientId, $clientSecret);
+        $this->_apiContent = $this->_getApiContext($clientId, $clientSecret);
 
         
+    }
+    
+    /**
+     * paypal 付款类的构造方法，一些参数初始化应该隔离在这里
+     * @param string $id id of this controller
+     * @param CWebModule $module the module that this controller belongs to.
+     */
+    public function __construct($id,$module=null)
+    {
+        $this->apiContext();
         //调用父类否则VIEW 无法解析
         parent::__construct($id, $module);
     }
@@ -46,7 +58,7 @@ class PaypalController extends Controller
     *
     * @return PayPal\Rest\ApiContext
     */
-   function getApiContext($clientId, $clientSecret)
+   private function _getApiContext($clientId, $clientSecret)
    {
 
        // ### Api context
