@@ -9,17 +9,17 @@ class PaypalController extends Controller
     /**
      * paypal 付款类的构造方法，一些参数初始化应该隔离在这里
      */
-    public function __construct() {
-        $composerAutoload = dirname(__DIR__) . '/../../paypal-sdk/vendor/autoload.php';
-        echo $composerAutoload;
-        if (!file_exists($composerAutoload)) {
-            echo "You need sdk. ";
-//            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
-            Yii::app()->end();
-        }
-        
-        
-    }
+//    public function __construct() {
+//        $composerAutoload = dirname(__DIR__) . '/../../paypal-sdk/vendor/autoload.php';
+//        echo $composerAutoload;
+//        if (!file_exists($composerAutoload)) {
+//            echo "You need sdk. ";
+////            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
+//            Yii::app()->end();
+//        }
+//        
+//        
+//    }
     
 
     /**
