@@ -13,14 +13,19 @@ class PaypalController extends Controller
      */
     public function __construct($id,$module=null)
     {
-        $composerAutoload = dirname(__DIR__) . '/../../paypal-sdk/vendor/autoload.php';
-        echo $composerAutoload;
+        $composerAutoload = dirname(__DIR__) . '/../../paypal-sdk/bootstrap.php';
+        
         if (!file_exists($composerAutoload)) {
             echo "You need sdk. ";
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
             Yii::app()->end();
         }
         
+        require $composerAutoload;
+        require __DIR__ . '/common.php';
+
+        
+        //调用父类否则VIEW 无法解析
         parent::__construct($id, $module);
     }
 
