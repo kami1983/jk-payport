@@ -14,7 +14,7 @@ class PaypalController extends Controller
     public function __construct($id,$module=null)
     {
         $composerAutoload = dirname(__DIR__) . '/../../paypal-sdk/bootstrap.php';
-        
+        echo $composerAutoload ;
         if (!file_exists($composerAutoload)) {
             echo "You need sdk. ";
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
