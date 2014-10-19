@@ -13,7 +13,7 @@ class PaypalController extends Controller
      */
     public function __construct($id,$module=null)
     {
-        $composerAutoload = dirname(__DIR__) . '/../../paypal-sdk/vendor/autoload.php';
+        $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
         echo $composerAutoload ;
         echo 'RUN 2 ';
         if (!file_exists($composerAutoload)) {

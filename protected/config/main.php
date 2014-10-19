@@ -1,5 +1,8 @@
 <?php
 define('PUB_PAYPAL_SERVICE_URI', 'https://www.paypal.com');
+define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
+
+Yii::setPathOfAlias('paypal-sdk',  PUB_PAYPAL_SDK_DIR);
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
@@ -17,6 +20,8 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+                
+                'paypal-sdk.lib.PayPal.*',
 	),
 
 	'modules'=>array(
