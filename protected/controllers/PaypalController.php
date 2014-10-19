@@ -23,7 +23,7 @@ class PaypalController extends Controller
         }
         
         require $composerAutoload;
-        require dirname(__DIR__) . '/../../sample/common.php';
+        require dirname(__DIR__) . '/../../paypal-sdk/sample/common.php';
 
 //        use PayPal\Rest\ApiContext;
 //        use PayPal\Auth\OAuthTokenCredential;
