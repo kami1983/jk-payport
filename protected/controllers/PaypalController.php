@@ -20,6 +20,8 @@ class PaypalController extends Controller
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
             Yii::app()->end();
         }
+        
+        parent::__construct($id, $module);
     }
 
     /**
