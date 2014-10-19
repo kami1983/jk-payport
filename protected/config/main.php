@@ -21,7 +21,15 @@ return array(
 		'application.models.*',
 		'application.components.*',
                 
-                'paypal-sdk.lib.PayPal.*',
+                'paypal-sdk.lib.PayPal.Api.*',
+                'paypal-sdk.lib.PayPal.Auth.*',
+                'paypal-sdk.lib.PayPal.Common.*',
+                'paypal-sdk.lib.PayPal.Core.*',
+                'paypal-sdk.lib.PayPal.Exception.*',
+                'paypal-sdk.lib.PayPal.Handler.*',
+                'paypal-sdk.lib.PayPal.Rest.*',
+                'paypal-sdk.lib.PayPal.Transport.*',
+                'paypal-sdk.lib.PayPal.Validation.*',
 	),
 
 	'modules'=>array(

@@ -15,7 +15,7 @@ class PaypalController extends Controller
     {
         $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
         echo $composerAutoload ;
-        echo 'RUN 2 ';
+        echo 'RUN 3 ';
         if (!file_exists($composerAutoload)) {
             echo "You need sdk. ";
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
