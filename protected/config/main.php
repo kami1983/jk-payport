@@ -6,8 +6,10 @@ Yii::setPathOfAlias('paypal-sdk',  PUB_PAYPAL_SDK_DIR);
 
 if(file_exists(PUB_PAYPAL_SDK_DIR.'/PayPal/Api/Address.php')){
     echo ' Address.php existes';
+}else{
+    echo PUB_PAYPAL_SDK_DIR.'/PayPal/Api/Address.php';
+    echo ' Address.php not existes';
 }
-echo ' Address.php not existes';
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
