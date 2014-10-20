@@ -11,6 +11,15 @@ use PayPal\Rest\RestHandler;
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
+use PayPal\Api\Address;
+use PayPal\Api\CreditCard;
+use PayPal\Api\Amount;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\Transaction;
+use PayPal\Api\FundingInstrument;
+
+
 /**
  * 
  */
