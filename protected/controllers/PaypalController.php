@@ -57,6 +57,10 @@ class PaypalController extends Controller
        // OAuthTokenCredential class can be retrieved from
        // developer.paypal.com
        
+       if(!class_exists('OAuthTokenCredentia')){
+           throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
+       }
+       
        $authToken=new OAuthTokenCredential($clientId,$clientSecret);
         echo 'RUN X4.1 ';
        $apiContext = new ApiContext($authToken);
