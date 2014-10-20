@@ -27,9 +27,9 @@ class PaypalController extends Controller
         
         //初始化：
         $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
-        echo $composerAutoload ;
+//        echo $composerAutoload ;
         if (!file_exists($composerAutoload)) {
-            echo "You need sdk. ";
+            
             throw new Exception('You need sdk. ','141020_1020');
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
             Yii::app()->end();
@@ -65,17 +65,6 @@ class PaypalController extends Controller
        // OAuthTokenCredential class can be retrieved from
        // developer.paypal.com
        
-       if(!class_exists('ContactForm')){
-           echo 'not found class ContactForm 2';
-           //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
-       }
-       
-       
-       
-       if(!class_exists('OAuthTokenCredential')){
-           echo 'not found class OAuthTokenCredential 2 <br/>';
-           //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
-       }
        
        $authToken=new OAuthTokenCredential($clientId,$clientSecret);
        
@@ -122,7 +111,7 @@ class PaypalController extends Controller
         
         //调用父类否则VIEW 无法解析
         parent::__construct($id, $module);
-        echo 'RUN A3 ';
+        
     }
     
     /**
