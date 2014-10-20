@@ -36,7 +36,7 @@ class PaypalController extends Controller
         
         echo 'RUN X1 ';
         
-//        require $composerAutoload;
+        require $composerAutoload;
 //        require dirname(__DIR__) . '/../../paypal-sdk/sample/common.php';
 //
 
