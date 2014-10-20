@@ -3,15 +3,15 @@ define('PUB_PAYPAL_SERVICE_URI', 'https://www.paypal.com');
 //define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
 define('PUB_PAYPAL_SDK_DIR', '/var/www/SITE_DEVELOPERS/SITE_JK_COMPONENT/paypal-sdk/');
 
-Yii::setPathOfAlias('paypal-sdk',  PUB_PAYPAL_SDK_DIR);
+Yii::setPathOfAlias('paypal-sdk',  '/var/www/SITE_DEVELOPERS/SITE_JK_COMPONENT/paypal-sdk/');
 
-if(file_exists(PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php')){
-    echo ' Address.php existes';
-}else{
-    echo PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php';
-    echo '<br/>';
-    echo ' Address.php not existes';
-}
+//if(file_exists(PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php')){
+//    echo ' Address.php existes';
+//}else{
+//    echo PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php';
+//    echo '<br/>';
+//    echo ' Address.php not existes';
+//}
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
