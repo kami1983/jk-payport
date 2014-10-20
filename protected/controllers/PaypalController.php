@@ -80,7 +80,6 @@ class PaypalController extends Controller
    private function _getApiContext($clientId, $clientSecret)
    {
        
-       echo Yii::app()->getBasePath();
        // ### Api context
        // Use an ApiContext object to authenticate
        // API calls. The clientId and clientSecret for the
@@ -286,11 +285,11 @@ class PaypalController extends Controller
         echo '<br/>';
         echo $redirectUrl;
         
-        $_SESSION['paymentId'] = $payment->getId();
-        if(isset($redirectUrl)) {
-                header("Location: $redirectUrl");
-                exit;
-        }
+//        $_SESSION['paymentId'] = $payment->getId();
+//        if(isset($redirectUrl)) {
+//                header("Location: $redirectUrl");
+//                exit;
+//        }
         
         $this->render('payment');
         
