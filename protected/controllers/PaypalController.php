@@ -21,7 +21,7 @@ use PayPal\Api\FundingInstrument;
 
 
 //use PayPal\Api\Amount;
-use PayPal\Api\RedirectUrls
+use PayPal\Api\RedirectUrls;
 use PayPal\Api\Details;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
