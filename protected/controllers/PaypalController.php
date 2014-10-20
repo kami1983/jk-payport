@@ -157,7 +157,7 @@ class PaypalController extends Controller
      * 创建付款页面
      */
     public function actionPayment(){
-        return ;
+        
         //Yii::app()->request->getParam(''); 
         echo 'RUN 1 ';
         // ### Payer
