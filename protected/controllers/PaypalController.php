@@ -1,5 +1,15 @@
 <?php
 
+use PayPal\Common\PPUserAgent;
+use PayPal\Core\PPConstants;
+use PayPal\Core\PPHttpConfig;
+use PayPal\Core\PPHttpConnection;
+use PayPal\Core\PPLoggingManager;
+use PayPal\Exception\PPConfigurationException;
+use PayPal\Rest\RestHandler;
+
+use PayPal\Auth\OAuthTokenCredential;
+
 /**
  * 
  */
@@ -64,12 +74,12 @@ class PaypalController extends Controller
        
        
        
-       if(!class_exists('PayPal\Auth\OAuthTokenCredential')){
-           echo 'not found class OAuthTokenCredential 2';
+       if(!class_exists('OAuthTokenCredential')){
+           echo 'not found class OAuthTokenCredential 2 <br/>';
            //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
        }
        
-       $authToken=new PayPal\Auth\OAuthTokenCredential($clientId,$clientSecret);
+       $authToken=new OAuthTokenCredential($clientId,$clientSecret);
         echo 'RUN X4.1 ';
        $apiContext = new ApiContext($authToken);
 
