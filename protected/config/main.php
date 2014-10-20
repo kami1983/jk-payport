@@ -4,10 +4,11 @@ define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
 
 Yii::setPathOfAlias('paypal-sdk',  PUB_PAYPAL_SDK_DIR);
 
-if(file_exists(PUB_PAYPAL_SDK_DIR.'/PayPal/Api/Address.php')){
+if(file_exists(PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php')){
     echo ' Address.php existes';
 }else{
-    echo PUB_PAYPAL_SDK_DIR.'/PayPal/Api/Address.php';
+    echo PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php';
+    echo '<br/>';
     echo ' Address.php not existes';
 }
 
