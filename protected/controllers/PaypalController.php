@@ -157,6 +157,7 @@ class PaypalController extends Controller
      * 创建付款页面
      */
     public function actionPayment(){
+        return ;
         //Yii::app()->request->getParam(''); 
         echo 'RUN 1 ';
         // ### Payer
@@ -165,7 +166,7 @@ class PaypalController extends Controller
         // to 'paypal'.
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
-
+        echo 'RUN 2 ';
         // ### Itemized information
         // (Optional) Lets you specify item wise
         // information
@@ -182,7 +183,7 @@ class PaypalController extends Controller
 
         $itemList = new ItemList();
         $itemList->setItems(array($item1, $item2));
-
+        echo 'RUN 3 ';
         // ### Additional payment details
         // Use this optional field to set additional
         // payment information such as tax, shipping
