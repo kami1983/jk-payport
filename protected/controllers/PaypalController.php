@@ -170,9 +170,6 @@ class PaypalController extends Controller
      */
     public function actionPayment(){
         
-        //Yii::app()->request->getParam(''); 
-        echo 'RUN 1 ';
-        
         
         // ### Payer
         // A resource representing a Payer that funds a payment
@@ -180,7 +177,7 @@ class PaypalController extends Controller
         // to 'paypal'.
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
-        echo 'RUN 2 ';
+        
         // ### Itemized information
         // (Optional) Lets you specify item wise
         // information
@@ -197,7 +194,7 @@ class PaypalController extends Controller
 
         $itemList = new ItemList();
         $itemList->setItems(array($item1, $item2));
-        echo 'RUN 3 ';
+        
         // ### Additional payment details
         // Use this optional field to set additional
         // payment information such as tax, shipping
@@ -206,7 +203,7 @@ class PaypalController extends Controller
         $details->setShipping('1.20')
                 ->setTax('1.30')
                 ->setSubtotal('17.50');
-        echo 'RUN 4 ';
+        
         // ### Amount
         // Lets you specify a payment amount.
         // You can also specify additional details
@@ -215,7 +212,7 @@ class PaypalController extends Controller
         $amount->setCurrency("USD")
                 ->setTotal("20.00")
                 ->setDetails($details);
-        echo 'RUN 5 ';
+        
         // ### Transaction
         // A transaction defines the contract of a
         // payment - what is the payment for and who
@@ -225,17 +222,15 @@ class PaypalController extends Controller
                 ->setItemList($itemList)
                 ->setDescription("Payment description");
 
-        echo 'RUN 6 ';
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
         // payment approval/ cancellation.
-        $baseUrl = $this->getBaseUrl();
-        echo $baseUrl;
+        $baseUrl = $this->getBaseUrl(); //这个注意这里设置的是回调页面成功的话，或者取消的话
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true")
                 ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false");
 
-        echo 'RUN 7 ';
+
         // ### Payment
         // A Payment Resource; create one using
         // the above types and intent set to 'sale'
@@ -245,7 +240,7 @@ class PaypalController extends Controller
                 ->setRedirectUrls($redirectUrls)
                 ->setTransactions(array($transaction));
 
-        echo 'RUN 8 ';
+
         // ### Create Payment
         // Create a payment by calling the 'create' method
         // passing it a valid apiContext.
@@ -261,7 +256,6 @@ class PaypalController extends Controller
                 exit(1);
         }
         
-        echo 'RUN 9 ';
 
         // ### Get redirect url
         // The API response provides the url that you must redirect
