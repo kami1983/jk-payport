@@ -62,37 +62,37 @@ class PaypalController extends Controller
            //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
        }
        
-       $authToken=new OAuthTokenCredential($clientId,$clientSecret);
-        echo 'RUN X4.1 ';
-       $apiContext = new ApiContext($authToken);
-
-       echo 'RUN X5 ';
-       // #### SDK configuration
-
-       // Comment this line out and uncomment the PP_CONFIG_PATH
-       // 'define' block if you want to use static file
-       // based configuration
-
-       $apiContext->setConfig(
-           array(
-               'mode' => 'sandbox',
-               'http.ConnectionTimeOut' => 30,
-               'log.LogEnabled' => true,
-               'log.FileName' => '../PayPal.log',
-               'log.LogLevel' => 'FINE',
-               'validation.level' => 'log'
-           )
-       );
-
-       /*
-       // Register the sdk_config.ini file in current directory
-       // as the configuration source.
-       if(!defined("PP_CONFIG_PATH")) {
-           define("PP_CONFIG_PATH", __DIR__);
-       }
-       */
-       echo 'RUN X6 ';
-       return $apiContext;
+//       $authToken=new OAuthTokenCredential($clientId,$clientSecret);
+//        echo 'RUN X4.1 ';
+//       $apiContext = new ApiContext($authToken);
+//
+//       echo 'RUN X5 ';
+//       // #### SDK configuration
+//
+//       // Comment this line out and uncomment the PP_CONFIG_PATH
+//       // 'define' block if you want to use static file
+//       // based configuration
+//
+//       $apiContext->setConfig(
+//           array(
+//               'mode' => 'sandbox',
+//               'http.ConnectionTimeOut' => 30,
+//               'log.LogEnabled' => true,
+//               'log.FileName' => '../PayPal.log',
+//               'log.LogLevel' => 'FINE',
+//               'validation.level' => 'log'
+//           )
+//       );
+//
+//       /*
+//       // Register the sdk_config.ini file in current directory
+//       // as the configuration source.
+//       if(!defined("PP_CONFIG_PATH")) {
+//           define("PP_CONFIG_PATH", __DIR__);
+//       }
+//       */
+//       echo 'RUN X6 ';
+//       return $apiContext;
    }
 
     
