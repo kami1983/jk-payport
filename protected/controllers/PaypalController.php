@@ -56,13 +56,10 @@ class PaypalController extends Controller
        // API calls. The clientId and clientSecret for the
        // OAuthTokenCredential class can be retrieved from
        // developer.paypal.com
-
-       $apiContext = new ApiContext(
-           new OAuthTokenCredential(
-               $clientId,
-               $clientSecret
-           )
-       );
+       
+       $authToken=new OAuthTokenCredential($clientId,$clientSecret);
+        echo 'RUN X4.1 ';
+       $apiContext = new ApiContext($authToken);
 
        echo 'RUN X5 ';
        // #### SDK configuration
