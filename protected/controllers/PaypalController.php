@@ -217,8 +217,8 @@ class PaypalController extends Controller
         // url to which the buyer must be redirected to
         // for payment approval
         try {
-                $payment->create($apiContext);
-        } catch (PayPal\Exception\PPConnectionException $ex) {
+                $payment->create($this->apiContext());
+        } catch (PPConnectionException $ex) {
                 echo "Exception: " . $ex->getMessage() . PHP_EOL;
                 var_dump($ex->getData());	
                 exit(1);
