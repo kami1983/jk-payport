@@ -80,6 +80,7 @@ class PaypalController extends Controller
    private function _getApiContext($clientId, $clientSecret)
    {
        
+       echo Yii::app()->getBasePath();
        // ### Api context
        // Use an ApiContext object to authenticate
        // API calls. The clientId and clientSecret for the
@@ -102,7 +103,7 @@ class PaypalController extends Controller
                'mode' => 'sandbox',
                'http.ConnectionTimeOut' => 30,
                'log.LogEnabled' => true,
-               'log.FileName' => '../PayPal.log',
+               'log.FileName' => Yii::app()->getBasePath().'/runtime/PayPal.log',
                'log.LogLevel' => 'FINE',
                'validation.level' => 'log'
            )
