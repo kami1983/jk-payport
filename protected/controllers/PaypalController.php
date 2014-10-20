@@ -17,7 +17,6 @@ class PaypalController extends Controller
         //初始化：
         $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
         echo $composerAutoload ;
-        echo 'RUN 3 ';
         if (!file_exists($composerAutoload)) {
             echo "You need sdk. ";
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
@@ -140,7 +139,7 @@ class PaypalController extends Controller
      */
     public function actionPayment(){
         //Yii::app()->request->getParam(''); 
-        
+        echo 'RUN 1 ';
         // ### Payer
         // A resource representing a Payer that funds a payment
         // For paypal account payments, set payment method
