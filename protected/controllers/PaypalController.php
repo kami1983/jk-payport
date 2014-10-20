@@ -228,7 +228,8 @@ class PaypalController extends Controller
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
         // payment approval/ cancellation.
-        $baseUrl = getBaseUrl();
+        $baseUrl = $this->getBaseUrl();
+        echo $baseUrl;
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true")
                 ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false");
@@ -291,6 +292,24 @@ class PaypalController extends Controller
         
         $this->render('payment');
         
+    }
+    
+    
+    private function getBaseUrl()
+    {
+
+        $protocol = 'http';
+        if ($_SERVER['SERVER_PORT'] == 443 || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')) {
+            $protocol .= 's';
+            $protocol_port = $_SERVER['SERVER_PORT'];
+        } else {
+            $protocol_port = 80;
+        }
+
+        $host = $_SERVER['HTTP_HOST'];
+        $port = $_SERVER['SERVER_PORT'];
+        $request = $_SERVER['PHP_SELF'];
+        return dirname($protocol . '://' . $host . ($port == $protocol_port ? '' : ':' . $port) . $request);
     }
 
 }
