@@ -68,7 +68,7 @@ class PaypalController extends Controller
            echo 'not found class OAuthTokenCredential 2';
            //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
        }
-       new XXX();
+       
        $authToken=new PayPal\Auth\OAuthTokenCredential($clientId,$clientSecret);
         echo 'RUN X4.1 ';
        $apiContext = new ApiContext($authToken);
