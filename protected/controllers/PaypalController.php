@@ -171,6 +171,8 @@ class PaypalController extends Controller
         
         //Yii::app()->request->getParam(''); 
         echo 'RUN 1 ';
+        
+        return ;
         // ### Payer
         // A resource representing a Payer that funds a payment
         // For paypal account payments, set payment method
