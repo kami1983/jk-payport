@@ -57,8 +57,15 @@ class PaypalController extends Controller
        // OAuthTokenCredential class can be retrieved from
        // developer.paypal.com
        
+       if(!class_exists('ContactForm')){
+           echo 'not found class ContactForm 2';
+           //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
+       }
+       
+       
+       
        if(!class_exists('OAuthTokenCredential')){
-           echo 'not found class OAuthTokenCredential ';
+           echo 'not found class OAuthTokenCredential 2';
            //throw new Exception('Api not found. OAuthTokenCredentia','141020-1107');
        }
        
