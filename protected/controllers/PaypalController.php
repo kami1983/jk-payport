@@ -73,8 +73,7 @@ class PaypalController extends Controller
     *
     * @return PayPal\Rest\ApiContext
     */
-   private function _getApiContext($clientId, $clientSecret)
-   {
+   private function _getApiContext($clientId, $clientSecret){
        
        // ### Api context
        // Use an ApiContext object to authenticate
@@ -160,6 +159,9 @@ class PaypalController extends Controller
             // using the default layout 'protected/views/layouts/main.php'
             $this->render('index');
     }
+    
+    
+    
 
     /**
      * 创建付款页面
@@ -247,9 +249,12 @@ class PaypalController extends Controller
         try {
                 $payment->create($this->apiContext());
         } catch (PPConnectionException $ex) {
-                echo "Exception: " . $ex->getMessage() . PHP_EOL;
-                var_dump($ex->getData());	
-                exit(1);
+//                echo "Exception: " . $ex->getMessage() . PHP_EOL;
+//                var_dump($ex->getData());	
+//                exit(1);
+            
+            throw new Exception($ex->getMessage,'141020_1753');
+            Yii::app()->end();
         }
         
 
@@ -258,11 +263,9 @@ class PaypalController extends Controller
         // the buyer to. Retrieve the url from the $payment->getLinks()
         // method
         foreach($payment->getLinks() as $link) {
-                echo $link->getHref();
-                echo '<br/>';
                 if($link->getRel() == 'approval_url') {
                         $redirectUrl = $link->getHref();
-                        //break;
+                        break;
                 }
         }
 
