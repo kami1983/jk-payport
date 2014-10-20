@@ -3,7 +3,7 @@ define('PUB_PAYPAL_SERVICE_URI', 'https://www.paypal.com');
 //define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
 define('PUB_PAYPAL_SDK_DIR', '/var/www/SITE_DEVELOPERS/SITE_JK_COMPONENT/paypal-sdk');
 
-Yii::setPathOfAlias('paypal_sdk',  '/var/www/SITE_DEVELOPERS/SITE_JK_COMPONENT/paypal-sdk');
+Yii::setPathOfAlias('paypal_sdk',  '/var/www/SITE_DEVELOPERS/SITE_JK_COMPONENT/paypal-sdk/lib/PayPal/Auth');
 
 //if(file_exists(PUB_PAYPAL_SDK_DIR.'/lib/PayPal/Api/Address.php')){
 //    echo ' Address.php existes';
@@ -30,15 +30,18 @@ return array(
 		'application.models.*',
 		'application.components.*',
                 
-                'paypal_sdk.lib.PayPal.Api.*',
-                'paypal_sdk.lib.PayPal.Auth.*',
-                'paypal_sdk.lib.PayPal.Common.*',
-                'paypal_sdk.lib.PayPal.Core.*',
-                'paypal_sdk.lib.PayPal.Exception.*',
-                'paypal_sdk.lib.PayPal.Handler.*',
-                'paypal_sdk.lib.PayPal.Rest.*',
-                'paypal_sdk.lib.PayPal.Transport.*',
-                'paypal_sdk.lib.PayPal.Validation.*',
+                'paypal_sdk.*',
+                'paypal_sdk.Openid.*',
+                
+//                'paypal_sdk.lib.PayPal.Api.*',
+//                'paypal_sdk.lib.PayPal.Auth.*',
+//                'paypal_sdk.lib.PayPal.Common.*',
+//                'paypal_sdk.lib.PayPal.Core.*',
+//                'paypal_sdk.lib.PayPal.Exception.*',
+//                'paypal_sdk.lib.PayPal.Handler.*',
+//                'paypal_sdk.lib.PayPal.Rest.*',
+//                'paypal_sdk.lib.PayPal.Transport.*',
+//                'paypal_sdk.lib.PayPal.Validation.*',
 	),
 
 	'modules'=>array(
