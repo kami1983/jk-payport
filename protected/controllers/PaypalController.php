@@ -249,6 +249,7 @@ class PaypalController extends Controller
                 exit;
         }
         
+        echo 'RUN 2 ';
     }
 
 }
