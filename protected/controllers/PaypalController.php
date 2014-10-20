@@ -8,6 +8,7 @@ use PayPal\Core\PPLoggingManager;
 use PayPal\Exception\PPConfigurationException;
 use PayPal\Rest\RestHandler;
 
+use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
 /**
@@ -25,21 +26,20 @@ class PaypalController extends Controller
         }
         
         //初始化：
-//        $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
-//        echo $composerAutoload ;
-//        if (!file_exists($composerAutoload)) {
-//            echo "You need sdk. ";
-////            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
-//            Yii::app()->end();
-//        }
-//        
-//        echo 'RUN X1 ';
+        $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
+        echo $composerAutoload ;
+        if (!file_exists($composerAutoload)) {
+            echo "You need sdk. ";
+//            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
+            Yii::app()->end();
+        }
+        
+        echo 'RUN X1 ';
         
 //        require $composerAutoload;
 //        require dirname(__DIR__) . '/../../paypal-sdk/sample/common.php';
 //
-////        use PayPal\Rest\ApiContext;
-////        use PayPal\Auth\OAuthTokenCredential;
+
         error_reporting(E_ALL);
         
         // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
