@@ -59,7 +59,7 @@ class PaypalController extends Controller
 //        require dirname(__DIR__) . '/../../paypal-sdk/sample/common.php';
 //
 
-        error_reporting(E_ALL);
+//        error_reporting(E_ALL);
         
         // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
         $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
@@ -172,7 +172,7 @@ class PaypalController extends Controller
         //Yii::app()->request->getParam(''); 
         echo 'RUN 1 ';
         
-        $this->render('payment');
+        
         // ### Payer
         // A resource representing a Payer that funds a payment
         // For paypal account payments, set payment method
@@ -284,6 +284,7 @@ class PaypalController extends Controller
                 exit;
         }
         
+        $this->render('payment');
         
     }
 
