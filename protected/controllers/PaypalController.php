@@ -99,9 +99,12 @@ class PaypalController extends Controller
      */
     public function __construct($id,$module=null)
     {
+        echo 'RUN A1 ';
         $this->apiContext();
+        echo 'RUN A2 ';
         //调用父类否则VIEW 无法解析
         parent::__construct($id, $module);
+        echo 'RUN A3 ';
     }
     
     /**
