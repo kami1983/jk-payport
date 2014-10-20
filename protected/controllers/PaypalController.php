@@ -1,23 +1,23 @@
 <?php
 
-use PayPal\Common\PPUserAgent;
-use PayPal\Core\PPConstants;
-use PayPal\Core\PPHttpConfig;
-use PayPal\Core\PPHttpConnection;
-use PayPal\Core\PPLoggingManager;
-use PayPal\Exception\PPConfigurationException;
-use PayPal\Rest\RestHandler;
+//use PayPal\Common\PPUserAgent;
+//use PayPal\Core\PPConstants;
+//use PayPal\Core\PPHttpConfig;
+//use PayPal\Core\PPHttpConnection;
+//use PayPal\Core\PPLoggingManager;
+//use PayPal\Exception\PPConfigurationException;
+//use PayPal\Rest\RestHandler;
 
 use PayPal\Rest\ApiContext;
 use PayPal\Auth\OAuthTokenCredential;
 
-use PayPal\Api\Address;
-use PayPal\Api\CreditCard;
+//use PayPal\Api\Address;
+//use PayPal\Api\CreditCard;
 use PayPal\Api\Amount;
 use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\Transaction;
-use PayPal\Api\FundingInstrument;
+//use PayPal\Api\FundingInstrument;
 
 
 //use PayPal\Api\Amount;
