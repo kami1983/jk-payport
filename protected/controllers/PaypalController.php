@@ -30,11 +30,10 @@ class PaypalController extends Controller
         echo $composerAutoload ;
         if (!file_exists($composerAutoload)) {
             echo "You need sdk. ";
+            throw new Exception('You need sdk. ','141020_1020');
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
             Yii::app()->end();
         }
-        
-        echo 'RUN X1 ';
         
         require $composerAutoload;
 //        require dirname(__DIR__) . '/../../paypal-sdk/sample/common.php';
@@ -45,11 +44,10 @@ class PaypalController extends Controller
         // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
         $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
         $clientSecret = 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL';
-        echo 'RUN X2 ';
+        
         /** @var \Paypal\Rest\ApiContext $apiContext */
         $this->_apiContent = $this->_getApiContext($clientId, $clientSecret);
 
-        echo 'RUN X3 ';    
     }
     
     
@@ -60,7 +58,7 @@ class PaypalController extends Controller
     */
    private function _getApiContext($clientId, $clientSecret)
    {
-       echo 'RUN X4 ';
+       
        // ### Api context
        // Use an ApiContext object to authenticate
        // API calls. The clientId and clientSecret for the
@@ -80,10 +78,9 @@ class PaypalController extends Controller
        }
        
        $authToken=new OAuthTokenCredential($clientId,$clientSecret);
-       echo 'RUN X4.1 ';
+       
        $apiContext = new ApiContext($authToken);
 
-       echo 'RUN X5 ';
        // #### SDK configuration
 
        // Comment this line out and uncomment the PP_CONFIG_PATH
@@ -108,7 +105,7 @@ class PaypalController extends Controller
            define("PP_CONFIG_PATH", __DIR__);
        }
        */
-       echo 'RUN X6 ';
+       
        return $apiContext;
    }
 
@@ -120,9 +117,9 @@ class PaypalController extends Controller
      */
     public function __construct($id,$module=null)
     {
-        echo 'RUN A1 ';
+        
         $this->apiContext();
-        echo 'RUN A2 ';
+        
         //调用父类否则VIEW 无法解析
         parent::__construct($id, $module);
         echo 'RUN A3 ';
