@@ -316,15 +316,8 @@ class CPaypalHandler extends CBase {
         // It is not a great idea to store the payment id
         // in the session. In a real world app, you may want to 
         // store the payment id in a database.
-        echo '<br/>';
-        echo $redirectUrl;
         
-//        $_SESSION['paymentId'] = $payment->getId();
-//        if(isset($redirectUrl)) {
-//                header("Location: $redirectUrl");
-//                exit;
-//        }
-        
+        return $redirectUrl;
         
     }
     
