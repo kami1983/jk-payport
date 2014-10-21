@@ -70,6 +70,10 @@ class PaypalController extends Controller {
         
         
         $paypal_handler=new CPaypalHandler();
+        $paypal_handler->addItem('2.01', 'actical');
+        $paypal_handler->addItem('2.01', 'links');
+        $paypal_handler->setDetails('0.00', '0.00');
+        
         $paypal_handler->createPayment();
         
         return $this->render('payment',array('name'=>'lin',),$this->is_jktesting);
