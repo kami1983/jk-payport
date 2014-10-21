@@ -76,6 +76,7 @@ class PaypalController extends Controller {
         
         echo $paypal_handler->createPaymentLink();
         
+        $this->layout='';
         return $this->render('payment',array('name'=>'lin',),$this->is_jktesting);
     }
 }
