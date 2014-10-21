@@ -49,15 +49,15 @@ class CPaypalHandler extends CBase {
             
             throw new Exception('You need sdk. ','141020_1020');
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
-            Yii::app()->end();
         }
         
         require_once $composerAutoload; //引入APIs
+        $this->_apiContext(); //初始化。
         
     }
 
 
-    private function apiContext(){
+    private function _apiContext(){
         if($this->_apiContent instanceof ApiContext){
            return $this->_apiContent; 
         }
