@@ -123,6 +123,7 @@ class CPaypalHandler extends CBase {
      */
     public function createPayment(){
         
+        echo 'RUN Z1 ';
         
         // ### Payer
         // A resource representing a Payer that funds a payment
