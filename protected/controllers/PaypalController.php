@@ -70,7 +70,7 @@ class PaypalController extends Controller {
         
         $paypal_handler=new CPaypalHandler();
         foreach($price_arr as $index=>$value){
-            $quantity= 0 >= $quantity_arr[$index] ? 1 : $quantity_arr[$index];
+            $quantity= 0 >= (int)$quantity_arr[$index] ? 1 : $quantity_arr[$index];
             $paypal_handler->addItem($value, $itemname_arr[$index],$quantity,$currency);
         }
         
