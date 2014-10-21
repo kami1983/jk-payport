@@ -70,8 +70,13 @@ class PaypalController extends Controller {
         
         $paypal_handler=new CPaypalHandler();
         foreach($price_arr as $index=>$value){
-            $quantity= 0 >= (int)$quantity_arr[$index] ? 1 : $quantity_arr[$index];
-            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity,$currency);
+            if(!isset($quantity_arr[$index])){
+                $quantity_arr[$index]=null;
+            }
+            if(!isset($itemname_arr[$index])){
+                $itemname_arr[$index]=null;
+            }
+            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
         }
         
 //        $paypal_handler->addItem('2.01', 'links',7);
