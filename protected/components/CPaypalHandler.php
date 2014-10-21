@@ -59,6 +59,7 @@ class CPaypalHandler extends CBase {
 
     private function _apiContext(){
         if($this->_apiContent instanceof ApiContext){
+            echo 'RUI X';
            return $this->_apiContent; 
         }
         
