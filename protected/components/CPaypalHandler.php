@@ -59,7 +59,6 @@ class CPaypalHandler extends CBase {
 
     private function _apiContext(){
         if($this->_apiContent instanceof ApiContext){
-            echo 'RUI X';
            return $this->_apiContent; 
         }
         
@@ -124,7 +123,6 @@ class CPaypalHandler extends CBase {
      */
     public function createPayment(){
         
-        echo 'RUN Z1 ';
         
         // ### Payer
         // A resource representing a Payer that funds a payment
