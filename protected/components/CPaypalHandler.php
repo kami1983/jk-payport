@@ -203,7 +203,7 @@ class CPaypalHandler extends CBase {
         // url to which the buyer must be redirected to
         // for payment approval
         try {
-                $payment->create($this->apiContext());
+                $payment->create($this->_apiContext());
         } catch (PPConnectionException $ex) {
 //                echo "Exception: " . $ex->getMessage() . PHP_EOL;
 //                var_dump($ex->getData());	
