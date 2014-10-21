@@ -42,15 +42,6 @@ class CPaypalHandler extends CBase {
     private $_apiContent=null;
 
     public function __construct() {
-        $this->apiContext(); //初始化
-    }
-
-
-    private function apiContext(){
-        if($this->_apiContent instanceof ApiContext){
-           return $this->_apiContent; 
-        }
-        
         //初始化：
         $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
 //        echo $composerAutoload ;
@@ -61,7 +52,16 @@ class CPaypalHandler extends CBase {
             Yii::app()->end();
         }
         
-        require_once $composerAutoload;
+        require_once $composerAutoload; //引入APIs
+        
+    }
+
+
+    private function apiContext(){
+        if($this->_apiContent instanceof ApiContext){
+           return $this->_apiContent; 
+        }
+        
         
         // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
         $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
@@ -241,7 +241,6 @@ class CPaypalHandler extends CBase {
 //                exit;
 //        }
         
-        $this->render('payment');
         
     }
     
