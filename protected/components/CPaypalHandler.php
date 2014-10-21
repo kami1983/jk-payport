@@ -38,8 +38,15 @@ use PayPal\Api\ItemList;
  * @author linhai
  */
 class CPaypalHandler extends CBase {
-    /* @var ApiContext $_apiContent */
-    private $_apiContent=null;
+    
+    /* @var $_apiContent ApiContext  */
+    protected $_apiContent=null;
+    
+    /* @var $_item_arr Item[] */
+    protected $_item_arr=array();
+    
+    /* @var $_details Details */
+    protected $_details=null;
 
     public function __construct() {
         //初始化：
@@ -119,9 +126,83 @@ class CPaypalHandler extends CBase {
    }
    
    /**
-     * 创建付款页面
-     */
-    public function createPayment(){
+    * 添加一个支付信息
+    * @param $price
+    * @param $name CCY Payment.
+    * @param $quantity 1
+    * @param $currency USD
+    * @return CPaypalHandler
+    */
+   public function addItem($price,$name='CCY Payment.',$quantity=1,$currency='USD'){
+       
+       foreach ($this->_item_arr as $item_obj) {
+           if($currency != $item_obj->getCurrency()){
+               //如果不想等那么throw
+               throw new Exception('支付货币必须一致','141021_1437');
+           }
+       }
+       
+        $item = new Item();
+        $item->setName($name)
+                ->setCurrency($currency)
+                ->setQuantity($quantity)
+                ->setPrice($price);
+        
+        $this->_item_arr[]=$item;
+        
+        return $this;
+   }
+   
+   /**
+    * 制作金额
+    * @param Details $details 支付细节
+    * @return Amount
+    */
+   private function _makeAmount(Details $details){
+       $amount = new Amount();
+       $amount->setCurrency($this->_item_arr[0]->getCurrency())
+                ->setTotal($details->getTax()+$details->getShipping()+$details->getSubtotal())
+                ->setDetails($details);
+       
+       return $amount;
+   }
+   
+   /**
+    * 制作金额
+    * @param Item[] $item_arr 付款条目数组
+    * @return float
+    */
+   private function _getItemPriceSum(array $item_arr){
+       $total_price=0.00;
+       foreach($item_arr as $item_obj){
+           $total_price+=$item_obj->getPrice();
+       }
+       return $total_price;
+   }
+   
+   /**
+    * 添加付款税金和运费
+    * @param string $shipping 运费
+    * @param string $tax 税金
+    * @return CPaypalHandler
+    */
+   public function setDetails($shipping='0.00',$tax='0.00'){
+       
+       $details = new Details();
+       $details->setShipping($shipping)
+                ->setTax($tax)
+                ->setSubtotal($this->_getItemPriceSum($this->_item_arr));
+        
+       $this->_details=$details;
+       return $this;
+   }
+
+
+   /**
+    * 创建付款页面
+    * Amount
+    */
+   public function createPayment(){
         
         
         // ### Payer
@@ -134,46 +215,48 @@ class CPaypalHandler extends CBase {
         // ### Itemized information
         // (Optional) Lets you specify item wise
         // information
-        $item1 = new Item();
-        $item1->setName('Ground Coffee 40 oz')
-                ->setCurrency('USD')
-                ->setQuantity(1)
-                ->setPrice('7.50');
-        $item2 = new Item();
-        $item2->setName('Granola bars')
-                ->setCurrency('USD')
-                ->setQuantity(5)
-                ->setPrice('2.01');
+//        $item1 = new Item();
+//        $item1->setName('Ground Coffee 40 oz')
+//                ->setCurrency('USD')
+//                ->setQuantity(1)
+//                ->setPrice('7.50');
+//        $item2 = new Item();
+//        $item2->setName('Granola bars')
+//                ->setCurrency('USD')
+//                ->setQuantity(5)
+//                ->setPrice('2.00');
 
         $itemList = new ItemList();
-        $itemList->setItems(array($item1, $item2));
+        $itemList->setItems($this->_item_arr);
+        
         
         // ### Additional payment details
         // Use this optional field to set additional
         // payment information such as tax, shipping
         // charges etc.
-        $details = new Details();
-        $details->setShipping('1.20')
-                ->setTax('1.30')
-                ->setSubtotal('17.50');
+//        $details = new Details();
+//        $details->setShipping('1.20')
+//                ->setTax('1.30')
+//                ->setSubtotal('17.50');
+        
         
         // ### Amount
         // Lets you specify a payment amount.
         // You can also specify additional details
         // such as shipping, tax.
-        $amount = new Amount();
-        $amount->setCurrency("USD")
-                ->setTotal("20.00")
-                ->setDetails($details);
+//        $amount = new Amount();
+//        $amount->setCurrency("USD")
+//                ->setTotal("20.00")
+//                ->setDetails($details);
         
         // ### Transaction
         // A transaction defines the contract of a
         // payment - what is the payment for and who
         // is fulfilling it. 
         $transaction = new Transaction();
-        $transaction->setAmount($amount)
+        $transaction->setAmount($this->_makeAmount($this->_details))
                 ->setItemList($itemList)
-                ->setDescription("Payment description");
+                ->setDescription("Payment description of cancanyou.com");
 
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
