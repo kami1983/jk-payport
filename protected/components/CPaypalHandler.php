@@ -175,7 +175,8 @@ class CPaypalHandler extends CBase {
    private function _getItemPriceSum(array $item_arr){
        $total_price=0.00;
        foreach($item_arr as $item_obj){
-           $total_price+=$item_obj->getPrice();
+           /* @var $item_obj Item */
+           $total_price+=($item_obj->getPrice() * $item_obj->getQuantity());
        }
        return $total_price;
    }
