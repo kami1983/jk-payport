@@ -64,6 +64,6 @@ class PaypalController extends Controller {
         $paypal_handler->createPayment();
         echo 'RUN 2 ';
         
-        $this->render('payment');
+        //$this->render('payment');
     }
 }
