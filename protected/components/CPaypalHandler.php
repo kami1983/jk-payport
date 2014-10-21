@@ -143,7 +143,7 @@ class CPaypalHandler extends CBase {
         $item2->setName('Granola bars')
                 ->setCurrency('USD')
                 ->setQuantity(5)
-                ->setPrice('23.00');
+                ->setPrice('2.00');
 
         $itemList = new ItemList();
         $itemList->setItems(array($item1, $item2));
