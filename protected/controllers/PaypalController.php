@@ -63,6 +63,7 @@ class PaypalController extends Controller {
         $paypal_handler=new CPaypalHandler();
         $paypal_handler->createPayment();
         
-        $this->render('payment');
+        $result=$this->render('payment',array('name'=>'lin',),true);
+        print_r($result);
     }
 }
