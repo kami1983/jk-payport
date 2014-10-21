@@ -52,7 +52,7 @@ class CPaypalHandler extends CBase {
         }
         
         require_once $composerAutoload; //引入APIs
-        $this->_apiContext(); //初始化。
+        //$this->_apiContext(); //初始化。
         
     }
 
