@@ -65,16 +65,18 @@ class PaypalController extends Controller {
         $price_arr=Yii::app()->request->getQuery('price_arr',array());
         $quantity_arr=Yii::app()->request->getQuery('quantity_arr',array()); //默认
         $itemname_arr=Yii::app()->request->getQuery('itemname_arr',array()); //名称默认 CCY Payment
-        
-        
-        
+        $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
+        $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
         
         $paypal_handler=new CPaypalHandler();
-        $paypal_handler->addItem('2.01', 'actical');
-        $paypal_handler->addItem('2.01', 'links',7);
-        $paypal_handler->setDetails('0.00', '0.00');
+        foreach($price_arr as $index=>$value){
+            $quantity= 0 >= $quantity_arr[$index] ? 1 : $quantity_arr[$index];
+            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity,$currency);
+        }
         
-        echo 'RUN 1 ';
+//        $paypal_handler->addItem('2.01', 'links',7);
+        $paypal_handler->setDetails($shipping, $tax);
+        
         echo $paypal_handler->createPaymentLink();
         
         $this->layout='';
