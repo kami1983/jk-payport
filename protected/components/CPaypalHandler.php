@@ -203,7 +203,7 @@ class CPaypalHandler extends CBase {
     * 创建付款页面
     * Amount
     */
-   public function createPayment(){
+   public function createPaymentLink(){
         
         
         // ### Payer
