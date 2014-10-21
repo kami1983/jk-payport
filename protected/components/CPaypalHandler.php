@@ -41,6 +41,10 @@ class CPaypalHandler extends CBase {
     /* @var ApiContext $_apiContent */
     private $_apiContent=null;
 
+    public function __construct() {
+        $this->apiContext(); //初始化
+    }
+
 
     private function apiContext(){
         if($this->_apiContent instanceof ApiContext){

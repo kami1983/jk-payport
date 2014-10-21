@@ -59,7 +59,9 @@ class PaypalController extends Controller {
      * 创建付款页面
      */
     public function actionPayment(){
+        echo 'RUN 1 ';
         $paypal_handler=new CPaypalHandler();
         $paypal_handler->createPayment();
+        echo 'RUN 2 ';
     }
 }
