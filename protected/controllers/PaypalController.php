@@ -60,6 +60,11 @@ class PaypalController extends Controller {
      */
     public function actionPayment(){
         
+        //获取币种
+        $currency_arr=Yii::app()->request->getQuery('currency_arr',array());
+        $currency_arr=Yii::app()->request->getQuery('currency_arr',array());
+        
+        
         $paypal_handler=new CPaypalHandler();
         $paypal_handler->createPayment();
         
