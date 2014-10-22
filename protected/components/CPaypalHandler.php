@@ -216,8 +216,7 @@ class CPaypalHandler extends CBase {
     * @return string
     */
    public static function ExtractId(Payment $payment_obj){
-       echo $payment_obj->getPayer();
-       echo '<br/>';
+       
        return $payment_obj->getId();
    }
    
