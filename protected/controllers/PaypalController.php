@@ -85,6 +85,7 @@ class PaypalController extends Controller {
         echo '<br/>';
         echo $cancel_url=$this->createUrl('recall',array('success'=>'false',));
         echo '<br/>';
+        return ;
         $paypal_handler=new CPaypalHandler($return_url,$cancel_url);
         
         foreach($price_arr as $index=>$value){
