@@ -117,10 +117,9 @@ class PaypalController extends Controller {
         $payid=CPaypalHandler::ExtractId($paymentObj);
         $match_arr=array();
         preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
-        print_r($match_arr[1]);
-        echo '<br/>';
-        
-        $this->layout='';
-        return $this->render('payment',array('name'=>'lin',),$this->is_jktesting);
+        $token=$match_arr[1];
+                
+        //$this->layout='';
+        return $this->renderFile('payment',array('name'=>'lin',),$this->is_jktesting);
     }
 }
