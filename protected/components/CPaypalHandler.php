@@ -314,9 +314,6 @@ class CPaypalHandler extends CBase {
         // The API response provides the url that you must redirect
         // the buyer to. Retrieve the url from the $payment->getLinks()
         // method
-        echo '<br/>';
-        echo $payment->getId();
-        echo '<br/>';
         foreach($payment->getLinks() as $link) {
                 if($link->getRel() == 'approval_url') {
                         $redirectUrl = $link->getHref();
