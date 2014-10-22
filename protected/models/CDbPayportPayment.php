@@ -14,24 +14,40 @@
  * @property string $ipaddress
  * @property string $payment_json
  */
-class CDbPaypalPayment extends CActiveRecord
-{
+class CDbPayportPayment extends CActiveRecord
+{   
+        const CONST_FIELD_STATUS_IS_VALID=1;
+        const CONST_FIELD_STATUS_IS_INVALID=2;
+        
+        const CONST_FIELD_TYPE_IS_PAYPAL=1;
+        
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return CDbPaypalPayment the static model class
+	 * @return CDbPayportPayment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+        
+        /**
+         * 创建一个临时的付款信息
+         * @return CDbPayportPayment
+         */
+        public static function Creation(){
+            $oper=new CDbPayportPayment();
+            $oper->ipaddress=$_SERVER['REMOTE_ADDR'];
+            $oper->creationdate=$oper->modificationdate=date('Y-m-d H:i:s');
+//            $oper->status=
+        }
 
-	/**
+        /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'paypal_payment';
+		return 'payport_payment';
 	}
 
 	/**
