@@ -76,7 +76,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=test_db_paypal',
+			'connectionString' => 'mysql:host=localhost;dbname=test_db_payport',
 			'emulatePrepare' => true,
 			'username' => 'payport',
 			'password' => 'payport_123',
