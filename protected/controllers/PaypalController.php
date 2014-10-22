@@ -81,7 +81,7 @@ class PaypalController extends Controller {
         $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
         $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
         
-        $base_url=Yii::app()->baseUrl;
+        $base_url=Yii::app()->request->baseUrl;
         echo $return_url=$base_url.$this->createUrl('recall',array('success'=>'true',));
         echo '<br/>';
         echo $cancel_url=$base_url.$this->createUrl('recall',array('success'=>'false',));
