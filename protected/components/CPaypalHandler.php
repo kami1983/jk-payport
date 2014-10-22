@@ -211,12 +211,33 @@ class CPaypalHandler extends CBase {
        return $this;
    }
 
+   /**
+    * @param Payment $payment_obj 付款对象
+    * @return string
+    */
+   public static function ExtractId(Payment $payment_obj){
+       return $payment_obj->getId();
+   }
+   
+   /**
+    * @param Payment $payment_obj 付款对象
+    * @return string
+    */
+   public static function ExtractApprovalUrl(Payment $payment_obj){
+        foreach($payment_obj->getLinks() as $link) {
+                if($link->getRel() == 'approval_url') {
+                        return $link->getHref();
+                }
+        }
+        
+        
+   }
 
    /**
     * 创建付款页面
-    * Amount
+    * Payment
     */
-   public function createPaymentLink(){
+   public function createPaymentObj(){
         
         
         // ### Payer
@@ -309,30 +330,31 @@ class CPaypalHandler extends CBase {
             Yii::app()->end();
         }
         
-        echo '<pre>';
-        print_r($payment);
-        echo '</pre>';
-        // ### Get redirect url
-        // The API response provides the url that you must redirect
-        // the buyer to. Retrieve the url from the $payment->getLinks()
-        // method
-        foreach($payment->getLinks() as $link) {
-                if($link->getRel() == 'approval_url') {
-                        $redirectUrl = $link->getHref();
-                        break;
-                }
-        }
-
-        // ### Redirect buyer to PayPal website
-        // Save the payment id so that you can 'complete' the payment
-        // once the buyer approves the payment and is redirected
-        // back to your website.
-        //
-        // It is not a great idea to store the payment id
-        // in the session. In a real world app, you may want to 
-        // store the payment id in a database.
-        
-        return $redirectUrl;
+        return $payment
+//        echo '<pre>';
+//        print_r($payment);
+//        echo '</pre>';
+//        // ### Get redirect url
+//        // The API response provides the url that you must redirect
+//        // the buyer to. Retrieve the url from the $payment->getLinks()
+//        // method
+//        foreach($payment->getLinks() as $link) {
+//                if($link->getRel() == 'approval_url') {
+//                        $redirectUrl = $link->getHref();
+//                        break;
+//                }
+//        }
+//
+//        // ### Redirect buyer to PayPal website
+//        // Save the payment id so that you can 'complete' the payment
+//        // once the buyer approves the payment and is redirected
+//        // back to your website.
+//        //
+//        // It is not a great idea to store the payment id
+//        // in the session. In a real world app, you may want to 
+//        // store the payment id in a database.
+//        
+//        return $redirectUrl;
         
     }
     
