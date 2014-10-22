@@ -93,7 +93,7 @@ class PaypalController extends Controller {
 //        $paypal_handler->addItem('2.01', 'links',7);
 //        $paypal_handler->setDetails('0.00', '0.00');
 //        
-//        echo $paypal_handler->createPaymentLink();
+        echo $paypal_handler->createPaymentLink();
         
         $this->layout='';
         return $this->render('payment',array('name'=>'lin',),$this->is_jktesting);
