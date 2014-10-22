@@ -84,6 +84,10 @@ class PaypalController extends Controller {
             echo '<br/>';
             $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
         }
+        
+        echo "shipping={$shipping},";
+        echo "tax={$tax},";
+        echo '<br/>';
         $paypal_handler->setDetails($shipping, $tax);
         
 //        $paypal_handler->addItem('2.01', 'links',7);
