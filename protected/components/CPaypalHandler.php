@@ -309,7 +309,9 @@ class CPaypalHandler extends CBase {
             Yii::app()->end();
         }
         
-
+        echo '<pre>';
+        print_r($payment);
+        echo '</pre>';
         // ### Get redirect url
         // The API response provides the url that you must redirect
         // the buyer to. Retrieve the url from the $payment->getLinks()
