@@ -118,8 +118,10 @@ class PaypalController extends Controller {
         $match_arr=array();
         preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
         $token=$match_arr[1];
-                
-        //$this->layout='';
+        
+        //存储：$payid，$token，$post_json
+        
+        
         return $this->renderPartial('payment',array('name'=>'lin',),$this->is_jktesting);
     }
 }
