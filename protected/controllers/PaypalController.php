@@ -69,9 +69,9 @@ class PaypalController extends Controller {
         echo md5('1'.'token_141022_1031');
         
         //效验请求合法性
-        if(!CUser::CheckValid($uid,$masksign)){
-            throw new Exception('无法识别调用用户','141022_1027');
-        }
+//        if(!CUser::CheckValid($uid,$masksign)){
+//            throw new Exception('无法识别调用用户','141022_1027');
+//        }
         
         
         //获取币种
