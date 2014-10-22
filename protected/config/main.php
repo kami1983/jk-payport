@@ -20,6 +20,7 @@ define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
+        'baseUrl'=>'http://'.$_SERVER['HTTP_HOST'] ,
 	'name'=>'Pay port',
 
 	// preloading 'log' component
