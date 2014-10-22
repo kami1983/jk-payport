@@ -70,21 +70,26 @@ class PaypalController extends Controller {
         
         $paypal_handler=new CPaypalHandler();
         
-//        foreach($price_arr as $index=>$value){
-//            if(!isset($quantity_arr[$index])){
-//                $quantity_arr[$index]=null;
-//            }
-//            if(!isset($itemname_arr[$index])){
-//                $itemname_arr[$index]=null;
-//            }
-//            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
-//        }
-//        $paypal_handler->setDetails($shipping, $tax);
+        foreach($price_arr as $index=>$value){
+            if(!isset($quantity_arr[$index])){
+                $quantity_arr[$index]=null;
+            }
+            if(!isset($itemname_arr[$index])){
+                $itemname_arr[$index]=null;
+            }
+            echo "value={$value},";
+            echo "itemname_arr[\$index]={$itemname_arr[$index]},";
+            echo "quantity_arr[\$index]={$quantity_arr[$index]},";
+            echo "currency={$currency},";
+            echo '<br/>';
+            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
+        }
+        $paypal_handler->setDetails($shipping, $tax);
         
-        $paypal_handler->addItem('2.01', 'links',7);
-        $paypal_handler->setDetails('0.00', '0.00');
-        
-        echo $paypal_handler->createPaymentLink();
+//        $paypal_handler->addItem('2.01', 'links',7);
+//        $paypal_handler->setDetails('0.00', '0.00');
+//        
+//        echo $paypal_handler->createPaymentLink();
         
         $this->layout='';
         return $this->render('payment',array('name'=>'lin',),$this->is_jktesting);
