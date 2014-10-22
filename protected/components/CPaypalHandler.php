@@ -216,6 +216,8 @@ class CPaypalHandler extends CBase {
     * @return string
     */
    public static function ExtractId(Payment $payment_obj){
+       echo $payment_obj->getPayer();
+       echo '<br/>';
        return $payment_obj->getId();
    }
    
@@ -225,6 +227,7 @@ class CPaypalHandler extends CBase {
     */
    public static function ExtractApprovalUrl(Payment $payment_obj){
         foreach($payment_obj->getLinks() as $link) {
+            
             if($link->getRel() == 'approval_url') {
                 return $link->getHref();
             }
