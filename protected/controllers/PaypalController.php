@@ -57,8 +57,22 @@ class PaypalController extends Controller {
 
     /**
      * 创建付款页面
+     * 测试页面：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/payment&price_arr[0]=2.77
+     * 测试页面：
      */
     public function actionPayment(){
+        
+        //获取请求的地址信息
+        $uid=Yii::app()->request->getQuery('uid','0');
+        $masksign=Yii::app()->request->getQuery('masksign','');
+        
+        echo md5('1'.'token_141022_1031');
+        
+        //效验请求合法性
+        if(!CUser::CheckValid($uid,$masksign)){
+            throw new Exception('无法识别调用用户','141022_1027');
+        }
+        
         
         //获取币种
         $currency=Yii::app()->request->getQuery('currency','USD');
@@ -67,6 +81,7 @@ class PaypalController extends Controller {
         $itemname_arr=Yii::app()->request->getQuery('itemname_arr',array()); //名称默认 CCY Payment
         $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
         $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
+        
         
         $paypal_handler=new CPaypalHandler();
         
@@ -77,17 +92,17 @@ class PaypalController extends Controller {
             if(!isset($itemname_arr[$index])){
                 $itemname_arr[$index]='CCY Payment.';
             }
-            echo "value={$value},";
-            echo "itemname_arr[\$index]={$itemname_arr[$index]},";
-            echo "quantity_arr[\$index]={$quantity_arr[$index]},";
-            echo "currency={$currency},";
-            echo '<br/>';
+//            echo "value={$value},";
+//            echo "itemname_arr[\$index]={$itemname_arr[$index]},";
+//            echo "quantity_arr[\$index]={$quantity_arr[$index]},";
+//            echo "currency={$currency},";
+//            echo '<br/>';
             $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
         }
         
-        echo "shipping={$shipping},";
-        echo "tax={$tax},";
-        echo '<br/>';
+//        echo "shipping={$shipping},";
+//        echo "tax={$tax},";
+//        echo '<br/>';
         $paypal_handler->setDetails($shipping, $tax);
         
 //        $paypal_handler->addItem('2.01', 'links',7);
