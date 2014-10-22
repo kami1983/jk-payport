@@ -72,10 +72,10 @@ class PaypalController extends Controller {
         
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){
-                $quantity_arr[$index]=null;
+                $quantity_arr[$index]=1;
             }
             if(!isset($itemname_arr[$index])){
-                $itemname_arr[$index]=null;
+                $itemname_arr[$index]='CCY Payment.';
             }
             echo "value={$value},";
             echo "itemname_arr[\$index]={$itemname_arr[$index]},";
