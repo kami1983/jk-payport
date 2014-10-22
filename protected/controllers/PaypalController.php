@@ -113,12 +113,11 @@ class PaypalController extends Controller {
 //        $paypal_handler->setDetails('0.00', '0.00');
 //        
         $paymentObj= $paypal_handler->createPaymentObj();
-        echo $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
-        echo '<br/>';
+        $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
         $payid=CPaypalHandler::ExtractId($paymentObj);
         $match_arr=array();
         preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
-        print_r($match_arr);
+        print_r($match_arr[1]);
         echo '<br/>';
         
         $this->layout='';
