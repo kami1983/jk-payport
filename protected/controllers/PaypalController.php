@@ -57,7 +57,7 @@ class PaypalController extends Controller {
 
     /**
      * 创建付款页面
-     * 测试页面：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/payment&price_arr[0]=2.77
+     * 测试页面：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/payment&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
      * 测试页面：
      */
     public function actionPayment(){
@@ -69,9 +69,9 @@ class PaypalController extends Controller {
         echo md5('1'.'token_141022_1031');
         
         //效验请求合法性
-//        if(!CUser::CheckValid($uid,$masksign)){
-//            throw new Exception('无法识别调用用户','141022_1027');
-//        }
+        if(!CUser::CheckValid($uid,$masksign)){
+            throw new Exception('无法识别调用用户','141022_1027');
+        }
         
         
         //获取币种
