@@ -225,12 +225,10 @@ class CPaypalHandler extends CBase {
     */
    public static function ExtractApprovalUrl(Payment $payment_obj){
         foreach($payment_obj->getLinks() as $link) {
-                if($link->getRel() == 'approval_url') {
-                        return $link->getHref();
-                }
+            if($link->getRel() == 'approval_url') {
+                return $link->getHref();
+            }
         }
-        
-        
    }
 
    /**
@@ -330,7 +328,7 @@ class CPaypalHandler extends CBase {
             Yii::app()->end();
         }
         
-        return $payment
+        return $payment;
 //        echo '<pre>';
 //        print_r($payment);
 //        echo '</pre>';
