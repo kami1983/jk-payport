@@ -315,7 +315,7 @@ class CPaypalHandler extends CBase {
         // the buyer to. Retrieve the url from the $payment->getLinks()
         // method
         echo '<br/>';
-        print_r($payment);
+        echoi $payment->getId();
         echo '<br/>';
         foreach($payment->getLinks() as $link) {
                 if($link->getRel() == 'approval_url') {
