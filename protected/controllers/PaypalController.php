@@ -120,6 +120,6 @@ class PaypalController extends Controller {
         $token=$match_arr[1];
                 
         //$this->layout='';
-        return $this->renderFile('payment',array('name'=>'lin',),$this->is_jktesting);
+        return $this->renderPartial('payment',array('name'=>'lin',),$this->is_jktesting);
     }
 }
