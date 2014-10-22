@@ -66,7 +66,6 @@ class PaypalController extends Controller {
         $uid=Yii::app()->request->getQuery('uid','0');
         $masksign=Yii::app()->request->getQuery('masksign','');
         
-        echo md5('1'.'token_141022_1031');
         
         //效验请求合法性
         if(!CUser::CheckValid($uid,$masksign)){
