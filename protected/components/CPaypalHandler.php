@@ -47,8 +47,15 @@ class CPaypalHandler extends CBase {
     
     /* @var $_details Details */
     protected $_details=null;
+    
+    /* @var $_return_url string *///成功后回跳的地址
+    protected $_return_url=null;
+    
+    /* @var $_cancel_url string *///取消付款后的回跳地址
+    protected $_cancel_url=null;
+    
 
-    public function __construct() {
+    public function __construct($return_url,$cancel_url) {
         //初始化：
         $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
 //        echo $composerAutoload ;
@@ -61,6 +68,9 @@ class CPaypalHandler extends CBase {
         require_once $composerAutoload; //引入APIs
         $this->_apiContext(); //初始化。
         
+        $this->_return_url=$return_url;
+        $this->_cancel_url=$cancel_url;
+
     }
 
 
@@ -265,10 +275,10 @@ class CPaypalHandler extends CBase {
         // ### Redirect urls
         // Set the urls that the buyer must be redirected to after 
         // payment approval/ cancellation.
-        $baseUrl = $this->getBaseUrl(); //这个注意这里设置的是回调页面成功的话，或者取消的话
+//        $baseUrl = $this->getBaseUrl(); //这个注意这里设置的是回调页面成功的话，或者取消的话
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl("$baseUrl/ExecutePayment.php?success=true")
-                ->setCancelUrl("$baseUrl/ExecutePayment.php?success=false");
+        $redirectUrls->setReturnUrl($this->_return_url)
+                ->setCancelUrl($this->_cancel_url);
 
 
         // ### Payment
@@ -325,21 +335,21 @@ class CPaypalHandler extends CBase {
     }
     
     
-    private function getBaseUrl()
-    {
-
-        $protocol = 'http';
-        if ($_SERVER['SERVER_PORT'] == 443 || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')) {
-            $protocol .= 's';
-            $protocol_port = $_SERVER['SERVER_PORT'];
-        } else {
-            $protocol_port = 80;
-        }
-
-        $host = $_SERVER['HTTP_HOST'];
-        $port = $_SERVER['SERVER_PORT'];
-        $request = $_SERVER['PHP_SELF'];
-        return dirname($protocol . '://' . $host . ($port == $protocol_port ? '' : ':' . $port) . $request);
-    }
+//    private function getBaseUrl()
+//    {
+//
+//        $protocol = 'http';
+//        if ($_SERVER['SERVER_PORT'] == 443 || (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')) {
+//            $protocol .= 's';
+//            $protocol_port = $_SERVER['SERVER_PORT'];
+//        } else {
+//            $protocol_port = 80;
+//        }
+//
+//        $host = $_SERVER['HTTP_HOST'];
+//        $port = $_SERVER['SERVER_PORT'];
+//        $request = $_SERVER['PHP_SELF'];
+//        return dirname($protocol . '://' . $host . ($port == $protocol_port ? '' : ':' . $port) . $request);
+//    }
 
 }

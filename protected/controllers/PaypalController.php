@@ -81,8 +81,11 @@ class PaypalController extends Controller {
         $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
         $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
         
-        
-        $paypal_handler=new CPaypalHandler();
+        echo $return_url=$this->createUrl('recall',array('success'=>'true',));
+        echo '<br/>';
+        echo $cancel_url=$this->createUrl('recall',array('success'=>'false',));
+        echo '<br/>';
+        $paypal_handler=new CPaypalHandler($return_url,$cancel_url);
         
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){
@@ -103,6 +106,7 @@ class PaypalController extends Controller {
 //        echo "tax={$tax},";
 //        echo '<br/>';
         $paypal_handler->setDetails($shipping, $tax);
+        
         
 //        $paypal_handler->addItem('2.01', 'links',7);
 //        $paypal_handler->setDetails('0.00', '0.00');
