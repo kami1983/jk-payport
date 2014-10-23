@@ -82,6 +82,18 @@ class PaypalController extends Controller {
         $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
         $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
         
+        //记录请求信息
+        $oper=new CDbPayportPayment();
+        $oper->ipaddress=$_SERVER['REMOTE_ADDR'];
+        $oper->creationdate=$oper->modificationdate=date('Y-m-d H:i:s');
+        $oper->status=CDbPayportPayment::CONST_FIELD_STATUS_IS_INVALID; //默认无效
+        $oper->type=CDbPayportPayment::CONST_FIELD_TYPE_IS_PAYPAL;
+        $oper->post_json=  json_encode($_POST);
+        $oper->get_json=  json_encode($_GET);
+        $oper->payment_json= '';
+        echo $oper->insert();
+        echo '<br/>';
+        
         $hostInfo=Yii::app()->request->hostInfo;
         $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true',));
         $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false',));

@@ -35,12 +35,10 @@ class CDbPayportPayment extends CActiveRecord
          * 创建一个临时的付款信息
          * @return CDbPayportPayment
          */
-        public static function Creation(){
-            $oper=new CDbPayportPayment();
-            $oper->ipaddress=$_SERVER['REMOTE_ADDR'];
-            $oper->creationdate=$oper->modificationdate=date('Y-m-d H:i:s');
-//            $oper->status=
-        }
+//        public static function Creation(){
+//            
+//            
+//        }
 
         /**
 	 * @return string the associated database table name
