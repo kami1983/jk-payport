@@ -91,12 +91,14 @@ class PaypalController extends Controller {
         $oper->post_json=  json_encode($_POST);
         $oper->get_json=  json_encode($_GET);
         $oper->payment_json= '';
-        echo $oper->insert();
-        echo '<br/>';
+        $insert_id= $oper->insert();
+        
         
         $hostInfo=Yii::app()->request->hostInfo;
-        $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true',));
-        $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false',));
+        $userdef_arr=CUser::GetAccountDefined($uid);
+        $record_masksign=md5($insert_id.$userdef_arr['token']) ;
+        $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
        
         $paypal_handler=new CPaypalHandler($return_url,$cancel_url);
         
