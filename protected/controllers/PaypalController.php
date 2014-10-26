@@ -134,8 +134,11 @@ class PaypalController extends Controller {
         $token=$match_arr[1];
         
         //存储：$payid，$token，$post_json
+        $result_arr=array();
+        $result_arr['redirect_url']=$redirect_url;
+        $result_arr['payid']=$payid;
+        $result_arr['token']=$token;
         
-        
-        return $this->renderPartial('payment',array('name'=>'lin',),$this->is_jktesting);
+        return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
     }
 }

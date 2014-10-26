@@ -1,5 +1,5 @@
 <?php
 /* @var $this PaypalController */
+/* @var $result_arr array */
 
-?>
-<h1>payment. </h1>
+echo json_encode($result_arr);
