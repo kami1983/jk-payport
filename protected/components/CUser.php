@@ -14,8 +14,10 @@ class CUser {
      */
     public static function CheckValid($uid,$masksign){
         
+        $user_def=self::GetAccountDefined($uid);
+        
         //判断是否相等，相等则验证成功
-        if($masksign == md5($uid.$user_def[$uid]['token'])){
+        if($masksign == md5($uid.$user_def['token'])){
             return true;
         }
         
