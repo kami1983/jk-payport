@@ -74,8 +74,7 @@ class PaypalController extends Controller {
         
         ###########
         
-        
-        Yii::log( date('Y-m-d H-i-s')."\n".print_r($_POST,true));
+        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'jkdebug.PaypalController.actionIpn');
     }
     
 

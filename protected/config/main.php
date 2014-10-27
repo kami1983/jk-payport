@@ -92,7 +92,8 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels' => 'trace, error, warning',
+                                        'categories' => 'jkdebug.*',
 				),
 				// uncomment the following to show log messages on web pages
 				/*
