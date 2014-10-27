@@ -141,7 +141,7 @@ class CPaypalHandler extends CBase {
        // based configuration
 
        $config_arr=array();
-       echo 'RUN OK ? ';
+       
        if(YII_DEBUG){
            echo 'RUN 0 ';
            $config_arr['mode']='sandbox';

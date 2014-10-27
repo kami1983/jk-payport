@@ -173,7 +173,6 @@ class PaypalController extends Controller {
         $result_arr['payid']=$payid;
         $result_arr['token']=$token;
         
-        echo 'RUN Z ';
         //return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
     }
     
