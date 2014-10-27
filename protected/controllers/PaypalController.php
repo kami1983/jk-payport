@@ -54,6 +54,30 @@ class PaypalController extends Controller {
     
     
     
+    /**
+     * 一个IPN 的着陆页面
+     * 测试例：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c
+     * 
+     * @return void
+     */
+    public function actionIpn(){
+        //获取请求的地址信息
+        $uid=Yii::app()->request->getQuery('uid','0');
+        $masksign=Yii::app()->request->getQuery('masksign','');
+        
+        
+        //效验请求合法性
+        if(!CUser::CheckValid($uid,$masksign)){
+            throw new Exception('无法识别调用用户','141022_1027');
+        }
+        
+        
+        ###########
+        
+        
+        Yii::trace( date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'develop-paypal-inp');
+    }
+    
 
     /**
      * 创建付款页面
