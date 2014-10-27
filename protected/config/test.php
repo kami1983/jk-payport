@@ -1,5 +1,6 @@
 <?php
-define('PUB_PAYPAL_SERVICE_URI', 'https://www.sandbox.paypal.com');
+//define('PUB_PAYPAL_SERVICE_URI', 'https://www.sandbox.paypal.com');
+define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
 
 return CMap::mergeArray(
 	require(dirname(__FILE__).'/main.php'),

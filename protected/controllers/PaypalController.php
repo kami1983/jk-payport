@@ -80,7 +80,7 @@ class PaypalController extends Controller {
 
     /**
      * 创建付款页面
-     * 测试页面：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/payment&client_id=AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-&client_secret=EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
+     * 测试页面：http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/payment&client_id=AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-&client_secret=EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
      * 页面返回JSON 类似：{"redirect_url":"https:\/\/www.sandbox.paypal.com\/cgi-bin\/webscr?cmd=_express-checkout&token=EC-91V555525V512641V","payid":"PAY-0LK657034L9866308KRGQOQY","token":"EC-91V555525V512641V"}
      * 访问回调redirect_url 后：cancanyou-facilitator-buyer@yahoo.com 密码：12345678
      * 付款成功后回调举例：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/recall&success=true&recordid=1&record_masksign=2fc7fd70fd1aafe36db926519507f77c&token=EC-91V555525V512641V&PayerID=RBJN2EXHT9MJY

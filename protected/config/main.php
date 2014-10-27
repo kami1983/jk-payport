@@ -1,5 +1,5 @@
 <?php
-define('PUB_PAYPAL_SERVICE_URI', 'https://www.paypal.com');
+//define('PUB_PAYPAL_SERVICE_URI', 'https://www.paypal.com');
 define('PUB_PAYPAL_SDK_DIR',dirname(__DIR__) . '/../../paypal-sdk');
 //define('PUB_PAYPAL_SDK_DIR', '/var/www/SITE_DEVELOPERS/SITE_JK_COMPONENT/paypal-sdk');
 
