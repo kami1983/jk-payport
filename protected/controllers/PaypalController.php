@@ -80,7 +80,7 @@ class PaypalController extends Controller {
 
     /**
      * 创建付款页面
-     * 测试页面：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/payment&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
+     * 测试页面：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/payment&client_id=AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-&client_secret=EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
      * 页面返回JSON 类似：{"redirect_url":"https:\/\/www.sandbox.paypal.com\/cgi-bin\/webscr?cmd=_express-checkout&token=EC-91V555525V512641V","payid":"PAY-0LK657034L9866308KRGQOQY","token":"EC-91V555525V512641V"}
      * 访问回调redirect_url 后：cancanyou-facilitator-buyer@yahoo.com 密码：12345678
      * 付款成功后回调举例：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/recall&success=true&recordid=1&record_masksign=2fc7fd70fd1aafe36db926519507f77c&token=EC-91V555525V512641V&PayerID=RBJN2EXHT9MJY
@@ -106,6 +106,14 @@ class PaypalController extends Controller {
         $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
         $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
         
+        //获取secret
+        $client_id=Yii::app()->request->getQuery('client_id','none id');
+        $client_secret=Yii::app()->request->getQuery('client_secret','none secret');
+        
+//        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
+//        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
+
+        
         //记录请求信息
         $oper=new CDbPayportPayment();
         $oper->ipaddress=$_SERVER['REMOTE_ADDR'];
@@ -124,7 +132,9 @@ class PaypalController extends Controller {
         $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
        
-        $paypal_handler=new CPaypalHandler($return_url,$cancel_url);
+        $paypal_handler=new CPaypalHandler($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
+        $paypal_handler->setReturnUrl($return_url);
+        $paypal_handler->setCancelUrl($cancel_url);
         
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){
@@ -164,5 +174,14 @@ class PaypalController extends Controller {
         $result_arr['token']=$token;
         
         return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
+    }
+    
+    /**
+     * 回调参数
+     * @return array
+     */
+    public function actionRecall(){
+        
+        echo 'RECALL';
     }
 }

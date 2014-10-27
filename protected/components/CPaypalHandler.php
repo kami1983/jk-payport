@@ -54,10 +54,15 @@ class CPaypalHandler extends CBase {
     /* @var $_cancel_url string *///取消付款后的回跳地址
     protected $_cancel_url=null;
     
+    /* @var $_client_id string *///应用的id
+    protected $_client_id=null;
+    
+    /* @var $_client_secret string *///应用的加密
+    protected $_client_secret=null;
 
-    public function __construct($return_url,$cancel_url) {
+    public function __construct($client_id,$client_secret,$paypal_sdk_dir) {
         //初始化：
-        $composerAutoload = PUB_PAYPAL_SDK_DIR.'/vendor/autoload.php';
+        $composerAutoload = $paypal_sdk_dir.'/vendor/autoload.php';
 //        echo $composerAutoload ;
         if (!file_exists($composerAutoload)) {
             
@@ -68,9 +73,26 @@ class CPaypalHandler extends CBase {
         require_once $composerAutoload; //引入APIs
         $this->_apiContext(); //初始化。
         
+        $this->_client_id=$client_id;
+        $this->_client_secret=$client_secret;
+    }
+    
+    /**
+     * 设置付款成功后返回的地址
+     * @return CPaypalHandler
+     */
+    public function setReturnUrl($return_url){
         $this->_return_url=$return_url;
+        return $this;
+    }
+    
+    /**
+     * 设置付款退出后返回的地址
+     * @return CPaypalHandler
+     */
+    public function setCancelUrl($cancel_url){
         $this->_cancel_url=$cancel_url;
-
+        return $this;
     }
 
 
@@ -84,11 +106,11 @@ class CPaypalHandler extends CBase {
 //        $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
 //        $clientSecret = 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL';
         
-        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
-        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
+//        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
+//        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
         
         /** @var \Paypal\Rest\ApiContext $apiContext */
-        $this->_apiContent = $this->_getApiContext($clientId, $clientSecret);
+        $this->_apiContent = $this->_getApiContext($this->_client_id, $this->_client_secret);
 
     }
     
