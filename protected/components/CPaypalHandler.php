@@ -98,7 +98,7 @@ class CPaypalHandler extends CBase {
     }
 
 
-    private function _apiContext($client_id,$client_secret){
+    private function _apiContext($client_id=null,$client_secret=null){
         if($this->_apiContent instanceof ApiContext){
            return $this->_apiContent; 
         }
