@@ -71,10 +71,12 @@ class CPaypalHandler extends CBase {
         }
         
         require_once $composerAutoload; //引入APIs
-        $this->_apiContext(); //初始化。
         
         $this->_client_id=$client_id;
         $this->_client_secret=$client_secret;
+        $this->_apiContext($this->_client_id,$this->_client_secret); //初始化。
+        
+        
     }
     
     /**
@@ -96,7 +98,7 @@ class CPaypalHandler extends CBase {
     }
 
 
-    private function _apiContext(){
+    private function _apiContext($client_id,$client_secret){
         if($this->_apiContent instanceof ApiContext){
            return $this->_apiContent; 
         }
@@ -110,7 +112,7 @@ class CPaypalHandler extends CBase {
 //        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
         
         /** @var \Paypal\Rest\ApiContext $apiContext */
-        $this->_apiContent = $this->_getApiContext($this->_client_id, $this->_client_secret);
+        $this->_apiContent = $this->_getApiContext($client_id, $client_secret);
 
     }
     
