@@ -143,10 +143,8 @@ class CPaypalHandler extends CBase {
        $config_arr=array();
        
        if(YII_DEBUG){
-           echo 'RUN 0 ';
            $config_arr['mode']='sandbox';
        }else{
-           echo 'RUN 1 ';
            $config_arr['mode']='live';
        }
        $config_arr['http.ConnectionTimeOut']=30;
