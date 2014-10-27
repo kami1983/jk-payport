@@ -140,16 +140,19 @@ class CPaypalHandler extends CBase {
        // 'define' block if you want to use static file
        // based configuration
 
-       $apiContext->setConfig(
-           array(
-               'mode' => 'sandbox',
-               'http.ConnectionTimeOut' => 30,
-               'log.LogEnabled' => true,
-               'log.FileName' => Yii::app()->getBasePath().'/runtime/PayPal.log',
-               'log.LogLevel' => 'FINE',
-               'validation.level' => 'log'
-           )
-       );
+       $config_arr=array();
+       if(YII_DEBUG){
+           $config_arr['mode']='sandbox';
+       }else{
+           $config_arr['mode']='live';
+       }
+       $config_arr['http.ConnectionTimeOut']=30;
+       $config_arr['log.LogEnabled']=true;
+       $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
+       $config_arr['log.LogLevel']='FINE';
+       $config_arr['validation.level']='log';
+       
+       $apiContext->setConfig($config_arr);
 
        /*
        // Register the sdk_config.ini file in current directory
