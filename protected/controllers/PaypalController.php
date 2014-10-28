@@ -174,6 +174,9 @@ class PaypalController extends Controller {
         preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
         $token=$match_arr[1];
         
+        header("location:{$redirect_url}");
+        exit;
+        
         //存储：$payid，$token，$post_json
         $result_arr=array();
         $result_arr['redirect_url']=$redirect_url;
