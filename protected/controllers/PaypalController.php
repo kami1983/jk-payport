@@ -73,7 +73,7 @@ class PaypalController extends Controller {
         
         
         ###########
-        
+        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_GET,true), 'jkdebug.PaypalController.actionIpn');
         Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'jkdebug.PaypalController.actionIpn');
     }
     
@@ -99,16 +99,16 @@ class PaypalController extends Controller {
         
         
         //获取币种
-        $currency=Yii::app()->request->getQuery('currency','USD');
-        $price_arr=Yii::app()->request->getQuery('price_arr',array());
-        $quantity_arr=Yii::app()->request->getQuery('quantity_arr',array()); //默认
-        $itemname_arr=Yii::app()->request->getQuery('itemname_arr',array()); //名称默认 CCY Payment
-        $shipping=Yii::app()->request->getQuery('shipping','0.00'); //名称默认 CCY Payment
-        $tax=Yii::app()->request->getQuery('tax','0.00'); //名称默认 CCY Payment
+        $currency=Yii::app()->request->getParam('currency','USD');
+        $price_arr=Yii::app()->request->getParam('price_arr',array());
+        $quantity_arr=Yii::app()->request->getParam('quantity_arr',array()); //默认
+        $itemname_arr=Yii::app()->request->getParam('itemname_arr',array()); //名称默认 CCY Payment
+        $shipping=Yii::app()->request->getParam('shipping','0.00'); //名称默认 CCY Payment
+        $tax=Yii::app()->request->getParam('tax','0.00'); //名称默认 CCY Payment
         
         //获取secret
-        $client_id=Yii::app()->request->getQuery('client_id','none id');
-        $client_secret=Yii::app()->request->getQuery('client_secret','none secret');
+        $client_id=Yii::app()->request->getParam('client_id','none id');
+        $client_secret=Yii::app()->request->getParam('client_secret','none secret');
         
 //        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
 //        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
@@ -131,10 +131,12 @@ class PaypalController extends Controller {
         $record_masksign=md5($insert_id.$userdef_arr['token']) ;
         $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        $ipn_url=$hostInfo.$this->createUrl('ipn',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
        
         $paypal_handler=new CPaypalHandler($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
         $paypal_handler->setReturnUrl($return_url);
         $paypal_handler->setCancelUrl($cancel_url);
+        $paypal_handler->setIpnUrl($ipn_url);
         
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){

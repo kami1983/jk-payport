@@ -54,6 +54,9 @@ class CPaypalHandler extends CBase {
     /* @var $_cancel_url string *///取消付款后的回跳地址
     protected $_cancel_url=null;
     
+    /* @var $_ipn_url string *///IPN 通知地址
+    protected $_ipn_url=null; 
+    
     /* @var $_client_id string *///应用的id
     protected $_client_id=null;
     
@@ -81,6 +84,7 @@ class CPaypalHandler extends CBase {
     
     /**
      * 设置付款成功后返回的地址
+     * @param string $return_url 用户付款完成跳转的RUL
      * @return CPaypalHandler
      */
     public function setReturnUrl($return_url){
@@ -90,13 +94,23 @@ class CPaypalHandler extends CBase {
     
     /**
      * 设置付款退出后返回的地址
+     * @param string $cancel_url 用户取消付款跳转的RUL
      * @return CPaypalHandler
      */
     public function setCancelUrl($cancel_url){
         $this->_cancel_url=$cancel_url;
         return $this;
     }
-
+    
+    /**
+     * 设置Paypal IPN 地址
+     * @param string $ipn_url IPN 的URL 地址
+     * @return CPaypalHandler
+     */
+    public function setIpnUrl($ipn_url){
+        $this->_ipn_url=$ipn_url;
+        return $this;
+    }
 
     private function _apiContext($client_id=null,$client_secret=null){
         if($this->_apiContent instanceof ApiContext){
@@ -152,7 +166,11 @@ class CPaypalHandler extends CBase {
        $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
        $config_arr['log.LogLevel']='FINE';
        $config_arr['validation.level']='log';
-       $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
+       if(null !== $this->_ipn_url){
+           $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
+       }else{
+           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
+       }
        
        $apiContext->setConfig($config_arr);
 
