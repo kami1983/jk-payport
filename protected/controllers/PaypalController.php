@@ -170,8 +170,7 @@ class PaypalController extends Controller {
         $paymentObj= $paypal_handler->createPaymentObj();
         
         $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
-        echo $redirect_url;
-        exit;
+        
         $payid=CPaypalHandler::ExtractId($paymentObj);
         $match_arr=array();
         preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
