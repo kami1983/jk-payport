@@ -129,9 +129,12 @@ class PaypalController extends Controller {
         $hostInfo=Yii::app()->request->hostInfo;
         $userdef_arr=CUser::GetAccountDefined($uid);
         $record_masksign=md5($insert_id.$userdef_arr['token']) ;
-        $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
-        $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
-        $ipn_url=$hostInfo.$this->createUrl('ipn',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        echo $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        echo '<br/>';
+        echo $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        echo '<br/>';
+        echo $ipn_url=$hostInfo.$this->createUrl('ipn',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        echo '<br/>';
        
         $paypal_handler=new CPaypalHandler($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
         $paypal_handler->setReturnUrl($return_url);
