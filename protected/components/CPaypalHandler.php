@@ -156,7 +156,7 @@ class CPaypalHandler extends CBase {
 
        $config_arr=array();
        
-       if(YII_DEBUG){
+       if(PUB_IS_PAYPAL_LIVE){
            $config_arr['mode']='sandbox';
        }else{
            $config_arr['mode']='live';
