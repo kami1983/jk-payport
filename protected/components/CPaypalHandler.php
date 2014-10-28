@@ -166,11 +166,11 @@ class CPaypalHandler extends CBase {
        $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
        $config_arr['log.LogLevel']='FINE';
        $config_arr['validation.level']='log';
-       if(null !== $this->_ipn_url){
-           $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
-       }else{
-           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
-       }
+//       if(null !== $this->_ipn_url){
+//           $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
+//       }else{
+//           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
+//       }
        
        $apiContext->setConfig($config_arr);
 
