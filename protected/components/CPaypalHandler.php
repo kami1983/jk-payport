@@ -274,7 +274,7 @@ class CPaypalHandler extends CBase {
    public static function ExtractApprovalUrl(Payment $payment_obj){
         foreach($payment_obj->getLinks() as $link) {
             
-            if($link->getRel() == 'approval_url') {
+            if($link->getRel() == 'execute') {
                 return $link->getHref();
             }
         }
