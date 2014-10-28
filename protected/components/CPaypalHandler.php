@@ -157,9 +157,9 @@ class CPaypalHandler extends CBase {
        $config_arr=array();
        
        if(PUB_IS_PAYPAL_LIVE){
-           $config_arr['mode']='sandbox';
-       }else{
            $config_arr['mode']='live';
+       }else{
+           $config_arr['mode']='sandbox';
        }
        $config_arr['http.ConnectionTimeOut']=30;
        $config_arr['log.LogEnabled']=true;
