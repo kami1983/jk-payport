@@ -225,6 +225,7 @@ class PaypalController extends Controller {
         $recordid=(int)Yii::app()->request->getQuery('recordid',0);
         $record_masksign=Yii::app()->request->getQuery('record_masksign','');
         $success=Yii::app()->request->getQuery('success','false');
+        $payer_id=trim(Yii::app()->request->getQuery('PayerID','')); 
         if('false' == $success){
             $cancel_redirect_url=Yii::app()->request->getQuery('cancel_redirect_url','');
             if('' == $cancel_redirect_url){
@@ -233,6 +234,11 @@ class PaypalController extends Controller {
                 Yii::app()->request->redirect($cancel_redirect_url);
             }
             Yii::app()->end();
+        }
+        
+        //如果成功那么肯定有 $payer_id
+        if('' == $payer_id){
+            throw new Exception('payer_id not empty.','141029_1215');
         }
         
         
@@ -257,7 +263,7 @@ class PaypalController extends Controller {
         }
         
         //执行付款操作
-        $payer_id=Yii::app()->request->getQuery('PayerID','');
+        
         
         //获取执行对象
         $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
