@@ -243,7 +243,7 @@ class PaypalController extends Controller {
             throw new Exception('Authorization Failed.','141029_1103');
         }
         
-        //正式进入执行操作
+        //正式进入执行操作--------
         //获取数据
         $dbinfo=CDbPayportPayment::model()->findByPk($recordid);
         /* @var $dbinfo CDbPayportPayment */
@@ -256,19 +256,16 @@ class PaypalController extends Controller {
             throw new Exception('Record Error. payment_json->payid is empty. ','141029_1112');
         }
         
-        //获取执行对象
-        $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
-        $apiContext=$api_creater->getApiContext();
-        
         //执行付款操作
         $payer_id=Yii::app()->request->getQuery('PayerID','');
-        $payment = Payment::get($payment_obj->payid, $apiContext);
-        $execution = new PaymentExecution();
-        $execution->setPayerId($payer_id);
-
-        //Execute the payment
-        // (See bootstrap.php for more on `ApiContext`)
-        $result = $payment->execute($execution, $apiContext);
+        
+        //获取执行对象
+        $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
+        $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
+        $result=$paypal_handler->executePayment($payer_id);
+        
+        
+        
 
         echo "<html><body><pre>";
         echo $result->toJSON(JSON_PRETTY_PRINT);

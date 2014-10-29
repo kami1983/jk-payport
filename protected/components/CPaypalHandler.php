@@ -211,6 +211,22 @@ class CPaypalHandler extends CBase {
        $this->_details=$details;
        return $this;
    }
+   
+   /**
+    * 执行一个付款操作
+    * @param string $payer_id 付款者的id
+    * @return mixed
+    */
+   public function executePayment($payer_id){
+        $payment = Payment::get($payer_id, $this->_apiContext);
+        $execution = new PaymentExecution();
+        $execution->setPayerId($payer_id);
+
+        //Execute the payment
+        // (See bootstrap.php for more on `ApiContext`)
+        $result = $payment->execute($execution, $this->_apiContext);
+        return $result;
+   }
 
    /**
     * 创建付款页面
