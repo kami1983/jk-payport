@@ -298,6 +298,9 @@ class CPaypalHandler extends CBase {
         // The return object contains the state and the
         // url to which the buyer must be redirected to
         // for payment approval
+        echo 'RUN 1 ';
+        echo get_class($this->_apiContent);
+        exit;
         try {
                 $payment->create($this->_apiContent);
         } catch (PPConnectionException $ex) {
