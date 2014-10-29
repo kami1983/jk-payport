@@ -150,7 +150,9 @@ class PaypalController extends Controller {
         echo $ipn_url=$hostInfo.$this->createUrl('ipn',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         echo '<br/>';
        
-        $paypal_handler=new CPaypalHandler($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
+        $api_creater=new CPaypalApiCreater($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
+        
+        $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $paypal_handler->setReturnUrl($return_url);
         $paypal_handler->setCancelUrl($cancel_url);
         $paypal_handler->setIpnUrl($ipn_url);

@@ -9,7 +9,7 @@
 //use PayPal\Rest\RestHandler;
 
 use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
+//use PayPal\Auth\OAuthTokenCredential;
 
 //use PayPal\Api\Address;
 //use PayPal\Api\CreditCard;
@@ -73,12 +73,6 @@ class CPaypalHandler extends CBase {
     protected $_apiContent=null;
     
     
-    /* @var $_client_id string *///应用的id
-    protected $_client_id=null;
-    
-    /* @var $_client_secret string *///应用的加密
-    protected $_client_secret=null;
-    
     //--------------------
     
     /* @var $_item_arr Item[] */
@@ -98,7 +92,7 @@ class CPaypalHandler extends CBase {
     
 
     
-    public function __construct($client_id,$client_secret,$paypal_sdk_dir) {
+    public function __construct(ApiContext $api_context_obj) {
         //初始化：
         $composerAutoload = $paypal_sdk_dir.'/vendor/autoload.php';
 //        echo $composerAutoload ;
@@ -110,9 +104,7 @@ class CPaypalHandler extends CBase {
         
         require_once $composerAutoload; //引入APIs
         
-        $this->_client_id=$client_id;
-        $this->_client_secret=$client_secret;
-        $this->_apiContext($this->_client_id,$this->_client_secret); //初始化。
+        $this->_apiContext=$api_context_obj; //创建API 内容对象
         
         
     }
@@ -147,80 +139,6 @@ class CPaypalHandler extends CBase {
         return $this;
     }
 
-    private function _apiContext($client_id=null,$client_secret=null){
-        if($this->_apiContent instanceof ApiContext){
-           return $this->_apiContent; 
-        }
-        
-        
-        // Replace these values by entering your own ClientId and Secret by visiting https://developer.paypal.com/webapps/developer/applications/myapps
-//        $clientId = 'AYSq3RDGsmBLJE-otTkBtM-jBRd1TCQwFf9RGfwddNXWz0uFU9ztymylOhRS';
-//        $clientSecret = 'EGnHDxD_qRPdaLdZz8iCr8N7_MzF-YHPTkjs6NKYQvQSBngp4PTTVWkPZRbL';
-        
-//        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
-//        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
-        
-        /** @var \Paypal\Rest\ApiContext $apiContext */
-        $this->_apiContent = $this->_getApiContext($client_id, $client_secret);
-
-    }
-    
-    /**
-    * Helper method for getting an APIContext for all calls
-    *
-    * @return PayPal\Rest\ApiContext
-    */
-   private function _getApiContext($clientId, $clientSecret){
-       
-       // ### Api context
-       // Use an ApiContext object to authenticate
-       // API calls. The clientId and clientSecret for the
-       // OAuthTokenCredential class can be retrieved from
-       // developer.paypal.com
-       
-       
-       $authToken=new OAuthTokenCredential($clientId,$clientSecret);
-       
-       $apiContext = new ApiContext($authToken);
-
-       // #### SDK configuration
-
-       // Comment this line out and uncomment the PP_CONFIG_PATH
-       // 'define' block if you want to use static file
-       // based configuration
-
-       $config_arr=array();
-       
-       if(PUB_IS_PAYPAL_LIVE){
-           $config_arr['mode']='live';
-       }else{
-           $config_arr['mode']='sandbox';
-       }
-       $config_arr['http.ConnectionTimeOut']=30;
-       $config_arr['log.LogEnabled']=true;
-       $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
-       $config_arr['log.LogLevel']='FINE';
-       $config_arr['validation.level']='log';
-       if(null !== $this->_ipn_url){
-           $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
-       }
-//       }else{
-//           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
-//       }
-       
-       $apiContext->setConfig($config_arr);
-
-       /*
-       // Register the sdk_config.ini file in current directory
-       // as the configuration source.
-       if(!defined("PP_CONFIG_PATH")) {
-           define("PP_CONFIG_PATH", __DIR__);
-       }
-       */
-       
-       return $apiContext;
-   }
-   
    /**
     * 添加一个支付信息
     * @param $price
@@ -293,8 +211,6 @@ class CPaypalHandler extends CBase {
        $this->_details=$details;
        return $this;
    }
-
-   
 
    /**
     * 创建付款页面
@@ -383,7 +299,7 @@ class CPaypalHandler extends CBase {
         // url to which the buyer must be redirected to
         // for payment approval
         try {
-                $payment->create($this->_apiContext());
+                $payment->create($this->_apiContent);
         } catch (PPConnectionException $ex) {
 //                echo "Exception: " . $ex->getMessage() . PHP_EOL;
 //                var_dump($ex->getData());	
