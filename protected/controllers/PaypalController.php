@@ -186,7 +186,7 @@ class PaypalController extends Controller {
         
         $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
         
-        $payid=CPaypalHandler::ExtractId($paymentObj);
+        $payment_id=CPaypalHandler::ExtractId($paymentObj);
 //        $match_arr=array();
 //        preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
 //        $token=$match_arr[1];
@@ -198,7 +198,7 @@ class PaypalController extends Controller {
         $result_arr=array();
         $result_arr['status']='success';
         $result_arr['redirect_url']=$redirect_url;
-        $result_arr['payid']=$payid;
+        $result_arr['payment_id']=$payment_id;
         $result_arr['client_id']=$client_id;
         $result_arr['client_secret']=$client_secret;
         
@@ -258,7 +258,7 @@ class PaypalController extends Controller {
         }
         
         $payment_obj=  json_decode($dbinfo->payment_json, false);
-        if('' == $payment_obj->payid){
+        if('' == $payment_obj->payment_id){
             throw new Exception('Record Error. payment_json->payid is empty. ','141029_1112');
         }
         
@@ -268,7 +268,7 @@ class PaypalController extends Controller {
         //获取执行对象
         $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
-        $result=$paypal_handler->executePayment($payer_id);
+        $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
         
         
         
