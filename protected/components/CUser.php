@@ -30,9 +30,8 @@ class CUser {
      */
     public static function GetAccountDefined($uid){
         //定义几个用户
-        echo Yii::app()->basePath;
-        exit;
-        //$user_def=
+        
+        $user_def=  require Yii::app()->basePath.DIRECTORY_SEPARATOR.config.DIRECTORY_SEPARATOR.userlist.conf.php;
         
         if(!isset($user_def[$uid]))return null;
         
