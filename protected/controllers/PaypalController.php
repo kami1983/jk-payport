@@ -266,7 +266,14 @@ class PaypalController extends Controller {
         
         
         //获取执行对象
+        $hostInfo=Yii::app()->request->hostInfo;
+        $ipn_url=$hostInfo.$this->createUrl('ipn',array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
+        echo $ipn_url;
+        echo '<br/>';
+        
         $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
+        $api_creater->setIpnUrl($ipn_url);
+         
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
         
