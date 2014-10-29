@@ -62,14 +62,14 @@ class PaypalController extends Controller {
      */
     public function actionIpn(){
         //获取请求的地址信息
-        $uid=Yii::app()->request->getQuery('uid','0');
-        $masksign=Yii::app()->request->getQuery('masksign','');
-        
-        
-        //效验请求合法性
-        if(!CUser::CheckValid($uid,$masksign)){
-            throw new Exception('无法识别调用用户','141022_1027');
-        }
+//        $uid=Yii::app()->request->getQuery('uid','0');
+//        $masksign=Yii::app()->request->getQuery('masksign','');
+//        
+//        
+//        //效验请求合法性
+//        if(!CUser::CheckValid($uid,$masksign)){
+//            throw new Exception('无法识别调用用户','141022_1027');
+//        }
         
         echo 'RUN action IPN <br/>';
         
