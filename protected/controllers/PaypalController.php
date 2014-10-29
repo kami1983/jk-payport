@@ -199,9 +199,10 @@ class PaypalController extends Controller {
         $result_arr['status']='success';
         $result_arr['redirect_url']=$redirect_url;
         $result_arr['payid']=$payid;
-//        $result_arr['token']=$token;
+        $result_arr['client_id']=$client_id;
+        $result_arr['client_secret']=$client_secret;
         
-        $oper->payment_json=  json_encode($result_arr);
+        $oper->payment_json=  json_encode($result_arr); //将结果数据记录到数据库
         if(!$oper->update()){
             $result_arr=array();
             $result_arr['status']='failure';
@@ -255,32 +256,24 @@ class PaypalController extends Controller {
             throw new Exception('Record Error. payment_json->payid is empty. ','141029_1112');
         }
         
-        //判断是否请求成功
-        if(isset($_GET['success']) && $_GET['success'] == 'true') {
-	
-                // Get the payment Object by passing paymentId
-                // payment id was previously stored in session in
-                // CreatePaymentUsingPayPal.php
-                $paymentId = $_SESSION['paymentId'];
-                $payment = Payment::get($paymentId, $apiContext);
+        //获取执行对象
+        $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
+        $apiContext=$api_creater->getApiContext();
+        
+        //执行付款操作
+        $payer_id=Yii::app()->request->getQuery('PayerID','');
+        $payment = Payment::get($payment_obj->payid, $apiContext);
+        $execution = new PaymentExecution();
+        $execution->setPayerId($payer_id);
 
-                // PaymentExecution object includes information necessary 
-                // to execute a PayPal account payment. 
-                // The payer_id is added to the request query parameters
-                // when the user is redirected from paypal back to your site
-                $execution = new PaymentExecution();
-                $execution->setPayerId($_GET['PayerID']);
+        //Execute the payment
+        // (See bootstrap.php for more on `ApiContext`)
+        $result = $payment->execute($execution, $apiContext);
 
-                //Execute the payment
-                // (See bootstrap.php for more on `ApiContext`)
-                $result = $payment->execute($execution, $apiContext);
+        echo "<html><body><pre>";
+        echo $result->toJSON(JSON_PRETTY_PRINT);
+        echo "</pre><a href='../index.html'>Back</a></body></html>";
 
-                echo "<html><body><pre>";
-                echo $result->toJSON(JSON_PRETTY_PRINT);
-                echo "</pre><a href='../index.html'>Back</a></body></html>";
-
-        } else {
-                echo "User cancelled payment.";
-        }
+        
     }
 }
