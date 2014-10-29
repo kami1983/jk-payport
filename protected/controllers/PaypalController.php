@@ -133,7 +133,7 @@ class PaypalController extends Controller {
         if(0 == (int)$insert_id){
             $result_arr=array();
             $result_arr['status']='failure';
-            $result_arr['info']='Db error.';
+            $result_arr['info']='Db error. create a payment. ';
             $result_arr['code']='100001';
             return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
         }
@@ -199,8 +199,14 @@ class PaypalController extends Controller {
 //        $result_arr['token']=$token;
         
         $oper->payment_json=  json_encode($result_arr);
-        echo $oper->update();
-        echo '<br/> RUN 2 ';
+        if(!$oper->update()){
+            $result_arr=array();
+            $result_arr['status']='failure';
+            $result_arr['info']='Db error. update a payment. ';
+            $result_arr['code']='100002';
+            return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
+        }
+        
         return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
         
     }
