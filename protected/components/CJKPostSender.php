@@ -25,7 +25,7 @@
 ///:使用方法见详细的注释.
 ///:在2008年7月份有增强此类功能,主要增加的功能是针对网络复杂的情况而设定的方超时功能.
 ///:现在具备访问发送请求后不监听结果的功能,和发送请求后在容忍时间内监听请求的功能.
-class CJKPostSender extends CJKClassBase{
+class CJKPostSender {
 
     ///:构造方法
     public function __construct() {
