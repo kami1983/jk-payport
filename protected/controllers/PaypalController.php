@@ -125,7 +125,11 @@ class PaypalController extends Controller {
         $oper->post_json=  json_encode($_POST);
         $oper->get_json=  json_encode($_GET);
         $oper->payment_json= '';
-        $insert_id= $oper->insert();
+        if($oper->insert()){
+            $insert_id=$oper->getPrimaryKey();
+        }
+        
+        
         
         
         $hostInfo=Yii::app()->request->hostInfo;
