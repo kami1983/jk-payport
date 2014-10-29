@@ -236,7 +236,7 @@ class PaypalController extends Controller {
             throw new Exception('Record Error. payment_json is empty. ','141029_1109');
         }
         
-        $payment_obj=  json_decode($dbinfo->payment_json, true);
+        $payment_obj=  json_decode($dbinfo->payment_json, false);
         print_r($payment_obj);
     }
 }
