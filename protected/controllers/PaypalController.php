@@ -172,18 +172,18 @@ class PaypalController extends Controller {
         $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
         
         $payid=CPaypalHandler::ExtractId($paymentObj);
-        $match_arr=array();
-        preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
-        $token=$match_arr[1];
+//        $match_arr=array();
+//        preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
+//        $token=$match_arr[1];
         
 //        header("location:{$redirect_url}");
 //        exit;
         
         //存储：$payid，$token，$post_json
         $result_arr=array();
-//        $result_arr['redirect_url']=$redirect_url;
+        $result_arr['redirect_url']=$redirect_url;
         $result_arr['payid']=$payid;
-        $result_arr['token']=$token;
+//        $result_arr['token']=$token;
         
         $oper->payment_json=  json_encode($result_arr);
         $oper->update();
