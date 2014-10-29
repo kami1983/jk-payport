@@ -30,9 +30,9 @@ class CUser {
      */
     public static function GetAccountDefined($uid){
         //定义几个用户
-        $user_def=array();
-        $user_def['1']=array('token'=>'token_141022_1031',
-                             'client_id'=>'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-',);
+        echo Yii::app()->basePath;
+        exit;
+        //$user_def=
         
         if(!isset($user_def[$uid]))return null;
         
