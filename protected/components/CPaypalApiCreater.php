@@ -58,7 +58,7 @@ class CPaypalApiCreater {
      * @return void
      */
     public function __construct($client_id,$client_secret,$paypal_sdk_dir) {
-        echo 'RUN X1 ';
+        
         //初始化：
         $composerAutoload = $paypal_sdk_dir.'/vendor/autoload.php';
 //        echo $composerAutoload ;
@@ -67,15 +67,14 @@ class CPaypalApiCreater {
             throw new Exception('You need sdk. ','141020_1020');
 //            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
         }
-        echo 'RUN X2 ';
         
         require_once $composerAutoload; //引入APIs
         
-        echo 'RUN X3 ';
+        
         $this->_client_id=$client_id;
         $this->_client_secret=$client_secret;
         $this->_apiContent=$this->_createApiContext($this->_client_id,$this->_client_secret); //初始化。
-        echo 'RUN X4 ';
+        
     }
     
     /**
@@ -86,26 +85,13 @@ class CPaypalApiCreater {
         
         return $this->_apiContent; 
     }
-
-    /**
-     * 创建一个 ApiContext 对象
-     * @return ApiContext
-     */
-    private function _createApiContext($client_id=null,$client_secret=null){
-        if($this->_apiContent instanceof ApiContext){
-           return $this->_apiContent; 
-        }
-        /** @var \Paypal\Rest\ApiContext $apiContext */
-        $this->_apiContent = $this->_getApiContext($client_id, $client_secret);
-    }
-    
     
     /**
         * Helper method for getting an APIContext for all calls
         *
         * @return PayPal\Rest\ApiContext
         */
-       private function _getApiContext($clientId, $clientSecret){
+       private function _createApiContext($clientId, $clientSecret){
 
            // ### Api context
            // Use an ApiContext object to authenticate
