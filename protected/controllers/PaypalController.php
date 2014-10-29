@@ -131,9 +131,9 @@ class PaypalController extends Controller {
         $hostInfo=Yii::app()->request->hostInfo;
         $userdef_arr=CUser::GetAccountDefined($uid);
         $record_masksign=md5($insert_id.$userdef_arr['token']) ;
-        echo $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        echo $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         echo '<br/>';
-        echo $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+        echo $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false',));
         echo '<br/>';
         echo $ipn_url=$hostInfo.$this->createUrl('ipn',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         echo '<br/>';
@@ -181,9 +181,12 @@ class PaypalController extends Controller {
         
         //存储：$payid，$token，$post_json
         $result_arr=array();
-        $result_arr['redirect_url']=$redirect_url;
+//        $result_arr['redirect_url']=$redirect_url;
         $result_arr['payid']=$payid;
         $result_arr['token']=$token;
+        
+        $oper->payment_json=  json_encode($result_arr);
+        $oper->update();
         
         return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
     }
