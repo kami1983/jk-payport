@@ -225,7 +225,11 @@ class CPaypalHandler extends CBase {
 
         //Execute the payment
         // (See bootstrap.php for more on `ApiContext`)
+        try{
         $result = $payment->execute($execution, $this->_apiContext);
+        }catch(PPConnectionException $ex){
+            echo '付过款了？？';
+        }
         return $result;
    }
 
