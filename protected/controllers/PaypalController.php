@@ -287,9 +287,8 @@ class PaypalController extends Controller {
         
         
 //http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/recall&success=true&uid=1&recordid=97&record_masksign=7b008e914e0cbc832c935cb494db1295&paymentId=PAY-5CD093538Y941501NKRIIMQY&token=EC-0YP63620YD969772Y&PayerID=RBJN2EXHT9MJY
-        echo "<html><body><pre>";
-        print_r($result);
-        echo "</pre><a href='../index.html'>Back</a></body></html>";
+        
+        
 
         echo $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
         echo '<br/>';
@@ -300,6 +299,7 @@ class PaypalController extends Controller {
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,'get_json'=>$dbinfo->get_json));
         $post_sender->getDatas();
         
+        print_r($result);
     }
     
     /**
