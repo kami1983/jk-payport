@@ -310,6 +310,8 @@ class PaypalController extends Controller {
     private function _urlAddParam($url,array $param_arr){
         if(!preg_match('/\?/iU', $url)){
             $url.='?';
+        }else{
+            $url.='&';
         }
         
         foreach($param_arr as $param_key=>$param_value){
