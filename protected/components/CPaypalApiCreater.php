@@ -88,6 +88,27 @@ class CPaypalApiCreater {
      */
     public function getApiContext(){
         
+        $config_arr=array();
+
+        if(PUB_IS_PAYPAL_LIVE){
+           $config_arr['mode']='live';
+        }else{
+           $config_arr['mode']='sandbox';
+        }
+        $config_arr['http.ConnectionTimeOut']=30;
+        $config_arr['log.LogEnabled']=true;
+        $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
+        $config_arr['log.LogLevel']='FINE';
+        $config_arr['validation.level']='log';
+        if(null !== $this->_ipn_url){
+            $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
+        }
+        //       }else{
+        //           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
+        //       }
+
+        $this->_apiContent->setConfig($config_arr);
+           
         return $this->_apiContent; 
     }
     
@@ -107,53 +128,8 @@ class CPaypalApiCreater {
         * @return PayPal\Rest\ApiContext
         */
        private function _createApiContext($clientId, $clientSecret){
-
-           // ### Api context
-           // Use an ApiContext object to authenticate
-           // API calls. The clientId and clientSecret for the
-           // OAuthTokenCredential class can be retrieved from
-           // developer.paypal.com
-
-
            $authToken=new OAuthTokenCredential($clientId,$clientSecret);
-
            $apiContext = new ApiContext($authToken);
-
-           // #### SDK configuration
-
-           // Comment this line out and uncomment the PP_CONFIG_PATH
-           // 'define' block if you want to use static file
-           // based configuration
-
-           $config_arr=array();
-
-           if(PUB_IS_PAYPAL_LIVE){
-               $config_arr['mode']='live';
-           }else{
-               $config_arr['mode']='sandbox';
-           }
-           $config_arr['http.ConnectionTimeOut']=30;
-           $config_arr['log.LogEnabled']=true;
-           $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
-           $config_arr['log.LogLevel']='FINE';
-           $config_arr['validation.level']='log';
-           if(null !== $this->_ipn_url){
-               $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
-           }
-    //       }else{
-    //           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
-    //       }
-
-           $apiContext->setConfig($config_arr);
-
-           /*
-           // Register the sdk_config.ini file in current directory
-           // as the configuration source.
-           if(!defined("PP_CONFIG_PATH")) {
-               define("PP_CONFIG_PATH", __DIR__);
-           }
-           */
-
            return $apiContext;
        }
 }

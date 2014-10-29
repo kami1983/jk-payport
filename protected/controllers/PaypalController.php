@@ -151,12 +151,12 @@ class PaypalController extends Controller {
         echo '<br/>';
        
         $api_creater=new CPaypalApiCreater($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
+        $api_creater->setIpnUrl($ipn_url);
         
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
-        
         $paypal_handler->setReturnUrl($return_url);
         $paypal_handler->setCancelUrl($cancel_url);
-        $paypal_handler->setIpnUrl($ipn_url);
+        
         
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){
