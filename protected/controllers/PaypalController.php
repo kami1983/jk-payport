@@ -159,17 +159,17 @@ class PaypalController extends Controller {
         $hostInfo=Yii::app()->request->hostInfo;
         $userdef_arr=CUser::GetAccountDefined($uid);
         $record_masksign=md5($insert_id.$userdef_arr['token']) ;
-        echo $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
-        echo '<br/>';
-        echo $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
-        echo '<br/>';
+        $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+//        echo '<br/>';
+        $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+//        echo '<br/>';
         if('' == $tip_url){
-            echo $tip_url=$hostInfo.$this->createUrl('paidtip',array());
-            echo '<br/>';
+            $tip_url=$hostInfo.$this->createUrl('paidtip',array());
+//            echo '<br/>';
         }
         if('' == $do_url){
-            echo $do_url=$hostInfo.$this->createUrl('paiddo',array());
-            echo '<br/>';
+            $do_url=$hostInfo.$this->createUrl('paiddo',array());
+//            echo '<br/>';
         }
         
 //        echo $ipn_url=$hostInfo.$this->createUrl('paiddo',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
@@ -258,11 +258,7 @@ class PaypalController extends Controller {
         
         if('false' == $success){
             $cancel_redirect_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'false',));
-            if('' == $cancel_redirect_url){
-                echo "User cancelled payment.";
-            }else{
-                Yii::app()->request->redirect($cancel_redirect_url);
-            }
+            Yii::app()->request->redirect($cancel_redirect_url);
             Yii::app()->end();
         }
         
@@ -285,21 +281,20 @@ class PaypalController extends Controller {
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
         
         
-        
-//http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/recall&success=true&uid=1&recordid=97&record_masksign=7b008e914e0cbc832c935cb494db1295&paymentId=PAY-5CD093538Y941501NKRIIMQY&token=EC-0YP63620YD969772Y&PayerID=RBJN2EXHT9MJY
-        
-        
 
-        echo $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
-        echo '<br/>';
-        echo $do_url=$this->_urlAddParam($payment_obj->do_url, array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
-        echo '<br/>';
+        $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
+//        echo '<br/>';
+        $do_url=$this->_urlAddParam($payment_obj->do_url, array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
+//        echo '<br/>';
         
         $post_sender=new CJKPostSender();
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,'get_json'=>$dbinfo->get_json));
         $post_sender->getDatas();
         
-        print_r($result);
+        Yii::app()->request->redirect($tip_url);
+        Yii::app()->end();
+        
+//        print_r($result);
     }
     
     /**
