@@ -126,7 +126,7 @@ class PaypalController extends Controller {
         
         //获取secret
 //        $client_id=Yii::app()->request->getParam('client_id','none id');
-//        $client_secret=Yii::app()->request->getParam('client_secret','none secret');
+        $client_secret=Yii::app()->request->getParam('client_secret','none secret');
         
 //        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
 //        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
@@ -175,7 +175,6 @@ class PaypalController extends Controller {
 //        echo $ipn_url=$hostInfo.$this->createUrl('paiddo',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
 //        echo '<br/>';
         $client_id=$userdef_arr['client_id'];
-        $client_secret=$userdef_arr['client_secret'];
                 
         $api_creater=new CPaypalApiCreater($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
 //        $api_creater->setIpnUrl($ipn_url);
@@ -288,7 +287,7 @@ class PaypalController extends Controller {
 //        echo '<br/>';
         
         $post_sender=new CJKPostSender();
-        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,'get_json'=>$dbinfo->get_json));
+        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
         $post_sender->getDatas();
         
         Yii::app()->request->redirect($tip_url);
