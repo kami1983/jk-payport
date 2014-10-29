@@ -151,11 +151,10 @@ class PaypalController extends Controller {
         echo '<br/>';
        
         $api_creater=new CPaypalApiCreater($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
-        echo 'RUN 1 ';
-        echo get_class($api_creater->getApiContext());
-        echo 'RUN 2 ';
-        exit;
+        
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
+        echo 'RUN 4';
+        exit;
         $paypal_handler->setReturnUrl($return_url);
         $paypal_handler->setCancelUrl($cancel_url);
         $paypal_handler->setIpnUrl($ipn_url);
