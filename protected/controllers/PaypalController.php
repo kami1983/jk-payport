@@ -232,6 +232,11 @@ class PaypalController extends Controller {
         //获取数据
         $dbinfo=CDbPayportPayment::model()->findByPk($recordid);
         /* @var $dbinfo CDbPayportPayment */
-        echo $dbinfo->payment_json;
+        if('' == $dbinfo->payment_json){
+            throw new Exception('Record Error. payment_json is empty. ','141029_1109');
+        }
+        
+        $payment_obj=  json_decode($dbinfo->payment_json, true);
+        print_r($payment_obj);
     }
 }
