@@ -9,7 +9,7 @@
 //use PayPal\Rest\RestHandler;
 
 use PayPal\Rest\ApiContext;
-//use PayPal\Auth\OAuthTokenCredential;
+use PayPal\Auth\OAuthTokenCredential;
 
 //use PayPal\Api\Address;
 //use PayPal\Api\CreditCard;
