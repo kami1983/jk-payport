@@ -125,10 +125,18 @@ class PaypalController extends Controller {
         $oper->post_json=  json_encode($_POST);
         $oper->get_json=  json_encode($_GET);
         $oper->payment_json= '';
+        $insert_id=0;
         if($oper->insert()){
             $insert_id=$oper->getPrimaryKey();
         }
         
+        if(0 == (int)$insert_id){
+            $result_arr=array();
+            $result_arr['status']='failure';
+            $result_arr['info']='Db error.';
+            $result_arr['code']='100001';
+            return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
+        }
         
         
         
@@ -185,14 +193,16 @@ class PaypalController extends Controller {
         
         //存储：$payid，$token，$post_json
         $result_arr=array();
+        $result_arr['status']='success';
         $result_arr['redirect_url']=$redirect_url;
         $result_arr['payid']=$payid;
 //        $result_arr['token']=$token;
         
         $oper->payment_json=  json_encode($result_arr);
-        $oper->update();
-        
+        echo $oper->update();
+        echo '<br/> RUN 2 ';
         return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
+        
     }
     
     /**
