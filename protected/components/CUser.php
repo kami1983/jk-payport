@@ -31,7 +31,9 @@ class CUser {
     public static function GetAccountDefined($uid){
         //定义几个用户
         $user_def=array();
-        $user_def['1']=array('token'=>'token_141022_1031');
+        $user_def['1']=array('token'=>'token_141022_1031',
+                             'client_id'=>'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-',
+                             'client_secret'=>'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp',);
         
         if(!isset($user_def[$uid]))return null;
         

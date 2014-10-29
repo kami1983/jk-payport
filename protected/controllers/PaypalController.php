@@ -53,6 +53,20 @@ class PaypalController extends Controller {
     }
     
     
+    /**
+     * 一个IPN 的着陆页面
+     * 测试例：http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c
+     * 
+     * @return void
+     */
+    public function actionPaidtip(){
+        $is_pay_success=Yii::app()->request->getQuery('is_pay_success','false');
+        if('true' == $is_pay_success){
+            echo 'Payment is successful. ';
+        }else{
+            echo 'User cancelled payment. ';
+        }
+    }
     
     /**
      * 一个IPN 的着陆页面
@@ -60,7 +74,7 @@ class PaypalController extends Controller {
      * 
      * @return void
      */
-    public function actionIpn(){
+    public function actionPaiddo(){
         //获取请求的地址信息
 //        $uid=Yii::app()->request->getQuery('uid','0');
 //        $masksign=Yii::app()->request->getQuery('masksign','');
@@ -82,7 +96,7 @@ class PaypalController extends Controller {
 
     /**
      * 创建付款页面
-     * 测试页面：http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/payment&client_id=AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-&client_secret=EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
+     * 测试页面：http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/payment&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=2.77
      * 页面返回JSON 类似：{"redirect_url":"https:\/\/www.sandbox.paypal.com\/cgi-bin\/webscr?cmd=_express-checkout&token=EC-91V555525V512641V","payid":"PAY-0LK657034L9866308KRGQOQY","token":"EC-91V555525V512641V"}
      * 访问回调redirect_url 后：cancanyou-facilitator-buyer@yahoo.com 密码：12345678
      * 付款成功后回调举例：http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/recall&success=true&recordid=1&record_masksign=2fc7fd70fd1aafe36db926519507f77c&token=EC-91V555525V512641V&PayerID=RBJN2EXHT9MJY
@@ -107,10 +121,12 @@ class PaypalController extends Controller {
         $itemname_arr=Yii::app()->request->getParam('itemname_arr',array()); //名称默认 CCY Payment
         $shipping=Yii::app()->request->getParam('shipping','0.00'); //名称默认 CCY Payment
         $tax=Yii::app()->request->getParam('tax','0.00'); //名称默认 CCY Payment
+        $tip_url=Yii::app()->request->getParam('tip_url',''); //用于提示付款结果的地址
+        $do_url=Yii::app()->request->getParam('do_url',''); //用于进行后续操作的URL
         
         //获取secret
-        $client_id=Yii::app()->request->getParam('client_id','none id');
-        $client_secret=Yii::app()->request->getParam('client_secret','none secret');
+//        $client_id=Yii::app()->request->getParam('client_id','none id');
+//        $client_secret=Yii::app()->request->getParam('client_secret','none secret');
         
 //        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
 //        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
@@ -145,13 +161,24 @@ class PaypalController extends Controller {
         $record_masksign=md5($insert_id.$userdef_arr['token']) ;
         echo $return_url=$hostInfo.$this->createUrl('recall',array('success'=>'true','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         echo '<br/>';
-        echo $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false',));
+        echo $cancel_url=$hostInfo.$this->createUrl('recall',array('success'=>'false','uid'=>$uid,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
         echo '<br/>';
-        echo $ipn_url=$hostInfo.$this->createUrl('ipn',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
-        echo '<br/>';
-       
+        if('' == $tip_url){
+            echo $tip_url=$hostInfo.$this->createUrl('paidtip',array());
+            echo '<br/>';
+        }
+        if('' == $do_url){
+            echo $do_url=$hostInfo.$this->createUrl('paiddo',array());
+            echo '<br/>';
+        }
+        
+//        echo $ipn_url=$hostInfo.$this->createUrl('paiddo',array('uid'=>$uid,'masksign'=>$masksign,'recordid'=>$insert_id,'record_masksign'=>$record_masksign,));
+//        echo '<br/>';
+        $client_id=$userdef_arr['client_id'];
+        $client_secret=$userdef_arr['client_secret'];
+                
         $api_creater=new CPaypalApiCreater($client_id,$client_secret,PUB_PAYPAL_SDK_DIR);
-        $api_creater->setIpnUrl($ipn_url);
+//        $api_creater->setIpnUrl($ipn_url);
         
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $paypal_handler->setReturnUrl($return_url);
@@ -165,34 +192,14 @@ class PaypalController extends Controller {
             if(!isset($itemname_arr[$index])){
                 $itemname_arr[$index]='CCY Payment.';
             }
-//            echo "value={$value},";
-//            echo "itemname_arr[\$index]={$itemname_arr[$index]},";
-//            echo "quantity_arr[\$index]={$quantity_arr[$index]},";
-//            echo "currency={$currency},";
-//            echo '<br/>';
+            
             $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
         }
         
-//        echo "shipping={$shipping},";
-//        echo "tax={$tax},";
-//        echo '<br/>';
         $paypal_handler->setDetails($shipping, $tax);
-        
-        
-//        $paypal_handler->addItem('2.01', 'links',7);
-//        $paypal_handler->setDetails('0.00', '0.00');
-//        
         $paymentObj= $paypal_handler->createPaymentObj();
-        
         $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
-        
         $payment_id=CPaypalHandler::ExtractId($paymentObj);
-//        $match_arr=array();
-//        preg_match('/&token=(.*)($|&| )/iU', $redirect_url,$match_arr);
-//        $token=$match_arr[1];
-        
-//        header("location:{$redirect_url}");
-//        exit;
         
         //存储：$payid，$token，$post_json
         $result_arr=array();
@@ -201,6 +208,8 @@ class PaypalController extends Controller {
         $result_arr['payment_id']=$payment_id;
         $result_arr['client_id']=$client_id;
         $result_arr['client_secret']=$client_secret;
+        $result_arr['tip_url']=$tip_url;
+        $result_arr['do_url']=$do_url;
         
         $oper->payment_json=  json_encode($result_arr); //将结果数据记录到数据库
         if(!$oper->update()){
@@ -226,21 +235,6 @@ class PaypalController extends Controller {
         $record_masksign=Yii::app()->request->getQuery('record_masksign','');
         $success=Yii::app()->request->getQuery('success','false');
         $payer_id=trim(Yii::app()->request->getQuery('PayerID','')); 
-        if('false' == $success){
-            $cancel_redirect_url=Yii::app()->request->getQuery('cancel_redirect_url','');
-            if('' == $cancel_redirect_url){
-                echo "User cancelled payment.";
-            }else{
-                Yii::app()->request->redirect($cancel_redirect_url);
-            }
-            Yii::app()->end();
-        }
-        
-        //如果成功那么肯定有 $payer_id
-        if('' == $payer_id){
-            throw new Exception('payer_id not empty.','141029_1215');
-        }
-        
         
         //验证请求合法性
 //        $hostInfo=Yii::app()->request->hostInfo;
@@ -249,9 +243,9 @@ class PaypalController extends Controller {
             throw new Exception('Authorization Failed.','141029_1103');
         }
         
-        //正式进入执行操作--------
         //获取数据
         $dbinfo=CDbPayportPayment::model()->findByPk($recordid);
+        //正式进入执行操作--------
         /* @var $dbinfo CDbPayportPayment */
         if('' == $dbinfo->payment_json){
             throw new Exception('Record Error. payment_json is empty. ','141029_1109');
@@ -259,31 +253,72 @@ class PaypalController extends Controller {
         
         $payment_obj=  json_decode($dbinfo->payment_json, false);
         if('' == $payment_obj->payment_id){
-            throw new Exception('Record Error. payment_json->payid is empty. ','141029_1112');
+            throw new Exception('Record Error. payment_json->payment_id is empty. ','141029_1112');
         }
         
-        //执行付款操作
+        if('false' == $success){
+            $cancel_redirect_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'false',));
+            if('' == $cancel_redirect_url){
+                echo "User cancelled payment.";
+            }else{
+                Yii::app()->request->redirect($cancel_redirect_url);
+            }
+            Yii::app()->end();
+        }
+        
+        //如果成功那么肯定有 $payer_id 
+        if('' == $payer_id){
+            throw new Exception('payer_id not empty.','141029_1215');
+        }
         
         
         //获取执行对象
-        $hostInfo=Yii::app()->request->hostInfo;
-        $ipn_url=$hostInfo.$this->createUrl('ipn',array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
-        echo $ipn_url;
-        echo '<br/>';
+//        $hostInfo=Yii::app()->request->hostInfo;
+//        $ipn_url=$hostInfo.$this->createUrl('ipn',array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
+//        echo $ipn_url;
+//        echo '<br/>';
         
         $api_creater=new CPaypalApiCreater($payment_obj->client_id,$payment_obj->client_secret,PUB_PAYPAL_SDK_DIR);
-        $api_creater->setIpnUrl($ipn_url);
+//        $api_creater->setIpnUrl($ipn_url);
          
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
         
         
         
-
+//http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/recall&success=true&uid=1&recordid=97&record_masksign=7b008e914e0cbc832c935cb494db1295&paymentId=PAY-5CD093538Y941501NKRIIMQY&token=EC-0YP63620YD969772Y&PayerID=RBJN2EXHT9MJY
         echo "<html><body><pre>";
         print_r($result);
         echo "</pre><a href='../index.html'>Back</a></body></html>";
 
+        echo $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
+        echo '<br/>';
+        echo $do_url=$this->_urlAddParam($payment_obj->do_url, array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
+        echo '<br/>';
         
+        $post_sender=new CJKPostSender();
+        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,'get_json'=>$dbinfo->get_json));
+        $post_sender->getDatas();
+        
+    }
+    
+    /**
+     * 给一个已有的URL 尾部添加参数
+     * @param array $param_arr 参数数组
+     * @return string
+     */
+    private function _urlAddParam($url,array $param_arr){
+        if(!preg_match('/\?/iU', $url)){
+            $url.='?';
+        }
+        
+        foreach($param_arr as $param_key=>$param_value){
+            $param_value_encode=  urlencode($param_value);
+            $url.="{$param_key}={$param_value_encode}&";
+        }
+        
+        $url.='1=1';
+        
+        return $url;
     }
 }
