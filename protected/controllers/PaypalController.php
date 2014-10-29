@@ -203,7 +203,7 @@ class PaypalController extends Controller {
         //存储：$payid，$token，$post_json
         $result_arr=array();
         $result_arr['status']='success';
-        $result_arr['redirect_url']=$redirect_url;
+        $result_arr['payment_url']=$redirect_url;
         $result_arr['payment_id']=$payment_id;
         $result_arr['client_id']=$client_id;
         $result_arr['client_secret']=$client_secret;
