@@ -216,7 +216,22 @@ class PaypalController extends Controller {
      * @return array
      */
     public function actionRecall(){
+        //&uid=1&recordid=69&record_masksign=7b15801a74e62bad1e04d8f9c076c91a
+        $uid=(int)Yii::app()->request->getQuery('uid',0);
+        $recordid=(int)Yii::app()->request->getQuery('recordid',0);
+        $record_masksign=Yii::app()->request->getQuery('record_masksign','');
         
-        echo 'RECALL';
+        //验证请求合法性
+//        $hostInfo=Yii::app()->request->hostInfo;
+        $userdef_arr=CUser::GetAccountDefined($uid);
+        if($record_masksign != md5($recordid.$userdef_arr['token'])){
+            throw new Exception('Authorization Failed.','141029_1103');
+        }
+        
+        //正式进入执行操作
+        //获取数据
+        $dbinfo=CDbPayportPayment::model()->findByPk($recordid);
+        /* @var $dbinfo CDbPayportPayment */
+        echo $dbinfo->payment_json;
     }
 }
