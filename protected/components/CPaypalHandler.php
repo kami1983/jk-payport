@@ -69,8 +69,8 @@ class CPaypalHandler extends CBase {
     
     
     
-    /* @var $_apiContent ApiContext  */
-    protected $_apiContent=null;
+    /* @var $_apiContext ApiContext  */
+    protected $_apiContext=null;
     
     
     //--------------------
@@ -298,11 +298,11 @@ class CPaypalHandler extends CBase {
         // The return object contains the state and the
         // url to which the buyer must be redirected to
         // for payment approval
-        echo 'RUN 1 ';
-        echo get_class($this->_apiContent);
-        exit;
+//        echo 'RUN 1 ';
+//        echo get_class($this->_apiContext);
+//        exit;
         try {
-                $payment->create($this->_apiContent);
+                $payment->create($this->_apiContext);
         } catch (PPConnectionException $ex) {
 //                echo "Exception: " . $ex->getMessage() . PHP_EOL;
 //                var_dump($ex->getData());	
