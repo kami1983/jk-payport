@@ -5,6 +5,7 @@ phpunit.local.xml
 *.log
 *.conf.php
 
+
 # IDE
 .idea
 .project
@@ -14,5 +15,6 @@ atlassian-ide-plugin.xml
 *.bak
 
 # Composer
+protected/runtime
 vendor
 composer.lock
