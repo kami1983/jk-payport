@@ -274,7 +274,7 @@ class PaypalController extends Controller {
         
 
         echo "<html><body><pre>";
-        echo $result->toJSON(JSON_PRETTY_PRINT);
+        print_r($result);
         echo "</pre><a href='../index.html'>Back</a></body></html>";
 
         
