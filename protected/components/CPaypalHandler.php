@@ -88,9 +88,6 @@ class CPaypalHandler extends CBase {
     /* @var $_cancel_url string *///取消付款后的回跳地址
     protected $_cancel_url=null;
     
-    /* @var $_ipn_url string *///IPN 通知地址
-    protected $_ipn_url=null; 
-    
 
     
     public function __construct(ApiContext $api_context_obj) {
@@ -130,15 +127,7 @@ class CPaypalHandler extends CBase {
         return $this;
     }
     
-    /**
-     * 设置Paypal IPN 地址
-     * @param string $ipn_url IPN 的URL 地址
-     * @return CPaypalHandler
-     */
-    public function setIpnUrl($ipn_url){
-        $this->_ipn_url=$ipn_url;
-        return $this;
-    }
+    
 
    /**
     * 添加一个支付信息
@@ -226,11 +215,11 @@ class CPaypalHandler extends CBase {
         //Execute the payment
         // (See bootstrap.php for more on `ApiContext`)
         try{
-        $result = $payment->execute($execution, $this->_apiContext);
+            return $payment->execute($execution, $this->_apiContext);
         }catch(PPConnectionException $ex){
-            echo '付过款了？？';
+            echo 'Is paid ?';
         }
-        return $result;
+        return null;
    }
 
    /**

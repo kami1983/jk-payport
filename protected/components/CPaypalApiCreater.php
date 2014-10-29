@@ -50,6 +50,11 @@ class CPaypalApiCreater {
     /* @var $_client_secret string *///应用的加密
     protected $_client_secret=null;
     
+    
+    /* @var $_ipn_url string *///IPN 通知地址
+    protected $_ipn_url=null; 
+    
+    
     /**
      * 构造一个 ApiContext 对象
      * @param string $client_id 链入的客户id
@@ -84,6 +89,16 @@ class CPaypalApiCreater {
     public function getApiContext(){
         
         return $this->_apiContent; 
+    }
+    
+    /**
+     * 设置Paypal IPN 地址
+     * @param string $ipn_url IPN 的URL 地址
+     * @return CPaypalHandler
+     */
+    public function setIpnUrl($ipn_url){
+        $this->_ipn_url=$ipn_url;
+        return $this;
     }
     
     /**
@@ -122,8 +137,9 @@ class CPaypalApiCreater {
            $config_arr['log.FileName']=Yii::app()->getBasePath().'/runtime/PayPal.log';
            $config_arr['log.LogLevel']='FINE';
            $config_arr['validation.level']='log';
-    //       if(null !== $this->_ipn_url){
-    //           $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
+           if(null !== $this->_ipn_url){
+               $config_arr['service.EndPoint.IPN'] = $this->_ipn_url;
+           }
     //       }else{
     //           $config_arr['service.EndPoint.IPN'] = 'http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/ipn&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c';
     //       }
