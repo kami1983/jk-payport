@@ -94,15 +94,15 @@ class CPaypalHandler extends CBase {
     
     public function __construct(ApiContext $api_context_obj) {
         //初始化：
-        $composerAutoload = $paypal_sdk_dir.'/vendor/autoload.php';
-//        echo $composerAutoload ;
-        if (!file_exists($composerAutoload)) {
-            
-            throw new Exception('You need sdk. ','141020_1020');
-//            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
-        }
-        
-        require_once $composerAutoload; //引入APIs
+//        $composerAutoload = $paypal_sdk_dir.'/vendor/autoload.php';
+////        echo $composerAutoload ;
+//        if (!file_exists($composerAutoload)) {
+//            
+//            throw new Exception('You need sdk. ','141020_1020');
+////            echo "The 'vendor' folder is missing. You must run 'composer update' to resolve application dependencies.\nPlease see the README for more information.\n";
+//        }
+//        
+//        require_once $composerAutoload; //引入APIs
         
         $this->_apiContext=$api_context_obj; //创建API 内容对象
         
