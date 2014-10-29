@@ -31,6 +31,9 @@ use PayPal\Api\ItemList;
 //use PayPal\Api\FundingInstrument;
 //use PayPal\Api\Transaction;
 
+
+
+
 /**
  * Description of CPaypalHandler
  * Paypal 处理类
@@ -39,8 +42,44 @@ use PayPal\Api\ItemList;
  */
 class CPaypalHandler extends CBase {
     
+    
+   /**
+    * @param Payment $payment_obj 付款对象
+    * @return string
+    */
+    public static function ExtractId(Payment $payment_obj){
+
+        return $payment_obj->getId();
+    }
+
+    /**
+     * @param Payment $payment_obj 付款对象
+     * @return string
+     */
+    public static function ExtractApprovalUrl(Payment $payment_obj){
+         foreach($payment_obj->getLinks() as $link) {
+
+             if($link->getRel() == 'approval_url') {
+                 return $link->getHref();
+             }
+         }
+    }
+    
+    ######################
+    
+    
+    
     /* @var $_apiContent ApiContext  */
     protected $_apiContent=null;
+    
+    
+    /* @var $_client_id string *///应用的id
+    protected $_client_id=null;
+    
+    /* @var $_client_secret string *///应用的加密
+    protected $_client_secret=null;
+    
+    //--------------------
     
     /* @var $_item_arr Item[] */
     protected $_item_arr=array();
@@ -57,12 +96,8 @@ class CPaypalHandler extends CBase {
     /* @var $_ipn_url string *///IPN 通知地址
     protected $_ipn_url=null; 
     
-    /* @var $_client_id string *///应用的id
-    protected $_client_id=null;
-    
-    /* @var $_client_secret string *///应用的加密
-    protected $_client_secret=null;
 
+    
     public function __construct($client_id,$client_secret,$paypal_sdk_dir) {
         //初始化：
         $composerAutoload = $paypal_sdk_dir.'/vendor/autoload.php';
@@ -259,27 +294,7 @@ class CPaypalHandler extends CBase {
        return $this;
    }
 
-   /**
-    * @param Payment $payment_obj 付款对象
-    * @return string
-    */
-   public static function ExtractId(Payment $payment_obj){
-       
-       return $payment_obj->getId();
-   }
    
-   /**
-    * @param Payment $payment_obj 付款对象
-    * @return string
-    */
-   public static function ExtractApprovalUrl(Payment $payment_obj){
-        foreach($payment_obj->getLinks() as $link) {
-            
-            if($link->getRel() == 'approval_url') {
-                return $link->getHref();
-            }
-        }
-   }
 
    /**
     * 创建付款页面

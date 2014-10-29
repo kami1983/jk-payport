@@ -220,6 +220,17 @@ class PaypalController extends Controller {
         $uid=(int)Yii::app()->request->getQuery('uid',0);
         $recordid=(int)Yii::app()->request->getQuery('recordid',0);
         $record_masksign=Yii::app()->request->getQuery('record_masksign','');
+        $success=Yii::app()->request->getQuery('success','false');
+        if('false' == $success){
+            $cancel_redirect_url=Yii::app()->request->getQuery('cancel_redirect_url','');
+            if('' == $cancel_redirect_url){
+                echo "User cancelled payment.";
+            }else{
+                Yii::app()->request->redirect($cancel_redirect_url);
+            }
+            Yii::app()->end();
+        }
+        
         
         //验证请求合法性
 //        $hostInfo=Yii::app()->request->hostInfo;
@@ -237,6 +248,36 @@ class PaypalController extends Controller {
         }
         
         $payment_obj=  json_decode($dbinfo->payment_json, false);
-        print_r($payment_obj);
+        if('' == $payment_obj->payid){
+            throw new Exception('Record Error. payment_json->payid is empty. ','141029_1112');
+        }
+        
+        //判断是否请求成功
+        if(isset($_GET['success']) && $_GET['success'] == 'true') {
+	
+                // Get the payment Object by passing paymentId
+                // payment id was previously stored in session in
+                // CreatePaymentUsingPayPal.php
+                $paymentId = $_SESSION['paymentId'];
+                $payment = Payment::get($paymentId, $apiContext);
+
+                // PaymentExecution object includes information necessary 
+                // to execute a PayPal account payment. 
+                // The payer_id is added to the request query parameters
+                // when the user is redirected from paypal back to your site
+                $execution = new PaymentExecution();
+                $execution->setPayerId($_GET['PayerID']);
+
+                //Execute the payment
+                // (See bootstrap.php for more on `ApiContext`)
+                $result = $payment->execute($execution, $apiContext);
+
+                echo "<html><body><pre>";
+                echo $result->toJSON(JSON_PRETTY_PRINT);
+                echo "</pre><a href='../index.html'>Back</a></body></html>";
+
+        } else {
+                echo "User cancelled payment.";
+        }
     }
 }
