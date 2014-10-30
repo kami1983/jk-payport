@@ -31,7 +31,19 @@ class CUser {
     public static function GetAccountDefined($uid){
         //定义几个用户
         
-        $user_def=  require Yii::app()->basePath.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'userlist.conf.php';
+        $userlist_file= Yii::app()->basePath.DIRECTORY_SEPARATOR.'config'.DIRECTORY_SEPARATOR.'userlist.conf.php';
+        
+        if(!is_file($userlist_file)){
+            //查找 sample 文件
+            if(!is_file($userlist_file.'.sample')){
+                throw new Exception('Sample file not found.','141030_1057');
+            }
+            
+            //copy sample 文件
+            copy($userlist_file.'.sample',$userlist_file);
+        }
+        
+        $user_def=  require $userlist_file;
         
         if(!isset($user_def[$uid]))return null;
         
