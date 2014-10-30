@@ -128,9 +128,6 @@ class PaypalController extends Controller {
 //        $client_id=Yii::app()->request->getParam('client_id','none id');
         $client_secret=Yii::app()->request->getParam('client_secret','none secret');
         
-//        $clientId = 'AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-';
-//        $clientSecret = 'EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp';
-
         
         //记录请求信息
         $oper=new CDbPayportPayment();
