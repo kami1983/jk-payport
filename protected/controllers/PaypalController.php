@@ -180,7 +180,6 @@ class PaypalController extends Controller {
         $paypal_handler->setReturnUrl($return_url);
         $paypal_handler->setCancelUrl($cancel_url);
         
-        
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){
                 $quantity_arr[$index]=1;
@@ -190,7 +189,9 @@ class PaypalController extends Controller {
             }
             
             $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
+
         }
+        
         
         $paypal_handler->setDetails($shipping, $tax);
         $paymentObj= $paypal_handler->createPaymentObj();

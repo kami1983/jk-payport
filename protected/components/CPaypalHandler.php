@@ -150,7 +150,7 @@ class CPaypalHandler extends CBase {
         $item->setName($name)
                 ->setCurrency($currency)
                 ->setQuantity($quantity)
-                ->setPrice($price);
+                ->setPrice(sprintf("%.2f",$price));
         
         $this->_item_arr[]=$item;
         
@@ -165,7 +165,7 @@ class CPaypalHandler extends CBase {
    private function _makeAmount(Details $details){
        $amount = new Amount();
        $amount->setCurrency($this->_item_arr[0]->getCurrency())
-                ->setTotal($details->getTax()+$details->getShipping()+$details->getSubtotal())
+                ->setTotal(sprintf("%.2f",$details->getTax()+$details->getShipping()+$details->getSubtotal()))
                 ->setDetails($details);
        
        return $amount;
@@ -182,7 +182,7 @@ class CPaypalHandler extends CBase {
            /* @var $item_obj Item */
            $total_price+=($item_obj->getPrice() * $item_obj->getQuantity());
        }
-       return $total_price;
+       return sprintf("%.2f",$total_price);
    }
    
    /**
@@ -214,12 +214,7 @@ class CPaypalHandler extends CBase {
 
         //Execute the payment
         // (See bootstrap.php for more on `ApiContext`)
-        try{
-            return $payment->execute($execution, $this->_apiContext);
-        }catch(PPConnectionException $ex){
-            echo 'Is paid ?';
-        }
-        return null;
+        return $payment->execute($execution, $this->_apiContext);
    }
 
    /**
