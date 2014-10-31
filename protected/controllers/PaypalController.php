@@ -181,6 +181,7 @@ class PaypalController extends Controller {
         $paypal_handler->setCancelUrl($cancel_url);
         
         
+        print_r($price_arr);
         foreach($price_arr as $index=>$value){
             if(!isset($quantity_arr[$index])){
                 $quantity_arr[$index]=1;
@@ -189,6 +190,7 @@ class PaypalController extends Controller {
                 $itemname_arr[$index]='CCY Payment.';
             }
             
+            echo "{$value}, {$itemname_arr[$index]},{$quantity_arr[$index]},{$currency}";
             $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
         }
         
