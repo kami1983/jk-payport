@@ -191,10 +191,11 @@ class PaypalController extends Controller {
             }
             
             echo "{$value}, {$itemname_arr[$index]},{$quantity_arr[$index]},{$currency}";
-            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
+//            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
+            $paypal_handler->addItem(31.5, $itemname_arr[$index],$quantity_arr[$index],$currency);
         }
+        echo 'RUN 1 <br/>';
         
-        exit;
         $paypal_handler->setDetails($shipping, $tax);
         $paymentObj= $paypal_handler->createPaymentObj();
         $redirect_url=CPaypalHandler::ExtractApprovalUrl($paymentObj);
