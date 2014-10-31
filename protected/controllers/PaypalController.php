@@ -191,8 +191,8 @@ class PaypalController extends Controller {
             }
             
             echo "{$value}, {$itemname_arr[$index]},{$quantity_arr[$index]},{$currency}";
-//            $paypal_handler->addItem($value, $itemname_arr[$index],$quantity_arr[$index],$currency);
-            $paypal_handler->addItem(37.50, $itemname_arr[$index],$quantity_arr[$index],$currency);
+            $paypal_handler->addItem(sprintf("%.2f",$value), $itemname_arr[$index],$quantity_arr[$index],$currency);
+
         }
         echo 'RUN 1 <br/>';
         
