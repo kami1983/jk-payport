@@ -113,10 +113,6 @@ class PaypalController extends Controller {
             throw new Exception('无法识别调用用户','141022_1027');
         }
         
-        echo '<pre>';
-        print_r($_GET);
-        echo '</pre>';
-        exit;
         
         //获取币种
         $currency=Yii::app()->request->getParam('currency','USD');
