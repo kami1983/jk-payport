@@ -116,6 +116,7 @@ class PaypalController extends Controller {
         echo '<pre>';
         print_r($_GET);
         echo '</pre>';
+        exit;
         
         //获取币种
         $currency=Yii::app()->request->getParam('currency','USD');
