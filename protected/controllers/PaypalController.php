@@ -66,7 +66,7 @@ class PaypalController extends Controller {
         echo 'RUN 1 ';
         $payportmentobj_arr=CDbPayportPayment::model()->find();
         echo 'RUN 2 ';
-        return $this->render('paymentlist', array('payportmentobj_arr'=>$payportmentobj_arr,),true);
+        return $this->render('paymentlist', array('payportmentobj_arr'=>$payportmentobj_arr,));
     }
     
     /**
