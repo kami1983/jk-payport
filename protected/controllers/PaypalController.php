@@ -55,6 +55,20 @@ class PaypalController extends Controller {
     }
     
     /**
+     * 显示JSON 信息
+     */
+    public function actionShowjson(){
+        $json=  json_decode(base64_decode('json_str'));
+        if(is_string($json)){
+            echo $json;
+            
+        }else{
+            print_r($json);
+        }
+    }
+
+
+    /**
      * 显示付款列表
      * @return array
      */
