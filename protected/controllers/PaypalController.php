@@ -150,6 +150,7 @@ class PaypalController extends Controller {
         $oper->status=CDbPayportPayment::CONST_FIELD_STATUS_IS_INVALID; //默认无效
         $oper->type=CDbPayportPayment::CONST_FIELD_TYPE_IS_PAYPAL;
         $oper->post_json=  json_encode($_POST);
+        $oper->do_response='';
         $oper->get_json=  json_encode($_GET);
         $oper->payment_json= '';
         $insert_id=0;
@@ -291,7 +292,6 @@ class PaypalController extends Controller {
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
         
-        
 
         $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
 //        echo '<br/>';
@@ -301,8 +301,9 @@ class PaypalController extends Controller {
         $post_sender=new CJKPostSender();
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
         $response_data=$post_sender->getDatas();
+        $dbinfo->do_response=  json_encode($response_data);
         
-        Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');
+        //Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');
         
         Yii::app()->request->redirect($tip_url);
         Yii::app()->end();
