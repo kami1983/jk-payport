@@ -85,7 +85,7 @@ class PaypalController extends Controller {
 //            throw new Exception('无法识别调用用户','141022_1027');
 //        }
         
-        echo 'RUN action IPN <br/>';
+        echo 'Pay do.';
         
         ###########
         Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_GET,true), 'jkdebug.PaypalController.actionIpn');
@@ -286,7 +286,9 @@ class PaypalController extends Controller {
         
         $post_sender=new CJKPostSender();
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
-        $post_sender->getDatas();
+        $response_data=$post_sender->getDatas();
+        
+        Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');
         
         Yii::app()->request->redirect($tip_url);
         Yii::app()->end();
