@@ -20,10 +20,10 @@
     <tr>
         <td><?php echo $payportmentobj->id; ?></td>
         <td><?php echo $payportmentobj->ipaddress; ?></td>
-        <td><?php echo $payportmentobj->do_response; ?></td>
-        <td><?php echo $payportmentobj->payment_json; ?></td>
-        <td><?php echo $payportmentobj->get_json; ?></td>
-        <td><?php echo $payportmentobj->post_json; ?></td>
+        <td><input type='button' value="do_response" onclick="alert('<?php echo htmlentities($payportmentobj->do_response); ?>');" /></td>
+        <td><input type='button' value="payment_json" onclick="alert('<?php echo htmlentities($payportmentobj->payment_json); ?>');" /></td>
+        <td><input type='button' value="get_json" onclick="alert('<?php echo htmlentities($payportmentobj->get_json); ?>');" /></td>
+        <td><input type='button' value="post_json" onclick="alert('<?php echo htmlentities($payportmentobj->post_json); ?>');" /></td>
     </tr>
     <?php endforeach; ?>
 </table>
