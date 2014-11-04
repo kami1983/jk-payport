@@ -10,10 +10,10 @@
     <tr>
         <td>Id</td>
         <td>IP</td>
-        <td style="width:100px;">Do Response</td>
-        <td style="width:100px;">Payment Info</td>
-        <td style="width:100px;">Payment Get</td>
-        <td style="width:100px;">Payment Post</td>
+        <td style="width:100px;word-wrap:break-word;">Do Response</td>
+        <td style="width:100px;word-wrap:break-word;">Payment Info</td>
+        <td style="width:100px;word-wrap:break-word;">Payment Get</td>
+        <td style="width:100px;word-wrap:break-word;">Payment Post</td>
         
     </tr>
     <?php foreach($payportmentobj_arr as $payportmentobj): ?>
