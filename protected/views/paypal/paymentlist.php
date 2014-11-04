@@ -17,11 +17,11 @@
     </tr>
     <?php foreach($payportmentobj_arr as $payportmentobj): ?>
     <tr>
-        <td><?php $payportmentobj->id; ?></td>
-        <td><?php $payportmentobj->ipaddress; ?></td>
-        <td><?php $payportmentobj->payment_json; ?></td>
-        <td><?php $payportmentobj->get_json; ?></td>
-        <td><?php $payportmentobj->post_json; ?></td>
+        <td><?php echo $payportmentobj->id; ?></td>
+        <td><?php echo $payportmentobj->ipaddress; ?></td>
+        <td><?php echo $payportmentobj->payment_json; ?></td>
+        <td><?php echo $payportmentobj->get_json; ?></td>
+        <td><?php echo $payportmentobj->post_json; ?></td>
     </tr>
     <?php endforeach; ?>
 </table>
