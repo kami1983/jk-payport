@@ -40,6 +40,8 @@ class PaypalController extends Controller {
 //			),
             );
     }
+    
+    
 
     /**
      * This is the default 'index' action that is invoked
@@ -52,6 +54,18 @@ class PaypalController extends Controller {
             $this->render('index');
     }
     
+    /**
+     * 显示付款列表
+     * @return array
+     */
+    public function actionPaymentlist(){
+        if(Yii::app()->user->isGuest){
+            return Yii::app()->request->redirect($this->createUrl('site/login'));
+        }
+        
+        $payportmentobj_arr=CDbPayportPayment::model()->findAll('1=1');
+        return $this->render('paymentlist', array('payportmentobj_arr'=>$payportmentobj_arr,),true);
+    }
     
     /**
      * 一个IPN 的着陆页面
