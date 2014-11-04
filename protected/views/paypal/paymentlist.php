@@ -2,9 +2,9 @@
 /* @var $this PaypalController */
 /* @var $payportmentobj_arr CDbPayportPayment[] */
 
-echo '<pre>';
-print_r($payportmentobj_arr);
-echo '</pre>';
+//echo '<pre>';
+//print_r($payportmentobj_arr);
+//echo '</pre>';
 ?>
 <table>
     <tr>
