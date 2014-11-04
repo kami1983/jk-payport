@@ -286,7 +286,9 @@ class PaypalController extends Controller {
         
         $post_sender=new CJKPostSender();
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
-        $post_sender->getDatas();
+        $response_data=$post_sender->getDatas();
+        
+        Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');
         
         Yii::app()->request->redirect($tip_url);
         Yii::app()->end();
