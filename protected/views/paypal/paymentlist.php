@@ -19,8 +19,8 @@
     <?php foreach($payportmentobj_arr as $payportmentobj): ?>
     <tr>
         <td><?php echo $payportmentobj->id; ?></td>
-        <td><?php echo $payportmentobj->do_response; ?></td>
         <td><?php echo $payportmentobj->ipaddress; ?></td>
+        <td><?php echo $payportmentobj->do_response; ?></td>
         <td><?php echo $payportmentobj->payment_json; ?></td>
         <td><?php echo $payportmentobj->get_json; ?></td>
         <td><?php echo $payportmentobj->post_json; ?></td>
