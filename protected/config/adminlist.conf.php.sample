@@ -1,0 +1,6 @@
+<?php
+
+$user_def=array(); 
+$user_def['admin']='aa11bb11';
+
+return $user_def;
