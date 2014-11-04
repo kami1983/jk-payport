@@ -59,11 +59,11 @@ class PaypalController extends Controller {
      * @return array
      */
     public function actionPaymentlist(){
-//        if(Yii::app()->user->isGuest){
-//            return Yii::app()->request->redirect($this->createUrl('site/login'));
-//        }
-//        
-//        $payportmentobj_arr=CDbPayportPayment::model()->findAll('1=1');
+        if(Yii::app()->user->isGuest){
+            return Yii::app()->request->redirect($this->createUrl('site/login'));
+        }
+        
+        $payportmentobj_arr=CDbPayportPayment::model()->find();
         return $this->render('paymentlist', array('payportmentobj_arr'=>$payportmentobj_arr,),true);
     }
     
