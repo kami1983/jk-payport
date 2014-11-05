@@ -79,7 +79,7 @@ class PaypalController extends Controller {
             return Yii::app()->request->redirect($this->createUrl('site/login'));
         }
         
-        $payportmentobj_arr=CDbPayportPayment::model()->findAll ('1=1');
+        $payportmentobj_arr=CDbPayportPayment::model()->findAll ('1=1 ORDER BY id DESC');
         return $this->render('paymentlist', array('payportmentobj_arr'=>$payportmentobj_arr,));
     }
     
