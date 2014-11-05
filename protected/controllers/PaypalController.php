@@ -318,6 +318,7 @@ class PaypalController extends Controller {
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
         $response_data=$post_sender->getDatas();
         $dbinfo->do_response=  json_encode($response_data);
+        $dbinfo->update();
         
         //Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');
         
