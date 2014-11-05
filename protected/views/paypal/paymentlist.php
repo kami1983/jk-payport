@@ -24,22 +24,22 @@
         <td><?php echo $payportmentobj->ipaddress; ?></td>
         <td>
             <?php if('' != $payportmentobj->do_response): ?>
-            <input type='button' value="do_response" onclick="$('#id_json_str').val('<?php echo base64_encode($payportmentobj->do_response); ?>');" />
+            <input type='button' value="do_response" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->do_response); ?>';" />
             <?php endif; ?>
         </td>
         <td>
             <?php if('' != $payportmentobj->payment_json): ?>
-            <input type='button' value="payment_json" onclick="$('#id_json_str').val('<?php echo base64_encode($payportmentobj->payment_json); ?>');" />
+            <input type='button' value="payment_json" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->payment_json); ?>';" />
             <?php endif; ?>
         </td>
         <td>
             <?php if('' != $payportmentobj->get_json): ?>
-            <input type='button' value="get_json" onclick="$('#id_json_str').val('<?php echo base64_encode($payportmentobj->get_json); ?>');" />
+            <input type='button' value="get_json" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->get_json); ?>';" />
             <?php endif; ?>
         </td>
         <td>
             <?php if('' != $payportmentobj->post_json): ?>
-            <input type='button' value="post_json" onclick="$('#id_json_str').val('<?php echo base64_encode($payportmentobj->post_json); ?>');" />
+            <input type='button' value="post_json" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->post_json); ?>';" />
             <?php endif; ?>
         </td>
     </tr>
