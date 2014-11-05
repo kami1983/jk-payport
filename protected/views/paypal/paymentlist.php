@@ -6,7 +6,7 @@
 //print_r($payportmentobj_arr);
 //echo '</pre>'; http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/paymentlist
 ?>
-<form action="<?php $this->createUrl('payment/showjson');?>" method="POST">
+<form action="<?php echo $this->createUrl('payment/showjson');?>" method="POST" target="_black">
     <input name="json_str" type="text" value="" />
 <table>
     <tr>
