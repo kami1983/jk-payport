@@ -7,7 +7,7 @@
 //echo '</pre>'; http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/paymentlist
 ?>
 <form action="<?php echo $this->createUrl('paypal/showjson');?>" method="POST" target="_black">
-    <input id="id_json_str" name="json_str" type="text" value="" />
+    <input id="id_json_str" name="json_str" type="text" value="--" />
 <table>
     <tr>
         <td>Id</td>
