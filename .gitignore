@@ -18,3 +18,4 @@ atlassian-ide-plugin.xml
 protected/runtime
 vendor
 composer.lock
+assets
