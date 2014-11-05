@@ -61,7 +61,6 @@ class PaypalController extends Controller {
         $json=  json_decode(base64_decode('json_str'));
         if(is_string($json)){
             echo $json;
-            
         }else{
             print_r($json);
         }
