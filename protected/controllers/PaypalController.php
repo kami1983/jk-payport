@@ -59,6 +59,7 @@ class PaypalController extends Controller {
      */
     public function actionShowjson(){
         $json_str=Yii::app()->request->getPost('json_str');
+        
         $json=  json_decode(base64_decode($json_str));
         if(is_string($json)){
             echo $json;
@@ -118,9 +119,9 @@ class PaypalController extends Controller {
         echo 'Pay do.';
         
         ###########
-        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_GET,true), 'jkdebug.PaypalController.actionIpn');
-        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'jkdebug.PaypalController.actionIpn');
-        Yii::trace('=======================','jkdebug.PaypalController.actionIpn');
+//        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_GET,true), 'jkdebug.PaypalController.actionIpn');
+//        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'jkdebug.PaypalController.actionIpn');
+//        Yii::trace('=======================','jkdebug.PaypalController.actionIpn');
     }
     
 
@@ -307,15 +308,35 @@ class PaypalController extends Controller {
          
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
+        /* @var $result PayPal\Api\Payment */
+        $payer_info_obj=$result->getPayer()->getPayerInfo();
+        $payer_info_arr=array();
+        $payer_info_arr['email']=$payer_info_obj->getEmail();
+        $payer_info_arr['firstname']=$payer_info_obj->getFirstName();
+        $payer_info_arr['lastname']=$payer_info_obj->getLastName();
+        $payer_info_arr['payerid']=$payer_info_obj->getPayerId();
+        $payer_info_obj_shippingaddress_obj=$payer_info_obj->getShippingAddress();
+        $payer_info_arr['shipping_address']=array();
+        $payer_info_arr['shipping_address']['line1']=$payer_info_obj_shippingaddress_obj->getLine1();
+        $payer_info_arr['shipping_address']['line2']=$payer_info_obj_shippingaddress_obj->getLine2();
+        $payer_info_arr['shipping_address']['city']=$payer_info_obj_shippingaddress_obj->getCity();
+        $payer_info_arr['shipping_address']['state']=$payer_info_obj_shippingaddress_obj->getState();
+        $payer_info_arr['shipping_address']['postalcode']=$payer_info_obj_shippingaddress_obj->getPostalCode();
+        $payer_info_arr['shipping_address']['countrycode']=$payer_info_obj_shippingaddress_obj->getCountryCode();
+        $payer_info_arr['shipping_address']['recipientname']=$payer_info_obj_shippingaddress_obj->getRecipientName();
         
+//        Yii::trace(date('Y-m-d H-i-s')."\n".  '--'.print_r($payer_info_arr,true).'--', 'jkdebug.PaypalController.actionRecall'); 
 
         $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
 //        echo '<br/>';
         $do_url=$this->_urlAddParam($payment_obj->do_url, array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
 //        echo '<br/>';
         
+        $dbinfo->payerinfo=  json_encode($payer_info_arr);
+        $dbinfo->update();
+        
         $post_sender=new CJKPostSender();
-        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
+        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,'payerinfo'=>$dbinfo->payerinfo));
         $response_data=$post_sender->getDatas();
         $dbinfo->do_response=  json_encode($response_data);
         $dbinfo->update();

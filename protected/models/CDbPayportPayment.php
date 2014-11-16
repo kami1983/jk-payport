@@ -5,6 +5,7 @@
  *
  * The followings are the available columns in table 'paypal_payment':
  * @property integer $id
+ * @property string $payerinfo
  * @property string $do_response
  * @property string $get_json
  * @property string $post_json
@@ -57,7 +58,7 @@ class CDbPayportPayment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('do_response, get_json, post_json, status, type, creationdate, modificationdate, ipaddress, payment_json', 'required'),
+			array('payerinfo','do_response, get_json, post_json, status, type, creationdate, modificationdate, ipaddress, payment_json', 'required'),
 			array('status, type', 'numerical', 'integerOnly'=>true),
 			array('ipaddress', 'length', 'max'=>16),
 			// The following rule is used by search().
@@ -84,6 +85,7 @@ class CDbPayportPayment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+                        'payerinfo' => '付款人信息',
                         'do_response' => 'Do Response',
 			'get_json' => 'Get Json',
 			'post_json' => 'Post Json',
@@ -108,6 +110,7 @@ class CDbPayportPayment extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+                $criteria->compare('payerinfo',$this->payerinfo,true);
                 $criteria->compare('do_response',$this->do_response,true);
 		$criteria->compare('get_json',$this->get_json,true);
 		$criteria->compare('post_json',$this->post_json,true);
