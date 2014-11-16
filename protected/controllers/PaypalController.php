@@ -59,6 +59,7 @@ class PaypalController extends Controller {
      */
     public function actionShowjson(){
         $json_str=Yii::app()->request->getPost('json_str');
+        
         $json=  json_decode(base64_decode($json_str));
         if(is_string($json)){
             echo $json;
