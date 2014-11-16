@@ -119,9 +119,9 @@ class PaypalController extends Controller {
         echo 'Pay do.';
         
         ###########
-        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_GET,true), 'jkdebug.PaypalController.actionIpn');
-        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'jkdebug.PaypalController.actionIpn');
-        Yii::trace('=======================','jkdebug.PaypalController.actionIpn');
+//        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_GET,true), 'jkdebug.PaypalController.actionIpn');
+//        Yii::trace(date('Y-m-d H-i-s')."\n".print_r($_POST,true), 'jkdebug.PaypalController.actionIpn');
+//        Yii::trace('=======================','jkdebug.PaypalController.actionIpn');
     }
     
 
@@ -308,7 +308,7 @@ class PaypalController extends Controller {
          
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
-        Yii::trace(date('Y-m-d H-i-s')."\n".  '--'.print_r($result,true).'--', 'Recall . $result'); 
+        Yii::trace(date('Y-m-d H-i-s')."\n".  '--'.print_r($result,true).'--', 'jkdebug.PaypalController.actionRecall'); 
 
         $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
 //        echo '<br/>';
