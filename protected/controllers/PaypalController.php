@@ -332,11 +332,13 @@ class PaypalController extends Controller {
         $do_url=$this->_urlAddParam($payment_obj->do_url, array('recordid'=>$recordid,'record_masksign'=>$record_masksign,));
 //        echo '<br/>';
         
+        $dbinfo->payerinfo=  json_encode($payer_info_arr);
+        $dbinfo->update();
+        
         $post_sender=new CJKPostSender();
-        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
+        $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,'payerinfo'=>$dbinfo->payerinfo));
         $response_data=$post_sender->getDatas();
         $dbinfo->do_response=  json_encode($response_data);
-        $dbinfo->payerinfo=  json_encode($payer_info_arr);
         $dbinfo->update();
         
         //Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');
