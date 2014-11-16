@@ -1,5 +1,10 @@
 # jk-payport
 
+## release 1.0.6 on 2014-11-16
+* 数据库表，支持记录付款人信息
+* pay do 地址会接收到post_json，payerinfo 两组POST 数据，其中payerinfo 是新添加，用于paydo 程序进行付款人核实，比如email 的发送。
+* 如果你使用版本小于 1.0.6 请升级你的数据库 ALTER TABLE `payport_payment` ADD `payerinfo` TEXT NOT NULL COMMENT '付款者的信息，付款成功才会有。' AFTER `id` 
+
 ## release 1.0.5 on 2014-11-05
 * 支持管理员功能，请务必改掉默认的管理员密码，这是你升级1.0.5 必须要做的事儿！
 * 增加内部付款记录数据列表
