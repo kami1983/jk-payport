@@ -308,7 +308,7 @@ class PaypalController extends Controller {
          
         $paypal_handler=new CPaypalHandler($api_creater->getApiContext());
         $result=$paypal_handler->executePayment($payment_obj->payment_id,$payer_id);
-        Yii::trace(date('Y-m-d H-i-s')."\n".  print_r($result,true), 'Recall . $result'); 
+        Yii::trace(date('Y-m-d H-i-s')."\n".  '--'.print_r($result,true).'--', 'Recall . $result'); 
 
         $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
 //        echo '<br/>';
