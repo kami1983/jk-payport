@@ -1,5 +1,8 @@
 # jk-payport
 
+## release 1.0.7 on 2014-11-16
+* 修改 .gitignore 文件，解决配置文件pull 后冲突的问题。
+
 ## release 1.0.6 on 2014-11-16
 * 数据库表，支持记录付款人信息
 * pay do 地址会接收到post_json，payerinfo 两组POST 数据，其中payerinfo 是新添加，用于paydo 程序进行付款人核实，比如email 的发送。
