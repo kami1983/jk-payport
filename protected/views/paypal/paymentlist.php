@@ -13,6 +13,7 @@
         <td>Id</td>
         <td>IP</td>
         <td>Do Response</td>
+        <td>Payer Info</td>
         <td>Payment Info</td>
         <td>Payment Get</td>
         <td>Payment Post</td>
@@ -28,8 +29,13 @@
             <?php endif; ?>
         </td>
         <td>
-            <?php if('' != $payportmentobj->payment_json): ?>
-            <input type='submit' value="payment_json" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->payment_json); ?>';" />
+            <?php if('' != $payportmentobj->do_response): ?>
+            <input type='submit' value="do_response" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->do_response); ?>';" />
+            <?php endif; ?>
+        </td>
+        <td>
+            <?php if('' != $payportmentobj->payerinfo): ?>
+            <input type='submit' value="payerinfo" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->payerinfo); ?>';" />
             <?php endif; ?>
         </td>
         <td>
