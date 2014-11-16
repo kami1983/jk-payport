@@ -325,7 +325,7 @@ class PaypalController extends Controller {
         $payer_info_arr['shipping_address']['countrycode']=$payer_info_obj_shippingaddress_obj->getCountryCode();
         $payer_info_arr['shipping_address']['recipientname']=$payer_info_obj_shippingaddress_obj->getRecipientName();
         
-        Yii::trace(date('Y-m-d H-i-s')."\n".  '--'.print_r($payer_info_arr,true).'--', 'jkdebug.PaypalController.actionRecall'); 
+//        Yii::trace(date('Y-m-d H-i-s')."\n".  '--'.print_r($payer_info_arr,true).'--', 'jkdebug.PaypalController.actionRecall'); 
 
         $tip_url=$this->_urlAddParam($payment_obj->tip_url, array('is_pay_success'=>'true',));
 //        echo '<br/>';
@@ -336,6 +336,7 @@ class PaypalController extends Controller {
         $post_sender->setSender($do_url, array('post_json'=>$dbinfo->post_json,));
         $response_data=$post_sender->getDatas();
         $dbinfo->do_response=  json_encode($response_data);
+        $dbinfo->payerinfo=  json_encode($payer_info_arr);
         $dbinfo->update();
         
         //Yii::trace(date('Y-m-d H-i-s')."\n".$response_data, 'DO_URL RESPONSE.');

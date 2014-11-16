@@ -46,7 +46,7 @@ return array(
 		// uncomment the following to enable the Gii tool
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'lh123321',
+			'password'=>'xxxxxx',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('*'),
 		),
