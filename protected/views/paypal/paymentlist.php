@@ -29,13 +29,13 @@
             <?php endif; ?>
         </td>
         <td>
-            <?php if('' != $payportmentobj->do_response): ?>
-            <input type='submit' value="do_response" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->do_response); ?>';" />
+            <?php if('' != $payportmentobj->payerinfo): ?>
+            <input type='submit' value="payerinfo" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->payerinfo); ?>';" />
             <?php endif; ?>
         </td>
         <td>
-            <?php if('' != $payportmentobj->payerinfo): ?>
-            <input type='submit' value="payerinfo" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->payerinfo); ?>';" />
+            <?php if('' != $payportmentobj->payment_json): ?>
+            <input type='submit' value="payment_json" onclick="document.getElementById('id_json_str').value='<?php echo base64_encode($payportmentobj->payment_json); ?>';" />
             <?php endif; ?>
         </td>
         <td>
