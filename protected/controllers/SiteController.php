@@ -49,6 +49,39 @@ class SiteController extends Controller
 	 */
 	public function actionContact()
 	{
+            
+            
+//        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+        
+        Yii::app()->mailer->Host = 'smtp.ym.163.com';
+        Yii::app()->mailer->Username = "service@cancanyou.com";  // SMTP username
+        Yii::app()->mailer->Password = "service_go"; // SMTP password
+        Yii::app()->mailer->IsSMTP();
+        
+        Yii::app()->mailer->From = "service@cancanyou.com";
+        Yii::app()->mailer->FromName = "Customer Service";
+        Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
+        Yii::app()->mailer->AddAddress("linhai_q8@163.com","Hello linhai");                  // name is optional
+        Yii::app()->mailer->AddReplyTo("service@cancanyou.com", "Replay service");
+
+//        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
+//        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+//        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
+
+        Yii::app()->mailer->Subject = "Here is the subject";
+        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
+        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+
+        if(!Yii::app()->mailer->Send())
+        {
+           echo "Message could not be sent. <p>";
+           echo "Mailer Error: " . $mail->ErrorInfo;
+           exit;
+        }
+
+        echo "Message has been sent";
+        
 		$model=new ContactForm;
 		if(isset($_POST['ContactForm']))
 		{
