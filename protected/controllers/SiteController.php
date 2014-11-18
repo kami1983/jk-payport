@@ -76,7 +76,7 @@ class SiteController extends Controller
         if(!Yii::app()->mailer->Send())
         {
            echo "Message could not be sent. <p>";
-           echo "Mailer Error: " . $mail->ErrorInfo;
+           echo "Mailer Error: " . Yii::app()->mailer->ErrorInfo;
            exit;
         }
 
