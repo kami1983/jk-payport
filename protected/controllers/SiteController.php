@@ -57,6 +57,7 @@ class SiteController extends Controller
         Yii::app()->mailer->Username = "service@cancanyou.com";  // SMTP username
         Yii::app()->mailer->Password = "service_go"; // SMTP password
         Yii::app()->mailer->IsSMTP();
+        Yii::app()->mailer->SMTPAuth = true;
         
         Yii::app()->mailer->From = "service@cancanyou.com";
         Yii::app()->mailer->FromName = "Customer Service";
