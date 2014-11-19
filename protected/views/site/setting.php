@@ -20,4 +20,12 @@ print_r($userlist_conf_arr);
 </form>
 
 
-
+<form action='<?php $this->createUrl('setting', array()); ?>'  >
+<?php foreach($userlist_conf_arr as $conf_arr): ?>
+<p>
+TOKEN：<input name='adminlist_conf_arr_token[]' type='text' value='<?php echo $conf_arr['token']; ?>' />
+CLIENT ID：<input name='adminlist_conf_arr_client_id[]' type='text' value='<?php echo $conf_arr['client_id']; ?>' />
+</p>
+<?php endforeach; ?>
+<input type='submit' value='SUBMIT' />
+</form>
