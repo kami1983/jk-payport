@@ -51,13 +51,16 @@ class SiteController extends Controller
         */
        public function actionSetting(){
            
-           $file_name_adminlist=Yii::app()->getBasePath().'/config/adminlist.conf.php';
+           $is_post_change=false;
            
-           $adminlist_conf_arr= @include $file_name_adminlist;
-           $userlist_conf_arr= @include Yii::app()->getBasePath().'/config/userlist.conf.php';
+           
+           //--------- 管理员配置文件修改
+           $file_name_adminlist=Yii::app()->getBasePath().'/config/adminlist.conf.php'; //配置文件
+           $adminlist_conf_arr= @include $file_name_adminlist; //读取并加载
            
            $post_adminlist_conf_arr_name=Yii::app()->request->getPost('adminlist_conf_arr_name');
-           if(is_array($post_adminlist_conf_arr_name)){
+           if(is_array($post_adminlist_conf_arr_name)){ //如果有修改
+                $is_post_change=true;
                 $post_adminlist_conf_arr_pwd=Yii::app()->request->getPost('adminlist_conf_arr_pwd');
 
                 $content='<?php $user_def=array(); ';
@@ -72,6 +75,40 @@ class SiteController extends Controller
                 $content.='return $user_def;';
                 
                 @file_put_contents($file_name_adminlist, $content);
+           }
+           
+           //--------- END
+           //--------- 管理员配置文件修改
+           
+           $file_name_userlist=@include Yii::app()->getBasePath().'/config/userlist.conf.php'; //配置文件
+           $userlist_conf_arr=$file_name_userlist ; //读取并加载
+           
+           $adminlist_conf_arr_token=Yii::app()->request->getPost('adminlist_conf_arr_token');
+           if(is_array($adminlist_conf_arr_token)){ //如果有修改
+                $is_post_change=true;
+                $adminlist_conf_arr_client_id=Yii::app()->request->getPost('adminlist_conf_arr_client_id');
+
+
+                $content='<?php $user_def=array(); ';
+                $content.="\n";
+                foreach($adminlist_conf_arr_token as $index=>$token){
+                    $client_id=$adminlist_conf_arr_client_id[$index];
+                    if('' == trim($token) || '' == $client_id)
+                                                continue;
+                    
+                    $user_index=$index+1;
+                    $content.="\$user_def['{$user_index}']=array('token'=>'{$token}',
+                             'client_id'=>'{$client_id}',);";
+                    $content.="\n";
+                }
+                $content.='return $user_def;';
+                
+                @file_put_contents($file_name_userlist, $content);
+           }
+           
+           //--------- END
+           
+           if($is_post_change){
                 return Yii::app()->request->redirect($this->createUrl('setting'));
            }
            
