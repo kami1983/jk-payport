@@ -71,7 +71,8 @@ class SiteController extends Controller
                 }
                 $content.='return $user_def;';
                 
-                file_put_contents($file_name_adminlist, $content);
+                @file_put_contents($file_name_adminlist, $content);
+                return Yii::app()->request->redirect($this->createUrl('setting'));
            }
            
            // display the login form
