@@ -35,6 +35,7 @@
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Paypal payment list', 'url'=>array('/paypal/paymentlist'), 'visible'=>!Yii::app()->user->isGuest),
+                                array('label'=>'Paypal payment list', 'url'=>array('/site/setting'), 'visible'=>!Yii::app()->user->isGuest),
 			),
 		)); ?>
 	</div><!-- mainmenu -->

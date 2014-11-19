@@ -43,6 +43,17 @@ class SiteController extends Controller
 				$this->render('error', $error);
 		}
 	}
+        
+        
+       /**
+        * 程序设置页面
+        * 
+        */
+       public function actionSetting(){
+
+           // display the login form
+           $this->render('setting', array());
+       }
 
 	/**
 	 * Displays the contact page
