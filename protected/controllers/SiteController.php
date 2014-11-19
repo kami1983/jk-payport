@@ -54,7 +54,7 @@ class SiteController extends Controller
            $adminlist_conf_arr= @include Yii::app()->getBasePath().'/config/adminlist.conf.php';
            $userlist_conf_arr= @include Yii::app()->getBasePath().'/config/userlist.conf.php';
            
-           $post_adminlist_conf_arr_name=Yii::app()->request->getPort('adminlist_conf_arr_name');
+           $post_adminlist_conf_arr_name=Yii::app()->request->getPost('adminlist_conf_arr_name');
            print_r($post_adminlist_conf_arr_name);
            
            // display the login form
