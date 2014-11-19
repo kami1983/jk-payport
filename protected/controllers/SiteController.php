@@ -51,11 +51,25 @@ class SiteController extends Controller
         */
        public function actionSetting(){
            
-           $adminlist_conf_arr= @include Yii::app()->getBasePath().'/config/adminlist.conf.php';
+           $file_name_adminlist=Yii::app()->getBasePath().'/config/adminlist.conf.php';
+           
+           $adminlist_conf_arr= @include $file_name_adminlist;
            $userlist_conf_arr= @include Yii::app()->getBasePath().'/config/userlist.conf.php';
            
            $post_adminlist_conf_arr_name=Yii::app()->request->getPost('adminlist_conf_arr_name');
-           print_r($post_adminlist_conf_arr_name);
+           if(is_array($post_adminlist_conf_arr_name)){
+                $post_adminlist_conf_arr_pwd=Yii::app()->request->getPost('adminlist_conf_arr_pwd');
+
+                $content='$user_def=array(); ';
+                $content.="\n";
+                foreach($post_adminlist_conf_arr_name as $index=>$value){
+                    $content.='$user_def["'.$value.'"]="'.$post_adminlist_conf_arr_pwd[$index].'";';
+                    $content.="\n";
+                }
+                $content.="\n";
+                echo $content;
+                return $user_def;
+           }
            
            // display the login form
            $this->render('setting', array('adminlist_conf_arr'=>$adminlist_conf_arr,
