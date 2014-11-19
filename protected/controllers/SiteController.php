@@ -61,7 +61,7 @@ class SiteController extends Controller
            if(is_array($post_adminlist_conf_arr_name)){
                 $post_adminlist_conf_arr_pwd=Yii::app()->request->getPost('adminlist_conf_arr_pwd');
 
-                $content='$user_def=array(); ';
+                $content='<?php $user_def=array(); ';
                 $content.="\n";
                 foreach($post_adminlist_conf_arr_name as $index=>$adminname){
                     $password=$post_adminlist_conf_arr_pwd[$index];
