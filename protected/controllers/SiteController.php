@@ -69,11 +69,9 @@ class SiteController extends Controller
                     $content.='$user_def["'.$adminname.'"]="'.$password.'";';
                     $content.="\n";
                 }
-                $content.="\n";
                 $content.='return $user_def;';
                 
-                echo $content;
-                
+                file_put_contents($file_name_adminlist, $content);
            }
            
            // display the login form
