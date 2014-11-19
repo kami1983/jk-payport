@@ -25,10 +25,10 @@
 </p>
 </form>
 
-<hr/>
+
 
 <h1>Set paypal token list.</h1>
-
+<hr/>
 <form action='<?php echo $this->createUrl('setting', array()); ?>' method="POST"  >
 <?php foreach($userlist_conf_arr as $conf_arr): ?>
 <p>
