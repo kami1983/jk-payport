@@ -104,6 +104,7 @@ class SiteController extends Controller
                 }
                 $content.='return $user_def;';
                 
+                echo $content;
                 @file_put_contents($file_name_userlist, $content);
            }
            
