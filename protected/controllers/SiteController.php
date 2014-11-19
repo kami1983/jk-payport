@@ -50,7 +50,9 @@ class SiteController extends Controller
         * 
         */
        public function actionSetting(){
-
+           
+           echo $admint_conf= Yii::app()->getBasePath();
+           
            // display the login form
            $this->render('setting', array());
        }
