@@ -109,9 +109,9 @@ class SiteController extends Controller
            
            //--------- END
            
-           if($is_post_change){
-                return Yii::app()->request->redirect($this->createUrl('setting'));
-           }
+//           if($is_post_change){
+//                return Yii::app()->request->redirect($this->createUrl('setting'));
+//           }
            
            // display the login form
            $this->render('setting', array('adminlist_conf_arr'=>$adminlist_conf_arr,
