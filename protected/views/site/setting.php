@@ -25,6 +25,8 @@
 
 <hr/>
 
+<h1>Set paypal token list.</h1>
+
 <form action='<?php $this->createUrl('setting', array()); ?>'  >
 <?php foreach($userlist_conf_arr as $conf_arr): ?>
 <p>
