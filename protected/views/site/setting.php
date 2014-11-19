@@ -9,7 +9,7 @@
 
 <hr/>
 
-<form action='<?php echo $this->createUrl('setting', array()); ?>'  >
+<form action='<?php echo $this->createUrl('setting', array()); ?>' method="POST" >
 <?php foreach($adminlist_conf_arr as $name=>$pwd): ?>
 <p>
 修改用户名：<input name='adminlist_conf_arr_name[]' type='text' value='<?php echo $name; ?>' />
@@ -29,7 +29,7 @@
 
 <h1>Set paypal token list.</h1>
 
-<form action='<?php echo $this->createUrl('setting', array()); ?>'  >
+<form action='<?php echo $this->createUrl('setting', array()); ?>' method="POST"  >
 <?php foreach($userlist_conf_arr as $conf_arr): ?>
 <p>
 修改 TOKEN：<input name='adminlist_conf_arr_token[]' type='text' value='<?php echo $conf_arr['token']; ?>' />
