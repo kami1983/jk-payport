@@ -3,7 +3,7 @@
 /* @var $adminlist_conf_arr array */
 /* @var $userlist_conf_arr array */
 
-
+print_r($userlist_conf_arr);
 ?>
 
 <h1>Set admin list.</h1>
@@ -18,4 +18,6 @@
 <?php endforeach; ?>
 <input type='submit' value='SUBMIT' />
 </form>
+
+
 
