@@ -20,7 +20,9 @@
 新增用户名：<input name='adminlist_conf_arr_name[]' type='text' value='' />
 新增密码：<input name='adminlist_conf_arr_pwd[]' type='text' value='' />
 </p>
+<p>
 <input type='submit' value='SUBMIT' />
+</p>
 </form>
 
 <hr/>
@@ -38,5 +40,7 @@
 新增 TOKEN：<input name='adminlist_conf_arr_token[]' type='text' value='' />
 新增 CLIENT ID：<input name='adminlist_conf_arr_client_id[]' type='text' value='' />
 </p>
+<p>
 <input type='submit' value='SUBMIT' />
+</p>
 </form>
