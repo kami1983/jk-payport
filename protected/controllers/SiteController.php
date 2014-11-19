@@ -55,8 +55,7 @@ class SiteController extends Controller
            
            $adminlist_conf_arr= @include $file_name_adminlist;
            $userlist_conf_arr= @include Yii::app()->getBasePath().'/config/userlist.conf.php';
-           print_r($adminlist_conf_arr);
-           exit;
+           
            $post_adminlist_conf_arr_name=Yii::app()->request->getPost('adminlist_conf_arr_name');
            if(is_array($post_adminlist_conf_arr_name)){
                 $post_adminlist_conf_arr_pwd=Yii::app()->request->getPost('adminlist_conf_arr_pwd');
