@@ -62,13 +62,18 @@ class SiteController extends Controller
 
                 $content='$user_def=array(); ';
                 $content.="\n";
-                foreach($post_adminlist_conf_arr_name as $index=>$value){
-                    $content.='$user_def["'.$value.'"]="'.$post_adminlist_conf_arr_pwd[$index].'";';
+                foreach($post_adminlist_conf_arr_name as $index=>$adminname){
+                    $password=$post_adminlist_conf_arr_pwd[$index];
+                    if('' == trim($adminname) || '' == $password)
+                                                continue;
+                    $content.='$user_def["'.$adminname.'"]="'.$password.'";';
                     $content.="\n";
                 }
                 $content.="\n";
+                $content.='return $user_def;';
+                
                 echo $content;
-                return $user_def;
+                
            }
            
            // display the login form
