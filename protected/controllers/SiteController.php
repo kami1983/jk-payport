@@ -80,11 +80,11 @@ class SiteController extends Controller
            //--------- END
            //--------- 管理员配置文件修改
            
-           $file_name_userlist=@include Yii::app()->getBasePath().'/config/userlist.conf.php'; //配置文件
-           $userlist_conf_arr=$file_name_userlist ; //读取并加载
+           $file_name_userlist= Yii::app()->getBasePath().'/config/userlist.conf.php'; //配置文件
+           $userlist_conf_arr=@include $file_name_userlist ; //读取并加载
            
            $userlist_conf_arr_token=Yii::app()->request->getPost('userlist_conf_arr_token');
-           print_r($userlist_conf_arr_token);
+           
            if(is_array($userlist_conf_arr_token)){ //如果有修改
                 $is_post_change=true;
                 $userlist_conf_arr_client_id=Yii::app()->request->getPost('userlist_conf_arr_client_id');
@@ -106,7 +106,6 @@ class SiteController extends Controller
                     $content.="\n";
                 }
                 $content.='return $user_def;';
-                echo $file_name_userlist;
                 @file_put_contents($file_name_userlist, $content);
            }
            
