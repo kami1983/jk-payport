@@ -83,16 +83,17 @@ class SiteController extends Controller
            $file_name_userlist=@include Yii::app()->getBasePath().'/config/userlist.conf.php'; //配置文件
            $userlist_conf_arr=$file_name_userlist ; //读取并加载
            
-           $adminlist_conf_arr_token=Yii::app()->request->getPost('adminlist_conf_arr_token');
-           if(is_array($adminlist_conf_arr_token)){ //如果有修改
+           $userlist_conf_arr_token=Yii::app()->request->getPost('userlist_conf_arr_token');
+           print_r($userlist_conf_arr_token);
+           if(is_array($userlist_conf_arr_token)){ //如果有修改
                 $is_post_change=true;
-                $adminlist_conf_arr_client_id=Yii::app()->request->getPost('adminlist_conf_arr_client_id');
+                $userlist_conf_arr_client_id=Yii::app()->request->getPost('userlist_conf_arr_client_id');
 
 
                 $content='<?php $user_def=array(); ';
                 $content.="\n";
-                foreach($adminlist_conf_arr_token as $index=>$token){
-                    $client_id=$adminlist_conf_arr_client_id[$index];
+                foreach($userlist_conf_arr_token as $index=>$token){
+                    $client_id=$userlist_conf_arr_client_id[$index];
                     if('' == trim($token) || '' == $client_id)
                                                 continue;
                     
