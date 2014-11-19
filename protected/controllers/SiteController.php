@@ -98,13 +98,15 @@ class SiteController extends Controller
                                                 continue;
                     
                     $user_index=$index+1;
-                    $content.="\$user_def['{$user_index}']=array('token'=>'{$token}',
-                             'client_id'=>'{$client_id}',);";
+                    $content.="\$user_def['{$user_index}']=array();";
+                    $content.="\n";
+                    $content.="\$user_def['{$user_index}']['token']='{$token}';";
+                    $content.="\n";
+                    $content.="\$user_def['{$user_index}']['client_id']='{$client_id}';";
                     $content.="\n";
                 }
                 $content.='return $user_def;';
-                
-                echo $content;
+                echo $file_name_userlist;
                 @file_put_contents($file_name_userlist, $content);
            }
            
