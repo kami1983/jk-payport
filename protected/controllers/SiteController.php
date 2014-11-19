@@ -51,11 +51,12 @@ class SiteController extends Controller
         */
        public function actionSetting(){
            
-           $admint_conf= @include Yii::app()->getBasePath().'/config/adminlist.conf.php';;
-           print_r($admint_conf);
+           $adminlist_conf_arr= @include Yii::app()->getBasePath().'/config/adminlist.conf.php';
+           $userlist_conf_arr= @include Yii::app()->getBasePath().'/config/userlist.conf.php';
            
            // display the login form
-           $this->render('setting', array());
+           $this->render('setting', array('adminlist_conf_arr'=>$adminlist_conf_arr,
+                                            'userlist_conf_arr'=>$userlist_conf_arr,));
        }
 
 	/**
