@@ -61,7 +61,9 @@ STMP PWD：<input name='emailsmtp_conf_smtp_pwd' type='text' value='<?php echo $
 </p>
 </form>
 <form action='<?php echo $this->createUrl('setting', array()); ?>' method="POST"  >
-测试Emial接收：<input type='text' value='<?php echo $emailsmtp_conf_arr['smtp_user']; ?>' />
+<p>
+测试Emial接收：<input type='text' name='test_emailaddress' value='<?php echo $emailsmtp_conf_arr['smtp_user']; ?>' />
+</p>
 <p>
 <input type='submit' value='TESTING & SENDING' /> 
 </p>    

@@ -117,11 +117,11 @@ class SiteController extends Controller
            $emailsmtp_conf_arr=@include $file_name_emailsmtp ; //读取并加载
 
            $emailsmtp_conf_smtp_host=trim(Yii::app()->request->getPost('emailsmtp_conf_smtp_host'));
-           
+           $emailsmtp_conf_smtp_user=trim(Yii::app()->request->getPost('emailsmtp_conf_smtp_user'));
+           $emailsmtp_conf_smtp_pwd=Yii::app()->request->getPost('emailsmtp_conf_smtp_pwd');
            if('' != $emailsmtp_conf_smtp_host){ //如果有修改
                 $is_post_change=true;
-                $emailsmtp_conf_smtp_user=trim(Yii::app()->request->getPost('emailsmtp_conf_smtp_user'));
-                $emailsmtp_conf_smtp_pwd=Yii::app()->request->getPost('emailsmtp_conf_smtp_pwd');
+                
 
 
                 $content='<?php $user_def=array(); ';
@@ -138,11 +138,46 @@ class SiteController extends Controller
                 @file_put_contents($file_name_emailsmtp, $content);
            }
            
+           
+           
            //--------- END
            
            if($is_post_change){
                 return Yii::app()->request->redirect($this->createUrl('setting'));
            }
+           
+           $test_emailaddress=trim(Yii::app()->request->getPost('test_emailaddress'));
+           if('' != $test_emailaddress){
+                Yii::app()->mailer->Host = $emailsmtp_conf_smtp_host;
+                Yii::app()->mailer->Username = $emailsmtp_conf_smtp_user;  // SMTP username
+                Yii::app()->mailer->Password = $emailsmtp_conf_smtp_pwd; // SMTP password
+                Yii::app()->mailer->IsSMTP();
+                if('' != $emailsmtp_conf_smtp_user){
+                    Yii::app()->mailer->SMTPAuth = true;
+                }
+
+                Yii::app()->mailer->From = $emailsmtp_conf_smtp_host;
+                Yii::app()->mailer->FromName = "Payport email service test.";
+                Yii::app()->mailer->AddAddress($test_emailaddress,"Your name.");    
+//                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
+                Yii::app()->mailer->AddReplyTo($emailsmtp_conf_smtp_host, "Payport Service");
+
+        //        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
+        //        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+        //        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+                Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
+
+                Yii::app()->mailer->Subject = "Here is the subject";
+                Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
+                Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+
+                if(!Yii::app()->mailer->Send()){
+                   echo "Message could not be sent. <p>";
+                   echo "Mailer Error: " . Yii::app()->mailer->ErrorInfo;
+                   exit;
+                }
+           }
+           
            
            // display the login form
            $this->render('setting', array('adminlist_conf_arr'=>$adminlist_conf_arr,
@@ -159,26 +194,26 @@ class SiteController extends Controller
             
 //        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
         
-        Yii::app()->mailer->Host = 'smtp.ym.163.com';
-        Yii::app()->mailer->Username = "service@cancanyou.com";  // SMTP username
-        Yii::app()->mailer->Password = "password"; // SMTP password
-        Yii::app()->mailer->IsSMTP();
-        Yii::app()->mailer->SMTPAuth = true;
-        
-        Yii::app()->mailer->From = "service@cancanyou.com";
-        Yii::app()->mailer->FromName = "Customer Service";
-        Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
-        Yii::app()->mailer->AddAddress("linhai_q8@163.com","Hello linhai");                  // name is optional
-        Yii::app()->mailer->AddReplyTo("service@cancanyou.com", "Replay service");
-
-//        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
-//        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
-//        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
-        Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
-
-        Yii::app()->mailer->Subject = "Here is the subject";
-        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
-        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+//        Yii::app()->mailer->Host = 'smtp.ym.163.com';
+//        Yii::app()->mailer->Username = "service@cancanyou.com";  // SMTP username
+//        Yii::app()->mailer->Password = "password"; // SMTP password
+//        Yii::app()->mailer->IsSMTP();
+//        Yii::app()->mailer->SMTPAuth = true;
+//        
+//        Yii::app()->mailer->From = "service@cancanyou.com";
+//        Yii::app()->mailer->FromName = "Customer Service";
+//        Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
+//        Yii::app()->mailer->AddAddress("linhai_q8@163.com","Hello linhai");                  // name is optional
+//        Yii::app()->mailer->AddReplyTo("service@cancanyou.com", "Replay service");
+//
+////        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
+////        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+////        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+//        Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
+//
+//        Yii::app()->mailer->Subject = "Here is the subject";
+//        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
+//        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
 
         if(!Yii::app()->mailer->Send())
         {
