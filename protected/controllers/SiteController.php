@@ -160,7 +160,7 @@ class SiteController extends Controller
                 Yii::app()->mailer->FromName = "Payport email service test.";
                 Yii::app()->mailer->AddAddress($test_emailaddress,"Your name.");    
 //                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
-                Yii::app()->mailer->AddReplyTo($emailsmtp_conf_arr['smtp_user'], "Payport Service");
+//                Yii::app()->mailer->AddReplyTo($emailsmtp_conf_arr['smtp_user'], "Payport Service");
 
         //        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
         //        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments

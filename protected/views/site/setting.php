@@ -37,7 +37,12 @@
 修改 CLIENT ID：<input name='userlist_conf_arr_client_id[]' type='text' value='<?php echo $conf_arr['client_id']; ?>' />
 </p>
 <p>
+<strong>支付接口：(GET)</strong>
 <?php echo htmlspecialchars('http://'.$_SERVER['HTTP_HOST'].$this->createUrl('paypal/payment',array()).'&uid='.$index.'&masksign='.md5($index.$conf_arr['token']).'&price_arr[0]=5&client_secret=YOUR_ARE_PAYPAL_SECRET'); ?>    
+</p>
+<p>
+<strong>EMail接口：(GET/POST)(m_* 参数可以POST给入)</strong>
+<?php echo htmlspecialchars('http://'.$_SERVER['HTTP_HOST'].$this->createUrl('paypal/sendemail',array()).'&uid='.$index.'&masksign='.md5($index.$conf_arr['token']).'&m_from=SERVICE_EMAIL&m_fromname=service&m_address=CUSTOM_EMAIL&m_subject=subject_text&m_body=body_text'); ?>    
 </p>
 <?php endforeach; ?>
 <p>
@@ -70,4 +75,7 @@ STMP PWD：<input name='emailsmtp_conf_smtp_pwd' type='text' value='<?php echo $
 <p>
 <input type='submit' value='TESTING & SENDING' /> 
 </p>    
+
+
+
 </form>
