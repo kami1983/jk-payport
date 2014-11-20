@@ -37,7 +37,7 @@
 修改 CLIENT ID：<input name='userlist_conf_arr_client_id[]' type='text' value='<?php echo $conf_arr['client_id']; ?>' />
 </p>
 <p>
-<?php echo htmlspecialchars(Yii::app()->baseUrl.$this->createUrl('paypal/payment',array()).'&uid='.($index+1).'&masksign='.md5(($index+1).$conf_arr['token']).'&price_arr[0]=5&client_secret=YOUR_ARE_PAYPAL_SECRET'); ?>    
+<?php echo htmlspecialchars(Yii::app()->baseUrl.$this->createUrl('paypal/payment',array()).'&uid='.$index.'&masksign='.md5($index.$conf_arr['token']).'&price_arr[0]=5&client_secret=YOUR_ARE_PAYPAL_SECRET'); ?>    
 </p>
 <?php endforeach; ?>
 <p>
