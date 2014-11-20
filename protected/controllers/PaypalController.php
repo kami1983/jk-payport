@@ -41,7 +41,68 @@ class PaypalController extends Controller {
             );
     }
     
-    
+    /**
+     * 发送Email
+     * 
+     */
+    public function actionSendemail(){
+        //获取请求的地址信息
+        $uid=Yii::app()->request->getQuery('uid','0');
+        $masksign=Yii::app()->request->getQuery('masksign','');
+        
+        
+        //效验请求合法性
+        if(!CUser::CheckValid($uid,$masksign)){
+            throw new Exception('无法识别调用用户','141022_1027');
+        }
+        
+        //-----
+        
+        $m_from=Yii::app()->request->getParam('m_from');
+        $m_fromname=Yii::app()->request->getParam('m_fromname');
+        $m_address=Yii::app()->request->getParam('m_address');
+        $m_replyto=Yii::app()->request->getParam('m_replyto');
+        $m_subject=Yii::app()->request->getParam('m_subject');
+        $m_body=Yii::app()->request->getParam('m_body');
+        
+        
+        $file_name_emailsmtp= Yii::app()->getBasePath().'/config/emailsmtp.conf.php'; //配置文件
+        $emailsmtp_conf_arr=@include $file_name_emailsmtp ; //读取并加载
+        
+        if(!is_array($emailsmtp_conf_arr)){
+            throw new Exception('请先配置SMTP 服务器','141120_1759');
+        }
+        
+        Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
+        Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
+        Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+        Yii::app()->mailer->IsSMTP();
+        if('' != Yii::app()->mailer->Username){
+            Yii::app()->mailer->SMTPAuth = true;
+        }
+
+        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
+        Yii::app()->mailer->FromName = "Payport email service test.";
+        Yii::app()->mailer->AddAddress($test_emailaddress,"Your name.");    
+//                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
+//                Yii::app()->mailer->AddReplyTo($emailsmtp_conf_arr['smtp_user'], "Payport Service");
+
+//        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
+//        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+//        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+        Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
+
+        Yii::app()->mailer->Subject = "Here is the subject";
+        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
+        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+
+        if(!Yii::app()->mailer->Send()){
+           echo "Message could not be sent. <p>";
+           echo "Mailer Error: " . Yii::app()->mailer->ErrorInfo;
+           exit;
+        }
+        
+    }
 
     /**
      * This is the default 'index' action that is invoked
