@@ -148,15 +148,15 @@ class SiteController extends Controller
            
            $test_emailaddress=trim(Yii::app()->request->getPost('test_emailaddress'));
            if('' != $test_emailaddress){
-                Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
-                Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
-                Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+                echo Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
+                echo Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
+                echo Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
                 Yii::app()->mailer->IsSMTP();
                 if('' != $emailsmtp_conf_smtp_user){
                     Yii::app()->mailer->SMTPAuth = true;
                 }
 
-                Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
+                echo Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
                 Yii::app()->mailer->FromName = "Payport email service test.";
                 Yii::app()->mailer->AddAddress($test_emailaddress,"Your name.");    
 //                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
