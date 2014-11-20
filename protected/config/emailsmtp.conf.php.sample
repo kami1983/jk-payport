@@ -1,0 +1,9 @@
+<?php
+
+$user_def=array(); 
+
+$user_def['smtp_host']='smtp.cancanyou.com';
+$user_def['smtp_user']='service@cancanyou.com';
+$user_def['smtp_pwd']='your password';
+
+return $user_def;

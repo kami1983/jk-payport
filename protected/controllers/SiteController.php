@@ -109,6 +109,35 @@ class SiteController extends Controller
                 @file_put_contents($file_name_userlist, $content);
            }
            
+           
+           //--------- END
+           //--------- 邮件发送器的配置
+           
+           $file_name_emailsmtp= Yii::app()->getBasePath().'/config/emailsmtp.conf.php'; //配置文件
+           $emailsmtp_conf_arr=@include $file_name_emailsmtp ; //读取并加载
+
+           $emailsmtp_conf_smtp_host=trim(Yii::app()->request->getPost('emailsmtp_conf_smtp_host'));
+           
+           if('' != $emailsmtp_conf_smtp_host){ //如果有修改
+                $is_post_change=true;
+                $emailsmtp_conf_smtp_user=trim(Yii::app()->request->getPost('emailsmtp_conf_smtp_user'));
+                $emailsmtp_conf_smtp_pwd=Yii::app()->request->getPost('emailsmtp_conf_smtp_pwd');
+
+
+                $content='<?php $user_def=array(); ';
+                $content.="\n";
+                
+                $content.="\$user_def['smtp_host']='{$emailsmtp_conf_smtp_host}';";
+                $content.="\n";
+                $content.="\$user_def['smtp_user']='{$emailsmtp_conf_smtp_user}';";
+                $content.="\n";
+                $content.="\$user_def['smtp_pwd']='{$emailsmtp_conf_smtp_pwd}';";
+                $content.="\n";
+                
+                $content.='return $user_def;';
+                @file_put_contents($file_name_emailsmtp, $content);
+           }
+           
            //--------- END
            
            if($is_post_change){
@@ -117,7 +146,8 @@ class SiteController extends Controller
            
            // display the login form
            $this->render('setting', array('adminlist_conf_arr'=>$adminlist_conf_arr,
-                                            'userlist_conf_arr'=>$userlist_conf_arr,));
+                                            'userlist_conf_arr'=>$userlist_conf_arr,
+                                            'emailsmtp_conf_arr'=>$emailsmtp_conf_arr,));
        }
 
 	/**
