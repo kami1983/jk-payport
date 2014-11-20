@@ -148,9 +148,12 @@ class SiteController extends Controller
            
            $test_emailaddress=trim(Yii::app()->request->getPost('test_emailaddress'));
            if('' != $test_emailaddress){
-                Yii::app()->mailer->Host = $emailsmtp_conf_smtp_host;
-                Yii::app()->mailer->Username = $emailsmtp_conf_smtp_user;  // SMTP username
-                Yii::app()->mailer->Password = $emailsmtp_conf_smtp_pwd; // SMTP password
+                echo Yii::app()->mailer->Host = $emailsmtp_conf_smtp_host;
+                echo '<br/>';
+                echo Yii::app()->mailer->Username = $emailsmtp_conf_smtp_user;  // SMTP username
+                echo '<br/>';
+                echo Yii::app()->mailer->Password = $emailsmtp_conf_smtp_pwd; // SMTP password
+                echo '<br/>';
                 Yii::app()->mailer->IsSMTP();
                 if('' != $emailsmtp_conf_smtp_user){
                     Yii::app()->mailer->SMTPAuth = true;
