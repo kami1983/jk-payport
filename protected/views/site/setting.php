@@ -46,9 +46,6 @@
 </p>
 </form>
 
-emailsmtp_conf_smtp_host
-emailsmtp_conf_smtp_user
-emailsmtp_conf_smtp_pwd
 <h1>Set email sender.</h1>
 <hr/>
 <form action='<?php echo $this->createUrl('setting', array()); ?>' method="POST"  >
@@ -57,12 +54,6 @@ emailsmtp_conf_smtp_pwd
 SMTP HOST：<input name='emailsmtp_conf_smtp_host' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_host']; ?>' />
 STMP USER：<input name='emailsmtp_conf_smtp_user' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_user']; ?>' />
 STMP USER：<input name='emailsmtp_conf_smtp_pwd' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_pwd']; ?>' />
-</p>
-
-<p>
-SMTP HOST：<input name='emailsmtp_conf_smtp_host' type='text' value='' />
-STMP USER：<input name='emailsmtp_conf_smtp_user' type='text' value='' />
-STMP USER：<input name='emailsmtp_conf_smtp_pwd' type='text' value='' />
 </p>
 
 <p>
