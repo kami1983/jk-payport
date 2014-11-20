@@ -1,5 +1,10 @@
 # jk-payport
 
+## release 1.0.8 on 2014-11-16
+* 新增 site/setting 管理页面用来操作配置文件，从此再也不需要去服务器上改配置文件了。
+* 新增邮件服务器功能，通过设置可以向付款中心进行请求进行通知邮件的发送。
+* 统一修正JSON 返回数据格式，为{"result":"success","back_value":true} 或者 "result":"failure","error_code":1000851,"error_info":"database operation error."} 
+
 ## release 1.0.7 on 2014-11-16
 * 修改 .gitignore 文件，解决配置文件pull 后冲突的问题。
 
