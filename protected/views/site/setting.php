@@ -53,7 +53,7 @@
 <p>
 SMTP HOST：<input name='emailsmtp_conf_smtp_host' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_host']; ?>' />
 STMP USER：<input name='emailsmtp_conf_smtp_user' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_user']; ?>' />
-STMP USER：<input name='emailsmtp_conf_smtp_pwd' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_pwd']; ?>' />
+STMP PWD：<input name='emailsmtp_conf_smtp_pwd' type='text' value='<?php echo $emailsmtp_conf_arr['smtp_pwd']; ?>' />
 </p>
 
 <p>
