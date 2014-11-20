@@ -148,11 +148,11 @@ class SiteController extends Controller
            
            $test_emailaddress=trim(Yii::app()->request->getPost('test_emailaddress'));
            if('' != $test_emailaddress){
-                echo Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
-                echo Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
-                echo Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+                Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
+                Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
+                Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
                 Yii::app()->mailer->IsSMTP();
-                if('' != $emailsmtp_conf_smtp_user){
+                if('' != Yii::app()->mailer->Username){
                     Yii::app()->mailer->SMTPAuth = true;
                 }
 
@@ -196,7 +196,7 @@ class SiteController extends Controller
         
 //        Yii::app()->mailer->Host = 'smtp.ym.163.com';
 //        Yii::app()->mailer->Username = "service@cancanyou.com";  // SMTP username
-//        Yii::app()->mailer->Password = "password"; // SMTP password
+//        Yii::app()->mailer->Password = "service"; // SMTP password
 //        Yii::app()->mailer->IsSMTP();
 //        Yii::app()->mailer->SMTPAuth = true;
 //        
@@ -214,13 +214,13 @@ class SiteController extends Controller
 //        Yii::app()->mailer->Subject = "Here is the subject";
 //        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
 //        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
-
-        if(!Yii::app()->mailer->Send())
-        {
-           echo "Message could not be sent. <p>";
-           echo "Mailer Error: " . Yii::app()->mailer->ErrorInfo;
-           exit;
-        }
+//
+//        if(!Yii::app()->mailer->Send())
+//        {
+//           echo "Message could not be sent. <p>";
+//           echo "Mailer Error: " . Yii::app()->mailer->ErrorInfo;
+//           exit;
+//        }
 
         echo "Message has been sent";
         
