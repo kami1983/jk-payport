@@ -61,7 +61,6 @@ class PaypalController extends Controller {
         $m_from=Yii::app()->request->getParam('m_from');
         $m_fromname=Yii::app()->request->getParam('m_fromname');
         $m_address=Yii::app()->request->getParam('m_address');
-        $m_replyto=Yii::app()->request->getParam('m_replyto');
         $m_subject=Yii::app()->request->getParam('m_subject');
         $m_body=Yii::app()->request->getParam('m_body');
         
@@ -81,9 +80,9 @@ class PaypalController extends Controller {
             Yii::app()->mailer->SMTPAuth = true;
         }
 
-        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
-        Yii::app()->mailer->FromName = "Payport email service test.";
-        Yii::app()->mailer->AddAddress($test_emailaddress,"Your name.");    
+        Yii::app()->mailer->From = $m_from;
+        Yii::app()->mailer->FromName = $m_fromname;
+        Yii::app()->mailer->AddAddress($m_address,$m_address);    
 //                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
 //                Yii::app()->mailer->AddReplyTo($emailsmtp_conf_arr['smtp_user'], "Payport Service");
 
@@ -92,9 +91,9 @@ class PaypalController extends Controller {
 //        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
 
-        Yii::app()->mailer->Subject = "Here is the subject";
-        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!</b>";
-        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+        Yii::app()->mailer->Subject = $m_subject;
+        Yii::app()->mailer->Body    = $m_body;
+//        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
 
         if(!Yii::app()->mailer->Send()){
            echo "Message could not be sent. <p>";
