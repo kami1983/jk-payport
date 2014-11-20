@@ -53,7 +53,7 @@ class PaypalController extends Controller {
         
         //效验请求合法性
         if(!CUser::CheckValid($uid,$masksign)){
-            throw new Exception('无法识别调用用户','141022_1027');
+            return $this->_resultJson(false, new Exception('无法识别调用用户','141022_1027'));
         }
         
         //-----
@@ -69,7 +69,7 @@ class PaypalController extends Controller {
         $emailsmtp_conf_arr=@include $file_name_emailsmtp ; //读取并加载
         
         if(!is_array($emailsmtp_conf_arr)){
-            throw new Exception('请先配置SMTP 服务器','141120_1759');
+            return $this->_resultJson(false,  new Exception('请先配置SMTP 服务器','141120_1759'));
         }
         
         Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
@@ -96,11 +96,30 @@ class PaypalController extends Controller {
 //        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
 
         if(!Yii::app()->mailer->Send()){
-           echo "Message could not be sent. <p>";
-           echo "Mailer Error: " . Yii::app()->mailer->ErrorInfo;
-           exit;
+            return $this->_resultJson(false, new Exception('邮件发送失败','141120_2209'));
         }
         
+        return $this->_resultJson(true,true);
+    }
+    
+    /**
+     * 用来生成并返回结果JSON 数据
+     * @param boolean $is_success
+     * @param mixed $back_value
+     * @return array
+     */
+    protected function _resultJson($is_success,$back_value){
+        $result_arr=array();
+        if($is_success){
+            $result_arr['result']="success";
+            $result_arr['back_value']=$back_value;
+        }else{
+            /* @var $back_value Exception */
+            $result_arr['result']="failure";
+            $result_arr['error_code']=$back_value->getCode();
+            $result_arr['error_info']=$back_value->getMessage();
+        }
+        return $this->renderPartial('_result_json',array('result_arr'=>$result_arr,),$this->is_jktesting);
     }
 
     /**
@@ -188,7 +207,7 @@ class PaypalController extends Controller {
     /**
      * 创建付款页面
      * 测试页面：http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/payment&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&price_arr[0]=5&client_secret=EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp
-     * 页面返回JSON 类似：{"status":"success","redirect_url":"https:\/\/www.sandbox.paypal.com\/cgi-bin\/webscr?cmd=_express-checkout&token=EC-0TF07914SR289291E","payment_id":"PAY-8V260968H2085143JKRILQXQ","client_id":"AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-","client_secret":"EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp","tip_url":"http:\/\/develop.jk-payport.git.cancanyou.com\/test_index.php?r=paypal\/paidtip","do_url":"http:\/\/develop.jk-payport.git.cancanyou.com\/test_index.php?r=paypal\/paiddo"}
+     * 页面返回JSON 类似：{"result":"success","redirect_url":"https:\/\/www.sandbox.paypal.com\/cgi-bin\/webscr?cmd=_express-checkout&token=EC-0TF07914SR289291E","payment_id":"PAY-8V260968H2085143JKRILQXQ","client_id":"AfSbYRAe0Li9JullQ41NFRZrSlOyDrs_TnOzwmXio7uk8-0TOS86vYWXRsF-","client_secret":"EPkh2BDXwnw3604-BQa4Hxdu1aZWAAjStHeymfOsveTE-8m5YsG_VhBlUXIp","tip_url":"http:\/\/develop.jk-payport.git.cancanyou.com\/test_index.php?r=paypal\/paidtip","do_url":"http:\/\/develop.jk-payport.git.cancanyou.com\/test_index.php?r=paypal\/paiddo"}
      * 访问回调redirect_url 后：cancanyou-facilitator-buyer@yahoo.com 密码：12345678
      * 付款成功后回调举例：
      */
@@ -236,11 +255,12 @@ class PaypalController extends Controller {
         }
         
         if(0 == (int)$insert_id){
-            $result_arr=array();
-            $result_arr['status']='failure';
-            $result_arr['info']='Db error. create a payment. ';
-            $result_arr['code']='100001';
-            return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
+            return $this->_resultJson(false, new Exception('Db error. create a payment. ','141120_1021'));
+//            $result_arr=array();
+//            $result_arr['status']='failure';
+//            $result_arr['info']='Db error. create a payment. ';
+//            $result_arr['code']='100001';
+//            return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
         }
         
         
@@ -292,7 +312,7 @@ class PaypalController extends Controller {
         
         //存储：$payid，$token，$post_json
         $result_arr=array();
-        $result_arr['status']='success';
+//        $result_arr['status']='success';
         $result_arr['payment_url']=$redirect_url;
         $result_arr['payment_id']=$payment_id;
         $result_arr['client_id']=$client_id;
@@ -302,15 +322,15 @@ class PaypalController extends Controller {
         
         $oper->payment_json=  json_encode($result_arr); //将结果数据记录到数据库
         if(!$oper->update()){
-            $result_arr=array();
-            $result_arr['status']='failure';
-            $result_arr['info']='Db error. update a payment. ';
-            $result_arr['code']='100002';
-            return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
+            return $this->_resultJson(false, new Exception('Db error. update a payment. ','141120_1022'));
+//            $result_arr=array();
+//            $result_arr['status']='failure';
+//            $result_arr['info']='Db error. update a payment. ';
+//            $result_arr['code']='100002';
+//            return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
         }
         
-        return $this->renderPartial('payment',array('result_arr'=>$result_arr,),$this->is_jktesting);
-        
+        return $this->_resultJson(true,$result_arr);
     }
     
     /**
