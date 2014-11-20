@@ -156,7 +156,7 @@ class SiteController extends Controller
                     Yii::app()->mailer->SMTPAuth = true;
                 }
 
-                echo Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
+                Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
                 Yii::app()->mailer->FromName = "Payport email service test.";
                 Yii::app()->mailer->AddAddress($test_emailaddress,"Your name.");    
 //                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
