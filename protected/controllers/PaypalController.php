@@ -43,7 +43,7 @@ class PaypalController extends Controller {
     
     /**
      * 发送Email
-     * 
+     * http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/sendemail&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&m_from=linhai_q8%40163.com&m_fromname=Service&m_address=kami%40cancanyou.com&m_subject=subject_text&m_body=body_text 
      */
     public function actionSendemail(){
         //获取请求的地址信息
@@ -80,7 +80,7 @@ class PaypalController extends Controller {
             Yii::app()->mailer->SMTPAuth = true;
         }
 
-        Yii::app()->mailer->From = $m_from;
+        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_host'];
         Yii::app()->mailer->FromName = $m_fromname;
         Yii::app()->mailer->AddAddress($m_address,$m_address);    
 //                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");

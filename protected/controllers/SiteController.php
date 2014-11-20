@@ -222,7 +222,7 @@ class SiteController extends Controller
 //           exit;
 //        }
 
-        echo "Message has been sent";
+//        echo "Message has been sent";
         
 		$model=new ContactForm;
 		if(isset($_POST['ContactForm']))
