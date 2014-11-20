@@ -80,7 +80,7 @@ class PaypalController extends Controller {
             Yii::app()->mailer->SMTPAuth = true;
         }
 
-        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_host'];
+        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
         Yii::app()->mailer->FromName = $m_fromname;
         Yii::app()->mailer->AddAddress($m_address,$m_address);    
 //                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
