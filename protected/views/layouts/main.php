@@ -23,7 +23,7 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?> V 1.0.7</div>
+		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?> - 1.0.9</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -35,6 +35,7 @@
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest),
                                 array('label'=>'Paypal payment list', 'url'=>array('/paypal/paymentlist'), 'visible'=>!Yii::app()->user->isGuest),
+                                array('label'=>'Public settings', 'url'=>array('/site/setting'), 'visible'=>!Yii::app()->user->isGuest),
 			),
 		)); ?>
 	</div><!-- mainmenu -->
@@ -49,9 +50,8 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
+		Copyright &copy; 2014 by PayPort - CanCanYou.<br/>
 		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 
 </div><!-- page -->
