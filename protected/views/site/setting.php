@@ -42,7 +42,7 @@
 </p>
 <p>
 <strong>EMail接口：(GET/POST)(m_* 参数可以POST给入)</strong>
-<?php echo htmlspecialchars('http://'.$_SERVER['HTTP_HOST'].$this->createUrl('paypal/sendemail',array()).'&uid='.$index.'&masksign='.md5($index.$conf_arr['token']).'&m_fromname=service&m_address=CUSTOM_EMAIL&m_subject=subject_text&m_body=body_text'); ?>    
+<?php echo htmlspecialchars('http://'.$_SERVER['HTTP_HOST'].$this->createUrl('paypal/sendemail',array()).'&uid='.$index.'&masksign='.md5($index.$conf_arr['token']).'&m_fromname=service&m_address=CUSTOM_EMAIL&m_replyto=REPLYTO_EMAIL&m_subject=subject_text&m_body=body_text'); ?>    
 </p>
 <?php endforeach; ?>
 <p>
