@@ -58,11 +58,16 @@ class PaypalController extends Controller {
         
         //-----
         
-        $m_replyto=Yii::app()->request->getParam('m_replyto');
-        $m_fromname=Yii::app()->request->getParam('m_fromname');
-        $m_address=Yii::app()->request->getParam('m_address');
-        $m_subject=Yii::app()->request->getParam('m_subject');
-        $m_body=Yii::app()->request->getParam('m_body');
+        echo $m_replyto=Yii::app()->request->getParam('m_replyto');
+        echo '<br/>';
+        echo $m_fromname=Yii::app()->request->getParam('m_fromname');
+        echo '<br/>';
+        echo $m_address=Yii::app()->request->getParam('m_address');
+        echo '<br/>';
+        echo $m_subject=Yii::app()->request->getParam('m_subject');
+        echo '<br/>';
+        echo $m_body=Yii::app()->request->getParam('m_body');
+        echo '<br/>';
         
         
         $file_name_emailsmtp= Yii::app()->getBasePath().'/config/emailsmtp.conf.php'; //配置文件
