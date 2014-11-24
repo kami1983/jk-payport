@@ -23,7 +23,7 @@
 <div class="container" id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?> - 1.0.9</div>
+		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?> - 1.0.10</div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
