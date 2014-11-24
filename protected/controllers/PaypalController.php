@@ -83,38 +83,36 @@ class PaypalController extends Controller {
             return $this->_resultJson(false,  new Exception('请先配置SMTP 服务器','141120_1759'));
         }
         
-        echo Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
-        echo '<br/>';
-        echo Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
-        echo '<br/>';
-        echo Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
-        echo '<br/>';
+//        echo Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
+//        echo '<br/>';
+//        echo Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
+//        echo '<br/>';
+//        echo Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+//        echo '<br/>';
         
+        Yii::app()->mailer->Host = 'smtp.ym.163.com';
+        Yii::app()->mailer->Username = "service@cancanyou.com";  // SMTP username
+        Yii::app()->mailer->Password = "service_go"; // SMTP password
         Yii::app()->mailer->IsSMTP();
-        if('' != Yii::app()->mailer->Username){
-            echo 'RUN 1 ';
-            Yii::app()->mailer->SMTPAuth = true;
-        }
-
-        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
-        Yii::app()->mailer->FromName = $m_fromname;
-        Yii::app()->mailer->AddAddress($m_address,$m_address);    
-//                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
-        if('' != $m_replyto){
-            Yii::app()->mailer->AddReplyTo($m_replyto, $m_replyto);
-        }
+        Yii::app()->mailer->SMTPAuth = true;
+        
+        Yii::app()->mailer->From = "service@cancanyou.com";
+        Yii::app()->mailer->FromName = "Customer Service";
+        Yii::app()->mailer->AddAddress($m_address, $m_address);                // name is optional
+        Yii::app()->mailer->AddReplyTo($m_replyto, $m_replyto);
 
 //        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
 //        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
 //        Yii::app()->mailer->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
         Yii::app()->mailer->IsHTML(true);                                  // set email format to HTML
 
-        Yii::app()->mailer->Subject = $m_subject;
-        Yii::app()->mailer->Body    = $m_body;
-//        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+        Yii::app()->mailer->Subject = "Here is the subject99";
+        Yii::app()->mailer->Body    = "This is the HTML message body <b>in bold!99</b>";
+        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients99";
 
+        
         if(!Yii::app()->mailer->Send()){
-            return $this->_resultJson(false, new Exception('邮件发送失败','141120_2209'));
+            return $this->_resultJson(false, new Exception('邮件发送失败：'.Yii::app()->mailer->ErrorInfo,'141120_2209'));
         }
         
         return $this->_resultJson(true,true);
