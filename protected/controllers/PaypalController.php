@@ -98,8 +98,8 @@ class PaypalController extends Controller {
         
         Yii::app()->mailer->From = "service@cancanyou.com";
         Yii::app()->mailer->FromName = "Customer Service";
-        Yii::app()->mailer->AddAddress($m_address, $m_address);                // name is optional
-        Yii::app()->mailer->AddReplyTo($m_replyto, $m_replyto);
+        Yii::app()->mailer->AddAddress($m_address, 'lin');                // name is optional
+        Yii::app()->mailer->AddReplyTo($m_replyto, 'Reply to');
 
 //        Yii::app()->mailer->WordWrap = 50;                                 // set word wrap to 50 characters
 //        Yii::app()->mailer->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
