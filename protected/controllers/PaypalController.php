@@ -68,7 +68,7 @@ class PaypalController extends Controller {
         echo '<br/>';
         echo $m_body=Yii::app()->request->getParam('m_body');
         echo '<br/>';
-        
+        exit;
         
         $file_name_emailsmtp= Yii::app()->getBasePath().'/config/emailsmtp.conf.php'; //配置文件
         $emailsmtp_conf_arr=@include $file_name_emailsmtp ; //读取并加载
