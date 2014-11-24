@@ -58,6 +58,12 @@ class PaypalController extends Controller {
         
         //-----
         
+//        meetcancanyou@yahoo.com
+//service
+//linhai@cancanyou.com
+//subject_text222
+//body_text222
+        
         echo $m_replyto=Yii::app()->request->getParam('m_replyto');
         echo '<br/>';
         echo $m_fromname=Yii::app()->request->getParam('m_fromname');
@@ -68,7 +74,7 @@ class PaypalController extends Controller {
         echo '<br/>';
         echo $m_body=Yii::app()->request->getParam('m_body');
         echo '<br/>';
-        exit;
+        
         
         $file_name_emailsmtp= Yii::app()->getBasePath().'/config/emailsmtp.conf.php'; //配置文件
         $emailsmtp_conf_arr=@include $file_name_emailsmtp ; //读取并加载
@@ -77,9 +83,13 @@ class PaypalController extends Controller {
             return $this->_resultJson(false,  new Exception('请先配置SMTP 服务器','141120_1759'));
         }
         
-        Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
-        Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
-        Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+        echo Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
+        echo '<br/>';
+        echo Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
+        echo '<br/>';
+        echo Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+        echo '<br/>';
+        exit;
         Yii::app()->mailer->IsSMTP();
         if('' != Yii::app()->mailer->Username){
             Yii::app()->mailer->SMTPAuth = true;
