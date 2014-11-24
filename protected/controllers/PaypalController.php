@@ -101,7 +101,7 @@ class PaypalController extends Controller {
             return $this->_resultJson(false, new Exception('邮件发送失败：'.Yii::app()->mailer->ErrorInfo,'141120_2209'));
         }
         
-        return $this->_resultJson(true,true);
+        return $this->_resultJson(true,array('m_address'=>$m_address,'m_replyto'=>$m_replyto,));
     }
     
     /**
