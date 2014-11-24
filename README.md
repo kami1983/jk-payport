@@ -1,5 +1,8 @@
 # jk-payport
 
+## release 1.0.11 on 2014-11-24
+* 修正Email 发送。
+
 ## release 1.0.10 on 2014-11-24
 * 去掉了Email 发送失败时的一些echo 信息，因为这些信息会影响json 错误输出。
 

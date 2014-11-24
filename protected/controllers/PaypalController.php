@@ -43,7 +43,8 @@ class PaypalController extends Controller {
     
     /**
      * 发送Email
-     * http://develop.jk-payport.git.cancanyou.com/test_index.php?r=paypal/sendemail&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&m_from=linhai_q8%40163.com&m_fromname=Service&m_address=kami%40cancanyou.com&m_subject=subject_text&m_body=body_text 
+     * http://develop.jk-payport.git.cancanyou.com/index.php?r=paypal/sendemail&uid=1&masksign=2fc7fd70fd1aafe36db926519507f77c&m_fromname=service&m_address=kami@cancanyou.com&m_replyto=meetcancanyou@yahoo.com&m_subject=subject_text222&m_body=body_text222
+     * 
      */
     public function actionSendemail(){
         //获取请求的地址信息
@@ -57,7 +58,6 @@ class PaypalController extends Controller {
         }
         
         //-----
-        
         $m_replyto=Yii::app()->request->getParam('m_replyto');
         $m_fromname=Yii::app()->request->getParam('m_fromname');
         $m_address=Yii::app()->request->getParam('m_address');
@@ -75,15 +75,13 @@ class PaypalController extends Controller {
         Yii::app()->mailer->Host = $emailsmtp_conf_arr['smtp_host'];
         Yii::app()->mailer->Username = $emailsmtp_conf_arr['smtp_user'];  // SMTP username
         Yii::app()->mailer->Password = $emailsmtp_conf_arr['smtp_pwd']; // SMTP password
+        
         Yii::app()->mailer->IsSMTP();
-        if('' != Yii::app()->mailer->Username){
-            Yii::app()->mailer->SMTPAuth = true;
-        }
-
-        Yii::app()->mailer->From = $emailsmtp_conf_arr['smtp_user'];
+        Yii::app()->mailer->SMTPAuth = true;
+        
+        Yii::app()->mailer->From = "service@cancanyou.com";
         Yii::app()->mailer->FromName = $m_fromname;
-        Yii::app()->mailer->AddAddress($m_address,$m_address);    
-//                Yii::app()->mailer->AddAddress("kami@cancanyou.com", "Hello Kami");
+        Yii::app()->mailer->AddAddress($m_address, $m_address);                // name is optional
         if('' != $m_replyto){
             Yii::app()->mailer->AddReplyTo($m_replyto, $m_replyto);
         }
@@ -95,13 +93,15 @@ class PaypalController extends Controller {
 
         Yii::app()->mailer->Subject = $m_subject;
         Yii::app()->mailer->Body    = $m_body;
-//        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients";
+//        Yii::app()->mailer->AltBody = "This is the body in plain text for non-HTML mail clients99";
 
+        
         if(!Yii::app()->mailer->Send()){
-            return $this->_resultJson(false, new Exception('邮件发送失败','141120_2209'));
+            //echo Yii::app()->mailer->ErrorInfo;
+            return $this->_resultJson(false, new Exception('邮件发送失败：'.Yii::app()->mailer->ErrorInfo,'141120_2209'));
         }
         
-        return $this->_resultJson(true,true);
+        return $this->_resultJson(true,array('m_address'=>$m_address,'m_replyto'=>$m_replyto,));
     }
     
     /**
